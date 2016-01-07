@@ -13,7 +13,16 @@
 require_once 'includes/configs/systemConfig.inc.php';
 
 
+
+
+
+// Require die Custom-Config - Datei ... dort sind die individuelle Werte definiert (z.B. DB - Verbindung, Webpfad, Uploadpfad, Farbeinstellungen usw.)
+require_once 'includes/configs/customConfig.inc.php';
+
+
+
+
 // PHP Version ausreichend?
-if (version_compare(phpversion(), $_SESSION['systemConfig']['requirePHPVersion'], '<')) {
-    die ('<hr>FEHLER bei der Systemprüfung:<br>- PHP Version auf verwendetem System unzureichend! (Version: PHP '.$_SESSION['systemConfig']['requirePHPVersion'].' oder höher erwartet.)<br><hr>');
+if (version_compare(phpversion(), $_SESSION['systemConfig']['Requirement']['requirePHPVersion'], '<')) {
+    die ('<hr>FEHLER bei der Systemprüfung:<br>- PHP Version auf verwendetem System unzureichend! (Version: PHP '.$_SESSION['systemConfig']['Requirement']['requirePHPVersion'].' oder höher erwartet.)<br><hr>');
 }

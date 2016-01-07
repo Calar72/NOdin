@@ -26,11 +26,16 @@ class Base
 
 
 
+
+
     function __construct()
     {
 
+        // Debug - Classname ausgeben?!
+        Debug::initDebugOnLoad('Class', __CLASS__);
 
     }	// END function __construct()
+
 
 
 
@@ -48,6 +53,7 @@ class Base
 
 
 
+
     function getClassName($printOnScreen=false)
     {
 
@@ -56,6 +62,58 @@ class Base
         return $myClassNmae;
 
     }	// END function getClassName(...)
+
+
+
+
+
+    // Methode gibt ein Array zurück
+    function getArgumentAsArray($arg)
+    {
+        $myArg = array();
+
+        if (!is_array($arg))
+            $myArg['AUTO'] = $arg;
+        else
+            $myArg = $arg;
+
+        RETURN $myArg;
+
+    }
+
+
+
+
+    // INITIAL Methode "säubert" GET und POST - Argumente
+    function getCleanInput($arg)
+    {
+        $myArg = $this->getArgumentAsArray($arg);
+
+        //FIXME SICHERHEIT - GET und POST - Argumente "säubern" eventuell mit foreach durchgehen?
+
+        RETURN $myArg;
+    }
+
+
+
+
+
+    // Methode prüft eine String-L�nge und gibt true oder false zurück
+    function checkLenMinMax($varToCheck, $minLen, $maxLen = '')
+    {
+
+        if (strlen($varToCheck) < $minLen)
+            RETURN FALSE;
+
+
+        if ( ($maxLen > 0) && (strlen($varToCheck) > $maxLen) )
+            RETURN FALSE;
+
+
+        RETURN TRUE;
+
+    }	// END function checkLen(...)
+
 
 
 

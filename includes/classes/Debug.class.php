@@ -26,12 +26,19 @@ class Debug extends Messages
 
 
 
+
+
     function __construct()
     {
+
+        // Debug - Classname ausgeben?!
+        $this->initDebugOnLoad('Class', __CLASS__);
+
 
         parent::__construct();
 
     }	// END function __construct()
+
 
 
 
@@ -49,6 +56,7 @@ class Debug extends Messages
 
 
 
+
     function getClassName($printOnScreen=false)
     {
 
@@ -57,6 +65,101 @@ class Debug extends Messages
         return $myClassNmae;
 
     }	// END function getClassName(...)
+
+
+
+
+
+    // INITIAL Methode ... die Methode steuert grundlegende Debug - Funktionen
+    // Wird aufgerufen beim laden einer Datei
+    static function initDebugOnLoad($getType, $getValue)
+    {
+
+        // Debug eingeschaltet?
+        if (!self::getDebugStatus('enableDebug'))
+            RETURN FALSE;
+
+
+        // Debug auf Monitor ausgeben?
+        if (self::getDebugStatus('ShowOnScreen')){
+
+            // Klassennamen ausgeben?
+            if ( ($getType == 'Class') && (self::getDebugStatus('ShowClassname')) )
+                    self::simpleout('Ich bin Klasse: '.$getValue);
+
+
+            // Dateinamen ausgeben?
+            elseif ( ($getType == 'File') && (self::getDebugStatus('ShowFilename')) )
+                    self::simpleout(basename($getValue));
+
+        }
+
+        RETURN TRUE;
+
+    }   // END function initDebugOnLoad(...)
+
+
+
+
+
+    // Prüft ob ein Debug Einstellungswert yes/no ist
+    private function getDebugStatus($arg)
+    {
+        if ( (isset($_SESSION['systemConfig']['Debug'][$arg])) && ($_SESSION['systemConfig']['Debug'][$arg] == 'yes') )
+            RETURN TRUE;
+
+        RETURN FALSE;
+
+    }   // END private function getDebugStatus(...)
+
+
+
+
+
+    // Debug - GET, POST, SESSSION, GLOBAL - Variable ausgeben?
+    function initDebugVarOutput()
+    {
+
+        $curVarArray = array(	'ShowGET' 		=> $_GET,
+                                'ShowPOST' 		=> $_POST,
+                                'ShowSession' 	=> $_SESSION,
+                                'ShowGLOBALS' 	=> $GLOBALS
+        );
+
+
+        $curNameArray = array(	'ShowGET' 		=> '$_GET',
+                                'ShowPOST' 		=> '$_POST',
+                                'ShowSession' 	=> '$_SESSION',
+                                'ShowGLOBALS' 	=> '$GLOBALS'
+        );
+
+
+        foreach ($curVarArray as $key=>$var){
+
+            // <hr> Tag ausgeben? - Steuerung
+            $htmlHRTagDone = false;
+
+            // Soll der Schlüssel bzw.die Variable ausgegeben werden?
+            if ($this->getDebugStatus($key)){
+
+                // <hr> Tag ausgeben?
+                if (!$htmlHRTagDone)
+                    $this->simpleout('<hr>');
+
+                // <hr> Tag ausgegeben, also auf true setzen
+                $htmlHRTagDone = true;
+
+                // Variable plus Headline ausgeben
+                $this->detaileout($curNameArray[$key], $var);
+
+            }
+
+        }
+
+        RETURN TRUE;
+
+    }   // END function initDebugVarOutput()
+
 
 
 

@@ -29,6 +29,10 @@ class DefaultConfig extends SystemConfig
     function __construct()
     {
 
+        // Debug - Classname ausgeben?!
+        Debug::initDebugOnLoad('Class', __CLASS__);
+
+
         parent::__construct();
 
     }	// END function __construct()

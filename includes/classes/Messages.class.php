@@ -29,6 +29,10 @@ class Messages extends DefaultConfig
     function __construct()
     {
 
+        // Debug - Classname ausgeben?!
+        Debug::initDebugOnLoad('Class', __CLASS__);
+
+
         parent::__construct();
 
     }	// END function __construct()
@@ -57,6 +61,88 @@ class Messages extends DefaultConfig
         return $myClassNmae;
 
     }	// END function getClassName(...)
+
+
+
+
+    // INITIAL - Gibt den übergebenen Content in einem HTML Pre-Tag aus!
+    function simpleout($arg, $splitArray=FALSE)
+    {
+
+        // Wurde $getContent als Array übergeben?
+        if ( (is_array($arg)) && ($splitArray) ){
+
+            foreach ($arg as $curContent)
+                $this->simpleoutString($curContent);	// Übergebe an Sub-Ausgabe-Methode
+
+        }
+        else
+            $this->simpleoutString($arg);		// Übergebe an Sub-Ausgabe-Methode
+
+        RETURN TRUE;
+
+    }	// END function simpleout(...)
+
+
+
+
+
+    // SUB - Gibt den übergebenen Content in einem HTML Pre-Tag aus!
+    private function simpleoutString($value)
+    {
+
+        print ("<br><pre><br>");
+            print_r($value);
+        print ("<br></pre><br>");
+
+        RETURN TRUE;
+
+    }	// END simpleoutString(...)
+
+
+
+
+
+    // INITIAL - Gibt den übergebenen Content in einem HTML Pre-Tag aus!
+    // Zusaetzlich muss eine Überschrift angegeben werden
+    function detaileout($getHeadline, $getContent, $splitArray=FALSE)
+    {
+
+        // Wurde $getContent als Array übergeben?
+        if ( (is_array($getContent)) && ($splitArray) ){
+
+            foreach ($getContent as $curContent)
+                $this->detailoutString($curContent, $getHeadline);	// Übergebe an Sub-Ausgabe-Methode
+
+        }
+        else
+            $this->detailoutString($getContent, $getHeadline);		// Übergebe an Sub-Ausgabe-Methode
+
+
+        RETURN TRUE;
+
+    }	// END function detaileout(...)
+
+
+
+
+
+
+    // Gibt den übergebenen Content in einem HTML Pre-Tag aus!
+    private function detailoutString($value, $getHeadline = '')
+    {
+        //TODO CSS Für debugHeadLine anlegen
+        if (strlen($getHeadline) > 0)
+            print ('<br><pre><div class="debugHeadline" style="text-decoration: underline;">&nbsp;' .$getHeadline. '&nbsp;</div><br>');
+        else
+            print ("<br><pre><br>");
+
+        print_r($value);
+        print ("<br></pre><br>");
+
+        RETURN TRUE;
+
+    }	// END detailoutString(...)
 
 
 

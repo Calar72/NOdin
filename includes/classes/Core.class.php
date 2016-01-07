@@ -28,6 +28,10 @@ class Core extends Debug
     function __construct()
     {
 
+        // Debug - Classname ausgeben?!
+        $this->initDebugOnLoad('Class', $this->getClassName(false));
+
+
         parent::__construct();
 
     }	// END function __construct()
