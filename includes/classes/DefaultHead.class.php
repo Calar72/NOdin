@@ -89,7 +89,7 @@ class DefaultHead extends Core
 
 
         // Head - Include noch nicht definiert, setze getLeadToHeadSite auf Default - Wert
-        $hCore->gCore['getLeadToHeadSite'] = 'html/defaultHead';
+        $hCore->gCore['getLeadToHeadSite'] = 'includes/html/defaultHead';
 
 
         RETURN $hCore->gCore['getLeadToHeadSite'];

@@ -44,12 +44,14 @@ $hCore->initDebugOnLoad('File',__FILE__);
 
 // 0020) Default zu-landende-Datein festlegen für:
 // Default Head
-$hCore->gCore['getLeadToHeadSite'] = 'html/defaultHead';
+$hCore->gCore['getLeadToHeadSite'] = 'includes/html/defaultHead';
 $getLeadToHeadClass  = 'DefaultHead';
 
 // Default Body
-$hCore->gCore['getLeadToBodySite'] = 'html/defaultBody';
-$getLeadToBodyClass  = 'DefaultBody';
+$hCore->gCore['getLeadToBodyClass']     = 'DefaultBody';
+$hCore->gCore['getLeadToBodySite']      = 'includes/html/defaultBody';
+$hCore->gCore['getLeadToBodyMethod']    = 'doNothing';
+
 
 // Default Footer
 $hCore->gCore['getLeadToFooterSite'] = 'includes/html/defaultFooter';
@@ -68,8 +70,14 @@ $hCore->gCore['getPOST'] = $hCore->getCleanInput($_POST);
 
 
 // 0040) Action - Steuerung
-// Starte die Action Steuereung
-//$hAction = new Action($hCore);
+// Starte die Action Steuereung ... UEBERSCHREIBE GGF. DIE DEFAULT EINSTELLUNGEN
+$hAction = new Action($hCore);
+$hCore->simpleout('klasse ... ' . $hCore->gCore['getLeadToBodyClass']);
+$hCore->simpleout('methode ... ' . $hCore->gCore['getLeadToBodyMethod']);
+$hCore->simpleout('html ... ' . $hCore->gCore['getLeadToBodySite']);
+$hCore->simpleout('force ... ' . $hCore->gCore['getLeadToBodyByAction']);
+
+
 
 
 
@@ -84,12 +92,10 @@ $hCore->gCore['getPOST'] = $hCore->getCleanInput($_POST);
 
 // 0050) Dynamischer Include HTML - Head
 // Erzeuge Head - Klassen - Objekt (Dynamisch nach Default (s.o.) und ggf. Änderungen durch die Action (s.o.)
-$hHead = new $getLeadToHeadClass($hCore);	// WICHTIG Übergebe hCore - Objekt
-
-$getLeadToHeadSite = $hHead->getLeadToHeadSite();
-// --> load Head
-//include $getLeadToHeadSite . '.inc.php';
-$hCore->simpleout('Geladene Head-Seite: ' . $getLeadToHeadSite);
+$hHead = new $getLeadToHeadClass($hCore);	        // WICHTIG Übergebe hCore - Objekt
+$getLeadToHeadSite = $hHead->getLeadToHeadSite();   // Initial Klassen-Aufruf für Head
+include $getLeadToHeadSite . '.inc.php';
+//$hCore->simpleout('Geladene Head-Seite: ' . $getLeadToHeadSite);
 
 
 
@@ -97,13 +103,13 @@ $hCore->simpleout('Geladene Head-Seite: ' . $getLeadToHeadSite);
 
 // 0060) Dynamischer Include HTML - Body
 // Erzeuge Body - Klassen - Objekt (Dynamisch nach Default (s.o.) und ggf. Änderungen durch die Action (s.o.)
-$hBody = new $getLeadToBodyClass($hCore);	// WICHTIG Übergebe hCore - Objekt
+$getLeadToBodyClass     =   $hCore->gCore['getLeadToBodyClass'];
+$getLeadToBodySite      =   $hCore->gCore['getLeadToBodySite'];
+$getLeadToBodyMethod    =   $hCore->gCore['getLeadToBodyMethod'];
 
-$getLeadToBodySite = $hBody->getLeadToBodySite();
-// --> load Body
-//include $getLeadToBodySite . '.inc.php';
-$hCore->simpleout('Geladene Body-Seite: ' . $getLeadToBodySite);
-
+$hBody = new $getLeadToBodyClass($hCore);   // Body - Klassen - Objekt erzeugen
+$hBody->$getLeadToBodyMethod();             // Body - Methode aufrufen
+include $getLeadToBodySite . '.inc.php';    // Body - HTML - Seite includen
 
 
 

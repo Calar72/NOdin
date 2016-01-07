@@ -100,10 +100,8 @@ $hCore->initDebugVarOutput();
 // Wird in der index.php geladen!
 // Grund: Eine formatierte Ausgabe der Debug und Zusatzinformationen ist sonst nicht möglich.
 // Erzeuge Footer - Klassen - Objekt (Dynamisch nach Default (s.o.) und ggf. Änderungen durch die Action (s.o.)
-$hFooter = new $getLeadToFooterClass($hCore);	// WICHTIG Übergebe hCore - Objekt
-
-$getLeadToFooterSite = $hFooter->getLeadToFooterSite();
-// --> load Footer
-//include $getLeadToFooterSite . '.inc.php';
-$hCore->simpleout('Geladene Footer-Seite: ' . $getLeadToFooterSite);
+$hFooter = new $getLeadToFooterClass($hCore);	            // WICHTIG Übergebe hCore - Objekt
+$getLeadToFooterSite = $hFooter->getLeadToFooterSite();     // Initial Klassen-Aufruf für Body
+include $getLeadToFooterSite . '.inc.php';
+//$hCore->simpleout('Geladene Footer-Seite: ' . $getLeadToFooterSite);
 

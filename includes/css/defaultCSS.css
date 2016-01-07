@@ -5,7 +5,7 @@ body {
 	color: #000000; 
 	font-family: "Arial", sans-serif;
 	font-size: 12px;
-	background-color: #FFFFFF; 
+	background-color: #FFFFFF;
 }
 
 
@@ -26,7 +26,7 @@ body {
 
 
 
-/* Größe ändern von Eingabefeld onFocus */
+/* GrÃ¶ÃŸe Ã¤ndern von Eingabefeld onFocus */
 input[id=ReRaise] {
   width: 50px;
   -webkit-transition: ease-in-out, width .35s ease-in-out;
@@ -85,7 +85,7 @@ td.loginForm {
 }
 
 
-/* Border Steuerung für Tabellen */
+/* Border Steuerung fï¿½r Tabellen */
 .rightLine{
 	border-right: 1px solid black;
 }

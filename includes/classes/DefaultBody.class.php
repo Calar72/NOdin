@@ -84,12 +84,12 @@ class DefaultBody extends Core
         $hCore = $this->hCore;
 
         // Body - Include schon definiert durch Action.class.php?
-        if ( (isset($hCore->gCore['Body']['setByAction']) && (strlen($hCore->gCore['Body']['setByAction']) > 0)) )
+        if ( (isset($hCore->gCore['LoadBody']['setByAction']) && (strlen($hCore->gCore['LoadBody']['setByAction']) > 0)) )
             RETURN $hCore->gCore['getLeadToBodySite'];
 
 
         // Body - Include noch nicht definiert, setze getLeadToHeadSite auf Default - Wert
-        $hCore->gCore['getLeadToBodySite'] = 'html/defaultBody';
+        $hCore->gCore['getLeadToBodySite'] = 'includes/html/defaultBody';
 
 
         RETURN $hCore->gCore['getLeadToBodySite'];

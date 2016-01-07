@@ -89,7 +89,7 @@ class DefaultFooter extends Core
 
 
         // Footer - Include noch nicht definiert, setze getLeadToHeadSite auf Default - Wert
-        $hCore->gCore['getLeadToFooterSite'] = 'html/defaultFooter';
+        $hCore->gCore['getLeadToFooterSite'] = 'includes/html/defaultFooter';
 
 
         RETURN $hCore->gCore['getLeadToFooterSite'];
