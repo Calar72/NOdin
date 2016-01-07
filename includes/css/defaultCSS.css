@@ -1,0 +1,115 @@
+@CHARSET "ISO-8859-1";
+
+/* Body Default - Color-Set */
+body { 
+	color: #000000; 
+	font-family: "Arial", sans-serif;
+	font-size: 12px;
+	background-color: #FFFFFF; 
+}
+
+
+
+
+/* Text Ausrichtung */
+.textCenter{ 
+	text-align: center; 
+}
+.textLeft{ 
+	text-align: left; 
+}
+.textRight{	
+	text-align: right; 
+}
+
+
+
+
+
+/* Größe ändern von Eingabefeld onFocus */
+input[id=ReRaise] {
+  width: 50px;
+  -webkit-transition: ease-in-out, width .35s ease-in-out;
+  transition: ease-in-out,width .35s ease-in-out;
+}
+input[id=ReRaise]:focus {
+  width: 150px;
+}
+
+
+
+
+/* Standard Input-Feld - Verhalten */
+input[id=DefaultGetData] {
+  width: 150px;
+  border: 1px solid;
+  background-color: #F0F0F0;
+  font-family: "Arial", sans-serif;
+  font-size: 12px;
+}
+input[id=DefaultGetData]:focus {
+  width: 150px;
+  border: 1px solid;
+  background-color: #FFFFFF;
+  font-family: "Arial", sans-serif;
+  font-size: 12px;
+}
+
+
+
+
+
+
+/* Table */
+table.standard {
+    border-collapse: collapse;
+    font-family: "Arial", sans-serif;
+	font-size: 12px;
+	background-color: #FFFFFF;
+}
+.width_100p {
+	width: 100%;
+}
+
+
+td.loginForm {
+	
+}
+
+
+
+
+/* Button td in Login - Form */
+.buttonFieldLogin{
+	padding-left:20px;
+}
+
+
+/* Border Steuerung für Tabellen */
+.rightLine{
+	border-right: 1px solid black;
+}
+.topLine{
+	border-top: 1px solid black;
+}
+.leftLine{
+	border-left: 1px solid black;
+}
+.bottomLine{
+	border-bottom: 1px solid black;
+}
+
+
+
+
+.alignCenter{
+	text-align: center;	
+}
+.alignLeft{
+	text-align: left;	
+}
+.alignRight{
+	text-align: right;	
+}
+
+

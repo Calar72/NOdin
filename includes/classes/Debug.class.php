@@ -103,7 +103,7 @@ class Debug extends Messages
 
 
     // Prüft ob ein Debug Einstellungswert yes/no ist
-    private function getDebugStatus($arg)
+    private static function getDebugStatus($arg)
     {
         if ( (isset($_SESSION['systemConfig']['Debug'][$arg])) && ($_SESSION['systemConfig']['Debug'][$arg] == 'yes') )
             RETURN TRUE;

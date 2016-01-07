@@ -5,29 +5,34 @@
  * Date: 06.01.2016
  * Time: 13:48
  *
- * 001) Initial - Starte Session - Management
- * 002) PHP Error - Handling
- * 003) System - Check durchführen
- * 004) Core - Klassen implementieren
+ * 0010) Initial - Starte Session - Management
  *
- * 3.) GET / POST annehmen und weitergeben an...
+ * 0020) PHP Error - Handling
  *
- * 4.) Action - Steuerung
+ * 0030) System - Check durchführen
  *
- * 5.) Dynamischer Include HTML - Head
+ * 0040) Core - Klassen implementieren
  *
- * 6.) Dynamischer Include HTML - Body
+ * 0050) Debug - Dateinamen ausgeben?!
  *
- * 7.) Dynamischer Include HTML - Footer
+ * 0060) Lade die systemMain - Webseite ... in ihr wird das eigentliche Frame-Gebilde erzeugt
+ *          Head und Body werden dort geladen
+ *          Action wird dort verarbeitet bzw. includet
+ *
+ * 0070) Debug - Variable augeben?!
+ *
+ * 0080) Dynamischer Include HTML - Footer
+ *          Head und Body wurdn in der includes/system/systemMain.inc.php geladen!
+ *
  */
 
-// 001) Initial - Starte Session - Management
+// 0010) Initial - Starte Session - Management
 session_start();
 
 
 
 
-// 002) PHP Error - Handling
+// 0020) PHP Error - Handling
 // Muss hier manuell eingesetzt werden, weil alle weiteren Daein erst noch kommen
 function indexErrorHandling()
 {
@@ -51,7 +56,7 @@ indexErrorHandling();
 
 
 
-// 003) System - Check durchführen
+// 0030) System - Check durchführen
 require_once 'includes/system/systemCheck.inc.php';
 
 // PHP Error - Handling
@@ -60,7 +65,7 @@ require_once 'includes/system/systemCheck.inc.php';
 
 
 
-// 004) Core - Klassen implementieren
+// 0040) Core - Klassen implementieren
 require 'includes/system/systemClassLoad.inc.php';
 
 // PHP Error - Handling
@@ -69,19 +74,36 @@ require 'includes/system/systemClassLoad.inc.php';
 
 
 
-// Debug - Dateinamen ausgeben?!
+// 0050) Debug - Dateinamen ausgeben?!
 $hCore->initDebugOnLoad('File',__FILE__);
 
 
 
 
-// Lade die Main - Webseite ... in ihr wird das eigentliche Frame-Gebilde erzeugt
+// 0060) Lade die systemMain - Webseite ... in ihr wird das eigentliche Frame-Gebilde erzeugt
 require 'includes/system/systemMain.inc.php';
 
 
+//DEBUG
+$hCore->detaileout('$gCore',$hCore->gCore);
 
 
 
-// Debug - Variable augeben?!
+// 0070) Debug - Variable augeben?!
 $hCore->initDebugVarOutput();
+
+
+
+
+
+// 0080) Dynamischer Include HTML - Footer
+// Wird in der index.php geladen!
+// Grund: Eine formatierte Ausgabe der Debug und Zusatzinformationen ist sonst nicht möglich.
+// Erzeuge Footer - Klassen - Objekt (Dynamisch nach Default (s.o.) und ggf. Änderungen durch die Action (s.o.)
+$hFooter = new $getLeadToFooterClass($hCore);	// WICHTIG Übergebe hCore - Objekt
+
+$getLeadToFooterSite = $hFooter->getLeadToFooterSite();
+// --> load Footer
+//include $getLeadToFooterSite . '.inc.php';
+$hCore->simpleout('Geladene Footer-Seite: ' . $getLeadToFooterSite);
 

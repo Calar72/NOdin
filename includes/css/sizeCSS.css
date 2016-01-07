@@ -1,0 +1,98 @@
+@CHARSET "ISO-8859-1";
+
+/* Width Größen in px */
+.width_10{
+	width:10px;
+}
+.width_20{
+	width:20px;
+}
+.width_30{
+	width:30px;
+}
+.width_40{
+	width:40px;
+}
+.width_50{
+	width:50px;
+}
+.width_60{
+	width:60px;
+}
+.width_70{
+	width:70px;
+}
+.width_80{
+	width:80px;
+}
+.width_90{
+	width:90px;
+}
+.width_100{
+	width:100px;
+}
+.width_110{
+	width:110px;
+}
+.width_120{
+	width:120px;
+}
+.width_130{
+	width:130px;
+}
+.width_140{
+	width:140px;
+}
+.width_150{
+	width:150px;
+}
+.width_160{
+	width:160px;
+}
+.width_170{
+	width:170px;
+}
+.width_180{
+	width:180px;
+}
+.width_190{
+	width:190px;
+}
+.width_200{
+	width:200px;
+}
+
+
+
+
+/* Width Größen in % */
+.width_10p {
+	width: 10%;
+}
+.width_20p {
+	width: 20%;
+}
+.width_30p {
+	width: 30%;
+}
+.width_40p {
+	width: 40%;
+}
+.width_50p {
+	width: 50%;
+}
+.width_60p {
+	width: 60%;
+}
+.width_70p {
+	width: 70%;
+}
+.width_80p {
+	width: 80%;
+}
+.width_90p {
+	width: 90%;
+}
+.width_100p {
+	width: 100%;
+}
