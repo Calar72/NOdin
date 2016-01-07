@@ -1,0 +1,17 @@
+RewriteEngine on
+
+# http://192.168.6.11/NOdin/product/123
+# RewriteRule ^product/([^/.]+)/?$ product.php?id=$1 [L]
+
+
+# http://192.168.6.11/NOdin/cat/product/123/
+# RewriteRule cat/(.*)/(.*)/$ index.php?$1=$2
+
+
+#RewriteRule ^/([^/.]+)/?$ product.php?id=$1 [L]
+RewriteRule ^([^/.]+)/?$ index.php?callAction=$1 [L]
+RewriteRule ^(.*)/(.*)/?$ index.php?action=$1&subAction=$2 [L]
+
+
+#https://www.branded3.com/blog/htaccess-mod_rewrite-ultimate-guide/
+#RewriteCond %{QUERY_STRING} ^source= RewriteRule (.*) /$1? [R=301,L]
