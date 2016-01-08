@@ -16,5 +16,6 @@ spl_autoload_register(function ($class) { include 'includes/classes/' . $class .
 
 
 
+
 // Initialisiere Base->Core - Klassen - Objekt
 $hCore = new Core();

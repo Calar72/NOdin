@@ -76,25 +76,13 @@ class DefaultHead extends Core
 
 
 
-    // INITIAL liefert die zu ladende Head-Seite
-    function getLeadToHeadSite()
+    // NULL - Funktion ... wird benötigt in der Action - Steuerung und dient als Platzhalter bzw. als Default - Aufruf
+    function doNothing()
     {
 
-        // Verwende öffentliches Objekt
-        $hCore = $this->hCore;
+        RETURN TRUE;
 
-        // Head - Include schon definiert durch Action.class.php?
-        if ( (isset($hCore->gCore['Head']['setByAction']) && (strlen($hCore->gCore['Head']['setByAction']) > 0)) )
-            RETURN $hCore->gCore['getLeadToHeadSite'];
-
-
-        // Head - Include noch nicht definiert, setze getLeadToHeadSite auf Default - Wert
-        $hCore->gCore['getLeadToHeadSite'] = 'includes/html/defaultHead';
-
-
-        RETURN $hCore->gCore['getLeadToHeadSite'];
-
-    }   // END function getLeadToHeadSite()
+    }
 
 
 

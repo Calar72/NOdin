@@ -84,6 +84,7 @@ class Base
 
 
 
+
     // INITIAL Methode "säubert" GET und POST - Argumente
     function getCleanInput($arg)
     {

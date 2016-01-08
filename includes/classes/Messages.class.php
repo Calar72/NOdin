@@ -26,6 +26,8 @@ class Messages extends DefaultConfig
 
 
 
+
+
     function __construct()
     {
 
@@ -36,6 +38,7 @@ class Messages extends DefaultConfig
         parent::__construct();
 
     }	// END function __construct()
+
 
 
 
@@ -53,6 +56,7 @@ class Messages extends DefaultConfig
 
 
 
+
     function getClassName($printOnScreen=false)
     {
 
@@ -61,6 +65,7 @@ class Messages extends DefaultConfig
         return $myClassNmae;
 
     }	// END function getClassName(...)
+
 
 
 
@@ -127,7 +132,6 @@ class Messages extends DefaultConfig
 
 
 
-
     // Gibt den übergebenen Content in einem HTML Pre-Tag aus!
     private function detailoutString($value, $getHeadline = '')
     {
@@ -143,6 +147,7 @@ class Messages extends DefaultConfig
         RETURN TRUE;
 
     }	// END detailoutString(...)
+
 
 
 

@@ -76,25 +76,13 @@ class DefaultBody extends Core
 
 
 
-    // INITIAL liefert die zu ladende Body-Seite
-    function getLeadToBodySite()
+    // NULL - Funktion ... wird benötigt in der Action - Steuerung und dient als Platzhalter bzw. als Default - Aufruf
+    function doNothing()
     {
 
-        // Verwende öffentliches Objekt
-        $hCore = $this->hCore;
+        RETURN TRUE;
 
-        // Body - Include schon definiert durch Action.class.php?
-        if ( (isset($hCore->gCore['LoadBody']['setByAction']) && (strlen($hCore->gCore['LoadBody']['setByAction']) > 0)) )
-            RETURN $hCore->gCore['getLeadToBodySite'];
-
-
-        // Body - Include noch nicht definiert, setze getLeadToHeadSite auf Default - Wert
-        $hCore->gCore['getLeadToBodySite'] = 'includes/html/defaultBody';
-
-
-        RETURN $hCore->gCore['getLeadToBodySite'];
-
-    }   // END function getLeadToBodySite()
+    }
 
 
 

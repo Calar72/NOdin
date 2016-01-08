@@ -81,20 +81,38 @@ class Action extends Core
 
 
 
+    // NULL - Funktion ... wird benötigt in der Action - Steuerung und dient als Platzhalter bzw. als Default - Aufruf
+    function doNothing()
+    {
+
+        RETURN TRUE;
+
+    }
+
+
+
+
+
     // INITIAL Default Aufruf
     // Methode wird aufgerufen sobald ein Action-Objekt erzeugt wird!
     private function initActionOnDefault()
     {
+
         $hCore = $this->hCore;
 
         // Benutzer schon eingeloggt?
-        if (!$this->checkLogedIn())
-        {
-            // Keine gültige LoginID -> Verweis zum Login - Formular
+        $hLogin         = new Login($hCore);
+        $getCurUserID   = $hLogin->getLoginUserID();
+        if ($getCurUserID < 1){
+            // Head - Datei bleibt Default!
+
+            // Body - Datei -> Verweis zum Login - Formular
             $hCore->gCore['getLeadToBodyClass']     = 'Login';                      // Klasse die geladen werden soll
             $hCore->gCore['getLeadToBodyMethod']    = 'doNothing';                  // Methoden - Aufruf
             $hCore->gCore['getLeadToBodySite']      = 'includes/html/loginBody';    // Webseite die geladen werden soll
             $hCore->gCore['getLeadToBodyByAction']  = 'force';                      // Erzwinge das Überschreiben von Default
+
+            // Footer - Datei bleibt Default!
         }
 
 /*
@@ -122,23 +140,6 @@ class Action extends Core
     }   // END function initOnDefault()
 
 
-
-
-
-    // Prüft ob es eine gültige LoginID in der aktuellen Session gibt
-    // Wenn ja, wird die ID zurückgegeben, wenn nein... wird FALSE geliefert
-    private function checkLogedIn()
-    {
-        // Login schon durcheführt?
-        $hLogin = new Login($this->hCore);
-        $getCurUserID = $hLogin->getLoginUserID();
-
-        if ($getCurUserID < 1)
-            RETURN FALSE;
-        else
-            RETURN $getCurUserID;
-
-    }
 
 
 

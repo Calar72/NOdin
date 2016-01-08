@@ -76,25 +76,13 @@ class DefaultFooter extends Core
 
 
 
-    // INITIAL liefert die zu ladende Footer-Seite
-    function getLeadToFooterSite()
+    // NULL - Funktion ... wird benötigt in der Action - Steuerung und dient als Platzhalter bzw. als Default - Aufruf
+    function doNothing()
     {
 
-        // Verwende öffentliches Objekt
-        $hCore = $this->hCore;
+        RETURN TRUE;
 
-        // Footer - Include schon definiert durch Action.class.php?
-        if ( (isset($hCore->gCore['Footer']['setByAction']) && (strlen($hCore->gCore['Footer']['setByAction']) > 0)) )
-            RETURN $hCore->gCore['getLeadToFooterSite'];
-
-
-        // Footer - Include noch nicht definiert, setze getLeadToHeadSite auf Default - Wert
-        $hCore->gCore['getLeadToFooterSite'] = 'includes/html/defaultFooter';
-
-
-        RETURN $hCore->gCore['getLeadToFooterSite'];
-
-    }   // END function getLeadToFooterSite()
+    }
 
 
 

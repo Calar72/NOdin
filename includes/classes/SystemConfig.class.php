@@ -26,6 +26,8 @@ class SystemConfig extends Base
 
 
 
+
+
     function __construct()
     {
 
@@ -36,6 +38,7 @@ class SystemConfig extends Base
         parent::__construct();
 
     }	// END function __construct()
+
 
 
 
@@ -53,6 +56,7 @@ class SystemConfig extends Base
 
 
 
+
     function getClassName($printOnScreen=false)
     {
 
@@ -61,6 +65,7 @@ class SystemConfig extends Base
         return $myClassNmae;
 
     }	// END function getClassName(...)
+
 
 
 

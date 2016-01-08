@@ -9,6 +9,7 @@
  *
  */
 
+
 // Require System-Config - Datei ... dort sind Basis und Default - Werte definiert
 require_once 'includes/configs/systemConfig.inc.php';
 
@@ -22,7 +23,32 @@ require_once 'includes/configs/customConfig.inc.php';
 
 
 
-// PHP Version ausreichend?
+
+// ERROR ... PHP Version ausreichend?
 if (version_compare(phpversion(), $_SESSION['systemConfig']['Requirement']['requirePHPVersion'], '<')) {
-    die ('<hr>FEHLER bei der Systemprüfung:<br>- PHP Version auf verwendetem System unzureichend! (Version: PHP '.$_SESSION['systemConfig']['Requirement']['requirePHPVersion'].' oder höher erwartet.)<br><hr>');
+    header('Content-Type: text/html; charset='.$_SESSION['customConfig']['TextCharset']['Website'].'');
+    die ('<hr>FEHLER bei der Systemprüfung:<br>- PHP Version auf verwendetem System unzureichend! (Hinweis: PHP Version '.$_SESSION['systemConfig']['Requirement']['requirePHPVersion'].' oder höher erwartet.)<br><hr>');
 }
+
+
+
+
+
+// ERROR ... mod_rewrite Modul aktiviert?
+if (!in_array('mod_rewrite', apache_get_modules())){
+    header('Content-Type: text/html; charset='.$_SESSION['customConfig']['TextCharset']['Website'].'');
+    die ('<hr>FEHLER bei der Systemprüfung:<br>- Apache fehlendes "mod_rewrite" Modul! (Hinweis: mod_rewrite aktivieren!)<br><hr>');
+}
+
+
+
+
+
+// WARNING ... Display error eingeschaltet? (sollte off sein)
+if ( (isset($_SESSION['systemConfig']['Debug']['DieOnSystemCheckWarning'])) && ($_SESSION['systemConfig']['Debug']['DieOnSystemCheckWarning'] == 'yes') ){
+    if (strtolower(ini_get('display_errors')) == 'on'){
+        header('Content-Type: text/html; charset='.$_SESSION['customConfig']['TextCharset']['Website'].'');
+        die ('<hr>WARNUNG bei der Systemprüfung:<br>- PHP Fehlerausgabe in php.ini ist aktiviert! (Hinweis: "display_errors=Off" erwartet.)<br><hr>');
+    }
+}
+

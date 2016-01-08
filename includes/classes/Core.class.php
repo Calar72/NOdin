@@ -25,6 +25,8 @@ class Core extends Debug
 
 
 
+
+
     function __construct()
     {
 
@@ -35,6 +37,7 @@ class Core extends Debug
         parent::__construct();
 
     }	// END function __construct()
+
 
 
 
@@ -52,6 +55,7 @@ class Core extends Debug
 
 
 
+
     function getClassName($printOnScreen=false)
     {
 
@@ -60,6 +64,7 @@ class Core extends Debug
         return $myClassNmae;
 
     }	// END function getClassName(...)
+
 
 
 

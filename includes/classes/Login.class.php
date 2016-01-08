@@ -76,6 +76,18 @@ class Login extends Core
 
 
 
+    // NULL - Funktion ... wird benötigt in der Action - Steuerung und dient als Platzhalter bzw. als Default - Aufruf
+    function doNothing()
+    {
+
+        RETURN TRUE;
+
+    }
+
+
+
+
+
     // Liefert die Login - ID des Users
     function getLoginUserID()
     {
@@ -88,16 +100,6 @@ class Login extends Core
     }   // END function getLoginUserID()
 
 
-
-
-
-
-    function doNothing()
-    {
-
-        RETURN TRUE;
-
-    }
 
 
 
