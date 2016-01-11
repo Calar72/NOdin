@@ -79,7 +79,7 @@ require 'includes/system/systemClassLoad.inc.php';
 
 
 // 0050) Debug - Dateinamen ausgeben?!
-$hCore->initDebugOnLoad('File',__FILE__);
+$hCore->debugInitOnLoad('File',__FILE__);
 
 
 
@@ -94,7 +94,7 @@ require 'includes/system/systemMain.inc.php';
 
 // 0070) Debug - Variable augeben?!
 $hCore->detaileout('$gCore',$hCore->gCore); // gCore - Variable ausgeben
-$hCore->initDebugVarOutput();
+$hCore->debugInitDebugVarOutput();
 
 
 

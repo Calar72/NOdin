@@ -22,7 +22,7 @@
 class DefaultBody extends Core
 {
 
-    public $gBody = array();
+    public $gDefaultBody = array();
 
     private $hCore;	            // Privates Core Objekt
 
@@ -34,7 +34,7 @@ class DefaultBody extends Core
     {
 
         // Debug - Classname ausgeben?!
-        $this->initDebugOnLoad('Class', $this->getClassName(false));
+        $this->debugInitOnLoad('Class', $this->getClassName(false));
 
 
         // Speichere das Öffentliche hCore - Objekt zur weiteren Verwendung lokal

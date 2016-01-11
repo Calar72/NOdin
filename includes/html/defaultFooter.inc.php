@@ -1,6 +1,6 @@
 <?php
 // Debug - Dateinamen ausgeben?!
-$hCore->initDebugOnLoad('File',__FILE__);
+$hCore->debugInitOnLoad('File',__FILE__);
 ?>
 
 

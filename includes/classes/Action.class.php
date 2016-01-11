@@ -34,7 +34,7 @@ class Action extends Core
     {
 
         // Debug - Classname ausgeben?!
-        $this->initDebugOnLoad('Class', $this->getClassName(false));
+        $this->debugInitOnLoad('Class', $this->getClassName(false));
 
 
         // Speichere das Öffentliche hCore - Objekt zur weiteren Verwendung lokal
@@ -46,7 +46,7 @@ class Action extends Core
 
         // Default Methode die bei der Erstellung eines Action-Objekts aufgerufen wird.
         // Enthalten: Eingeloggt oder nicht - Prüfung
-        $this->initActionOnDefault();
+        $this->actionInitOnDefault();
 
     }    // END function __construct()
 
@@ -95,15 +95,59 @@ class Action extends Core
 
     // INITIAL Default Aufruf
     // Methode wird aufgerufen sobald ein Action-Objekt erzeugt wird!
-    private function initActionOnDefault()
+    private function actionInitOnDefault()
     {
 
         $hCore = $this->hCore;
 
-        // Benutzer schon eingeloggt?
+        // Erzeuge Login - Objekt
         $hLogin         = new Login($hCore);
-        $getCurUserID   = $hLogin->getLoginUserID();
+
+
+
+
+        // Login Aufgerufen?
+        if ( (isset($hCore->gCore['getPOST']['callAction'])) && ($hCore->gCore['getPOST']['callAction'] == 'callLogin') )
+        {
+            // Rufe Initial - Methode für den Login auf
+            // Rückgabe egal, weiter in deiser Methode werden alle Fälle abehandelt
+            $hLogin->loginInitCallLogin();
+        }
+
+
+
+        // Aktuell Benutzer ID ermitteln (wenn vorhanden)
+        $getCurUserID   = $hLogin->loginGetLoginUserID();
+
+
+
+        // Login - Formular aufrufen oder Home - Webseite ausgeben?
+        $this->actionGetLoginPageOrHomePage($getCurUserID);
+
+
+
+        //////////////////////////////////// Ab hier die Action - Steuerung //////////////////////////////////
+
+
+
+        RETURN TRUE;
+
+    }   // END function initOnDefault()
+
+
+
+
+
+    // Setzt Seitenaufruf auf Home (wenn güliter Login) oder auf Login - Formular (wenn kein gülitger Login (Session) vorhanden ist
+    private function actionGetLoginPageOrHomePage($getCurUserID = 0)
+    {
+        $hCore = $this->hCore;
+
+        // Benutzer schon eingeloggt?
         if ($getCurUserID < 1){
+
+            // Benutzer noch nicht eingeloggt!
+
             // Head - Datei bleibt Default!
 
             // Body - Datei -> Verweis zum Login - Formular
@@ -114,30 +158,21 @@ class Action extends Core
 
             // Footer - Datei bleibt Default!
         }
-
-/*
-        // Login schon vollzogen?
-        $hLogin = new Login();
-        $getCurUserID = $hLogin->getCurUserID();
-
-        // Verweise zum Login - Formular
-        if ($getCurUserID < 1){
-            $hCore->classArg['getLeadToBodySite'] = 'html/loginBody';
-            $hCore->classArg['Body']['setAction'] = 'Login';
-        }
         else {
-            $hCore->classArg['getLeadToBodySite'] = 'html/homeBody';
-            $hCore->classArg['Body']['setAction'] = 'home';
+
+            // Benutzer eingeloggt!
+
+            // Head - Datei bleibt Default!
+
+            // Body - Datei -> Verweis zu Home
+            $hCore->gCore['getLeadToBodyClass']     = 'HomeBody';                   // Klasse die geladen werden soll
+            $hCore->gCore['getLeadToBodyMethod']    = 'doNothing';                  // Methoden - Aufruf
+            $hCore->gCore['getLeadToBodySite']      = 'includes/html/homeBody';     // Webseite die geladen werden soll
+            $hCore->gCore['getLeadToBodyByAction']  = 'force';                      // Erzwinge das Überschreiben von Default
+
+            // Footer - Datei bleibt Default!
         }
-
-
-        // callAction - Abarbeiten?!
-        $this->initOnCallAction();
-
-*/
-
-        //TODO Sonst hier zum Rechtecheck?
-    }   // END function initOnDefault()
+    }
 
 
 

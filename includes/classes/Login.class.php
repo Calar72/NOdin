@@ -34,7 +34,7 @@ class Login extends Core
     {
 
         // Debug - Classname ausgeben?!
-        $this->initDebugOnLoad('Class', $this->getClassName(false));
+        $this->debugInitOnLoad('Class', $this->getClassName(false));
 
 
         // Speichere das Öffentliche hCore - Objekt zur weiteren Verwendung lokal
@@ -89,7 +89,7 @@ class Login extends Core
 
 
     // Liefert die Login - ID des Users
-    function getLoginUserID()
+    function loginGetLoginUserID()
     {
 
         if ( (isset($_SESSION['Login']['User']['userID'])) && ($_SESSION['Login']['User']['userID']) > 0)
@@ -98,6 +98,110 @@ class Login extends Core
         RETURN FALSE;
 
     }   // END function getLoginUserID()
+
+
+
+
+
+    //TODO Odentliche Messages
+    // INITIAL Login Prozedur
+    function loginInitCallLogin()
+    {
+
+        $hCore = $this->hCore;
+
+        $boolUsernamePasswordWrong = false;
+
+
+        // Loign wurde schon durchgeführt?
+        if ($this->loginGetLoginUserID() > 0) {
+
+            // Login schon vorhanden, habe in dieser Methode nichts zu suchen!
+            RETURN TRUE;
+
+        }
+
+
+
+        // Prüfung: Benutzerdaten (Username) angegeben?
+        if (!$this->checkLenMinMax($hCore->gCore['getPOST']['getUsername'], $_SESSION['customConfig']['Login']['MinLenUsername'], $_SESSION['customConfig']['Login']['MaxLenUsername'])){
+
+            echo "Ey kein Username<br>";
+
+            $boolUsernamePasswordWrong = true;
+
+        }
+
+
+
+        // Prüfung: Logindaten (Passwort) angegeben?
+        if (!$this->checkLenMinMax($hCore->gCore['getPOST']['getPassword'], $_SESSION['customConfig']['Login']['MinLenPassword'], $_SESSION['customConfig']['Login']['MaxLenPassword'])){
+
+            echo "Ey kein Passwort<br>";
+
+            $boolUsernamePasswordWrong = true;
+
+        }
+
+
+
+        // Username und/oder Passwort nicht angeben und/oder entspricht nicht den Vorgaben?
+        if ($boolUsernamePasswordWrong){
+
+            RETURN FALSE;
+
+        }
+
+
+
+        // Übergabe an Datenbank - Login - Abfrage
+        if ($this->loginCheckLoginOnDB()) {
+
+            RETURN TRUE;
+
+        }
+
+
+        RETURN FALSE;
+
+    }
+
+
+
+
+
+    // TODO DB Magin Check
+    // Führt via Datenbank den - Login - Check durch
+    private function loginCheckLoginOnDB()
+    {
+
+        $boolLoginOk = false;
+
+        // Login & PW - DB Check
+        $boolLoginOk = true;
+
+
+        // Login durchführen (Loggen usw)
+        if ($boolLoginOk){
+            // Login in DB - Schreiben
+
+            // Session Variable setzen
+            // User - Relevante Daten
+            $_SESSION['Login']['User']['userID']    = '1';
+            $_SESSION['Login']['User']['userName']  = 'Calar';
+            $_SESSION['Login']['User']['userEmail'] = 'markus.melching@tkrz.de';
+
+            // User Rolle
+            $_SESSION['Login']['User']['roleID']    = '1';
+            $_SESSION['Login']['User']['roleName']  = 'Entwickler';
+
+            // User Datum - Informationen
+            $_SESSION['Login']['User']['dateCurLogin']  = '02.01.2016 13:34';
+            $_SESSION['Login']['User']['dateLastLogin'] = '02.01.2016 12:34';
+        }
+
+        RETURN TRUE;
+    }
 
 
 

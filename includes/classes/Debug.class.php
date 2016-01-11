@@ -32,7 +32,7 @@ class Debug extends Messages
     {
 
         // Debug - Classname ausgeben?!
-        $this->initDebugOnLoad('Class', __CLASS__);
+        $this->debugInitOnLoad('Class', __CLASS__);
 
 
         parent::__construct();
@@ -72,24 +72,24 @@ class Debug extends Messages
 
     // INITIAL Methode ... die Methode steuert grundlegende Debug - Funktionen
     // Wird aufgerufen beim laden einer Datei
-    static function initDebugOnLoad($getType, $getValue)
+    static function debugInitOnLoad($getType, $getValue)
     {
 
         // Debug eingeschaltet?
-        if (!self::getDebugStatus('enableDebug'))
+        if (!self::debugGetDebugStatus('enableDebug'))
             RETURN FALSE;
 
 
         // Debug auf Monitor ausgeben?
-        if (self::getDebugStatus('ShowOnScreen')){
+        if (self::debugGetDebugStatus('ShowOnScreen')){
 
             // Klassennamen ausgeben?
-            if ( ($getType == 'Class') && (self::getDebugStatus('ShowClassname')) )
+            if ( ($getType == 'Class') && (self::debugGetDebugStatus('ShowClassname')) )
                     self::simpleout('Ich bin Klasse: '.$getValue);
 
 
             // Dateinamen ausgeben?
-            elseif ( ($getType == 'File') && (self::getDebugStatus('ShowFilename')) )
+            elseif ( ($getType == 'File') && (self::debugGetDebugStatus('ShowFilename')) )
                     self::simpleout(basename($getValue));
 
         }
@@ -103,7 +103,7 @@ class Debug extends Messages
 
 
     // Prüft ob ein Debug Einstellungswert yes/no ist
-    private static function getDebugStatus($arg)
+    private static function debugGetDebugStatus($arg)
     {
         if ( (isset($_SESSION['systemConfig']['Debug'][$arg])) && ($_SESSION['systemConfig']['Debug'][$arg] == 'yes') )
             RETURN TRUE;
@@ -117,7 +117,7 @@ class Debug extends Messages
 
 
     // Debug - GET, POST, SESSSION, GLOBAL - Variable ausgeben?
-    function initDebugVarOutput()
+    function debugInitDebugVarOutput()
     {
 
         $curVarArray = array(	'ShowGET' 		=> $_GET,
@@ -140,7 +140,7 @@ class Debug extends Messages
             $htmlHRTagDone = false;
 
             // Soll der Schlüssel bzw.die Variable ausgegeben werden?
-            if ($this->getDebugStatus($key)){
+            if ($this->debugGetDebugStatus($key)){
 
                 // <hr> Tag ausgeben?
                 if (!$htmlHRTagDone)

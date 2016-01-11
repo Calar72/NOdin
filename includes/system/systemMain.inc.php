@@ -34,7 +34,7 @@
 //FIXME SICHERHEIT Prüfen ob Datei vorhanden und Zugriff ok
 
 // 0010) Debug - Dateinamen ausgeben?!
-$hCore->initDebugOnLoad('File',__FILE__);
+$hCore->debugInitOnLoad('File',__FILE__);
 
 
 

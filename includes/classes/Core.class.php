@@ -31,7 +31,7 @@ class Core extends Debug
     {
 
         // Debug - Classname ausgeben?!
-        $this->initDebugOnLoad('Class', $this->getClassName(false));
+        $this->debugInitOnLoad('Class', $this->getClassName(false));
 
 
         parent::__construct();

@@ -32,7 +32,7 @@ class Base
     {
 
         // Debug - Classname ausgeben?!
-        Debug::initDebugOnLoad('Class', __CLASS__);
+        Debug::debugInitOnLoad('Class', __CLASS__);
 
     }	// END function __construct()
 
@@ -99,18 +99,21 @@ class Base
 
 
 
-    // Methode prüft eine String-L�nge und gibt true oder false zurück
+    // Methode prüft eine String-Länge und gibt true oder false zurück
     function checkLenMinMax($varToCheck, $minLen, $maxLen = '')
     {
 
+        // String ist zu kurz?
         if (strlen($varToCheck) < $minLen)
             RETURN FALSE;
 
 
+        // String ist zu lang?
         if ( ($maxLen > 0) && (strlen($varToCheck) > $maxLen) )
             RETURN FALSE;
 
 
+        // String ist ok!
         RETURN TRUE;
 
     }	// END function checkLen(...)

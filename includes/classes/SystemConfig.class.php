@@ -32,7 +32,7 @@ class SystemConfig extends Base
     {
 
         // Debug - Classname ausgeben?!
-        Debug::initDebugOnLoad('Class', __CLASS__);
+        Debug::debugInitOnLoad('Class', __CLASS__);
 
 
         parent::__construct();
