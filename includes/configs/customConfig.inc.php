@@ -32,7 +32,7 @@ $_SESSION['customConfig']['TextCharset']['Website'] = 'UTF-8';
 
 // Database Settings
 $_SESSION['customConfig']['DBSettings']['DBHOST'] 		= 'localhost';
-$_SESSION['customConfig']['DBSettings']['DBNAME'] 		= 'Odin';
+$_SESSION['customConfig']['DBSettings']['DBNAME'] 		= 'NOdin';
 $_SESSION['customConfig']['DBSettings']['DBUSER'] 		= 'root';
 $_SESSION['customConfig']['DBSettings']['DBPASSWORD'] 	= 'OdinDev';
 
