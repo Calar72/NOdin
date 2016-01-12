@@ -1,3 +1,5 @@
+<?php include 'headCenterInfo.inc.php'; ?>
+
 <form action="" method="post">
 
 <div align="center" style="padding-top: 100px;">

@@ -124,10 +124,33 @@ class Login extends Core
 
 
 
+        // Prüfung: Weder Benutzername, noch Passwort nach Anforderungen angegeben?
+        if (
+            (!$this->checkLenMinMax($hCore->gCore['getPOST']['getUsername'], $_SESSION['customConfig']['Login']['MinLenUsername'], $_SESSION['customConfig']['Login']['MaxLenUsername']))
+            &&
+            (!$this->checkLenMinMax($hCore->gCore['getPOST']['getPassword'], $_SESSION['customConfig']['Login']['MinLenPassword'], $_SESSION['customConfig']['Login']['MaxLenPassword']))
+            ){
+
+            // Message Ausgabe vorebeiten
+            $hCore->gCore['Messages']['Type'][]      = 'Fehler';
+            $hCore->gCore['Messages']['Code'][]      = 'Login';
+            $hCore->gCore['Messages']['Headline'][]  = 'Login fehlgeschlagen!';
+            $hCore->gCore['Messages']['Message'][]   = 'Keinen gültigen Benutzer und kein gültiges Passwort angegeben!';
+
+            RETURN FALSE;
+
+        }
+
+
+
         // Prüfung: Benutzerdaten (Username) angegeben?
         if (!$this->checkLenMinMax($hCore->gCore['getPOST']['getUsername'], $_SESSION['customConfig']['Login']['MinLenUsername'], $_SESSION['customConfig']['Login']['MaxLenUsername'])){
 
-            echo "Ey kein Username<br>";
+            // Message Ausgabe vorebeiten
+            $hCore->gCore['Messages']['Type'][]      = 'Fehler';
+            $hCore->gCore['Messages']['Code'][]      = 'Login';
+            $hCore->gCore['Messages']['Headline'][]  = 'Login fehlgeschlagen!';
+            $hCore->gCore['Messages']['Message'][]   = 'Keinen gültigen Benutzer angegeben!';
 
             $boolUsernamePasswordWrong = true;
 
@@ -138,7 +161,11 @@ class Login extends Core
         // Prüfung: Logindaten (Passwort) angegeben?
         if (!$this->checkLenMinMax($hCore->gCore['getPOST']['getPassword'], $_SESSION['customConfig']['Login']['MinLenPassword'], $_SESSION['customConfig']['Login']['MaxLenPassword'])){
 
-            echo "Ey kein Passwort<br>";
+            // Message Ausgabe vorebeiten
+            $hCore->gCore['Messages']['Type'][]      = 'Fehler';
+            $hCore->gCore['Messages']['Code'][]      = 'Login';
+            $hCore->gCore['Messages']['Headline'][]  = 'Login fehlgeschlagen!';
+            $hCore->gCore['Messages']['Message'][]   = 'Kein gültiges Passwort angegeben!';
 
             $boolUsernamePasswordWrong = true;
 
@@ -163,7 +190,11 @@ class Login extends Core
         }
         else {
 
-            echo "Ey dich kenne ich nicht!<br>";
+            // Message Ausgabe vorebeiten
+            $hCore->gCore['Messages']['Type'][]      = 'Fehler';
+            $hCore->gCore['Messages']['Code'][]      = 'Login';
+            $hCore->gCore['Messages']['Headline'][]  = 'Login fehlgeschlagen!';
+            $hCore->gCore['Messages']['Message'][]   = 'Benutzer/Passwort stimmen nicht überein, oder Benutzer/Passwort unbekannt!';
 
             RETURN FALSE;
         }
@@ -178,6 +209,8 @@ class Login extends Core
     // Führt via Datenbank den - Login - Check durch
     private function loginCheckLoginOnDB()
     {
+
+        $hCore = $this->hCore;
 
         // Hole mir die Query zum Login
         $query = $this->gCoreQuery->getQuery('loginCheckLoginOnDB');
@@ -223,6 +256,12 @@ class Login extends Core
         */
 
         $this->gCoreDB->free_result($result);
+
+        // Message Ausgabe vorebeiten
+        $hCore->gCore['Messages']['Type'][]      = 'Info';
+        $hCore->gCore['Messages']['Code'][]      = 'Login';
+        $hCore->gCore['Messages']['Headline'][]  = 'Erfolgreicher Login!';
+        $hCore->gCore['Messages']['Message'][]   = 'Willkommen '.$_SESSION['Login']['User']['userName'].'!';
 
         RETURN TRUE;
 
@@ -304,6 +343,7 @@ class Login extends Core
 
 
 
+
     // Logge User aus
     public function loginLogoutUser()
     {
@@ -321,5 +361,11 @@ class Login extends Core
         header('Location: '.$redirectTo.'');
 
         exit;
-    }
+    }   // END public function loginLogoutUser()
+
+
+
+
+
+
 }   // END class Action extends Core
