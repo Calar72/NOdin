@@ -127,6 +127,8 @@ class Action extends Core
 
 
         //////////////////////////////////// Ab hier die Action - Steuerung //////////////////////////////////
+
+        // Logout angefordert?
         if ($this->gCore['getGET']['callAction'] == 'callLogout'){
             // Head - Datei bleibt Default!
 
