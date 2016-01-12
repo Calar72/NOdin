@@ -7,16 +7,17 @@
  * Time: 15:08
  *
  * Vererbungsfolge der (Basis) - Klassen:
- *  	Base									Adam/Eva
- *  	'-> SystemConfig						Child
- *  	   	'-> DefaultConfig					Child
- *  			'-> Messages					Child
- *  				'-> Debug					Child
- *  					'-> Core				Child
- * 							|-> MySQLDB			Child
- * 	===>					|-> ConcreteClass1	Core - Child - AnyCreature
- * 							|-> ...				Core - Child - AnyCreatures
- * 							|-> ConcreteClass20	Core - Child - AnyCreature
+ *  	Base									            Adam/Eva
+ *  	'-> SystemConfig						            Child
+ *  	   	'-> DefaultConfig					            Child
+ *  			'-> Messages					            Child
+ *  				'-> Debug					            Child
+ * 					    '-> MySQLDB			                Child
+ *  					    '-> Query		                Child
+ *      					    '-> Core			        Child
+ * ===>	        					|-> ConcreteClass1	    Core - Child - AnyCreature
+ * 			        				|-> ...				    Core - Child - AnyCreatures
+ * 				        			|-> ConcreteClass20	    Core - Child - AnyCreature
  *
  */
 class Login extends Core
@@ -154,16 +155,18 @@ class Login extends Core
 
 
 
-        // Übergabe an Datenbank - Login - Abfrage
-        //TODO WENN FALSE
+        // Übergabe an Datenbank - Login - Abfrage und Login ok?
         if ($this->loginCheckLoginOnDB()) {
 
             RETURN TRUE;
 
         }
+        else {
 
+            echo "Ey dich kenne ich nicht!<br>";
 
-        RETURN FALSE;
+            RETURN FALSE;
+        }
 
     }
 
@@ -176,42 +179,28 @@ class Login extends Core
     private function loginCheckLoginOnDB()
     {
 
-        $hCore = $this->hCore;
-
-        // Login & PW - DB Check
-
-        // Erzeuge MySQL - Objekt
-        $hMySQLDB = new MySQLDB($hCore);
-
-        // Erzeuge Query - Objekt
-        $hQuery = new Query($hCore);
-
         // Hole mir die Query zum Login
-        $query = $hQuery->getQuery('UserLogin');
+        $query = $this->gCoreQuery->getQuery('loginCheckLoginOnDB');
 
         // Resultat der Login - Prüfung
-        $result = $hMySQLDB->query($query,true);
+        $result = $this->gCoreDB->query($query);
 
         // Betroffene Zeilen, bzw. erhaltene
-        $num_rows = $hMySQLDB->num_rows($result);
+        $num_rows = $this->gCoreDB->num_rows($result);
 
 
-
-        // Kein gültiger Login
+        // Kein gültiger Login!
         if ($num_rows != '1'){
 
-            //TODO Message und Weterleitung
+            // Breche Methode hier ab und liefere false - Wert zurück
 
             RETURN FALSE;
         }
 
 
+        // Login durchführen (Loggen usw)
 
         $row = $result->fetch_object();
-/*
-
-        // Login durchführen (Loggen usw)
-        // Login in DB - Schreiben
 
         // Session Variable setzen
         // User - Relevante Daten
@@ -222,49 +211,115 @@ class Login extends Core
          // User Rolle
         $_SESSION['Login']['User']['roleID']    = $row->roleID;
         $_SESSION['Login']['User']['roleName']  = $row->roleName;
-*/
 
         // Login - Vorgang in DB schreiben!
-        $this->writeUserLoginToDB($hMySQLDB, $hQuery, $row->userID);
+        $this->loginWriteUserLoginToDB($row->userID);
 
+        // User Datum - Informationen der letzten Logins ermitteln
+        $this->loginGetUserLastLogin($row->userID);
         /*
-        // User Datum - Informationen
-        $_SESSION['Login']['User']['dateCurLogin']  = '02.01.2016 12:34';
-        $_SESSION['Login']['User']['dateLastLogin'] = '02.01.2016 12:34';
-        //TODO HIER FEIERABEND
-*/
-        $hMySQLDB->free_result($result);
+            $_SESSION['Login']['User']['dateCurLogin']  = '02.01.2016 12:34';
+            $_SESSION['Login']['User']['dateLastLogin'] = '02.01.2016 12:34';
+        */
 
-
-        // Login - Loggen
-
+        $this->gCoreDB->free_result($result);
 
         RETURN TRUE;
-    }
+
+    }   // END private function loginCheckLoginOnDB()
 
 
 
 
 
     // Speichert den Login-Vorgang eines Benutzers
-    private function writeUserLoginToDB($hMySQLDB, $hQuery, $curUserID)
+    private function loginWriteUserLoginToDB($curUserID)
     {
 
         // Übergabe Array erstellen
         $paramArray['Login']['User']['userID'] = $curUserID;
 
         // Hole mir die Query
-        $query = $hQuery->getQuery('WriteUserLoginToDB', $paramArray);
+        $query = $this->gCoreQuery->getQuery('loginWriteUserLoginToDB', $paramArray);
 
         // Führe Query aus
-        $hMySQLDB->query($query,true);
+        $this->gCoreDB->query($query);
 
         RETURN TRUE;
 
-    }	// END private function writeUserLoginToDB(...)
+    }	// END private function loginWriteUserLoginToDB(...)
 
 
 
 
 
+    // Liest letzte Login-Informationen eines Betnutzers
+    private function loginGetUserLastLogin($curUserID)
+    {
+
+        // Übergabe Array erstellen
+        $paramArray['Login']['User']['userID'] = $curUserID;
+
+        // Hole mir die Query
+        $query = $this->gCoreQuery->getQuery('loginGetUserLastLogin', $paramArray);
+
+        // Führe Query aus
+        $result = $this->gCoreDB->query($query);
+
+        if ($this->gCoreDB->num_rows($result) >= 1){
+
+            $bGotLast = false;
+
+            while($row = $result->fetch_object()){
+
+                if (!$bGotLast){
+                    // Speichere beide Info-Variable auf dateLastLogin
+                    // Im zweiten Durchlauf der Schleife ist dann alles richtig.
+                    // So fange ich ab, wenn der User sich zum ersten mal einlogt
+
+                    $_SESSION['Login']['User']['dateCurLogin']  = $row->lastLogin;
+                    $_SESSION['Login']['User']['dateLastLogin'] = $row->lastLogin;
+
+                    $bGotLast = true;
+                }
+                else {
+                    $_SESSION['Login']['User']['dateLastLogin'] = $row->lastLogin;
+                }
+
+            }
+
+        }
+        else {
+            $this->gCoreDB->free_result($result);
+
+            RETURN FALSE;
+        }
+
+        $this->gCoreDB->free_result($result);
+
+        RETURN TRUE;
+
+    }	// END private function loginGetUserLastLogin(...)
+
+
+
+
+    // Logge User aus
+    public function loginLogoutUser()
+    {
+
+        // Soll gleich wohin leiten?
+        $redirectTo = $_SESSION['customConfig']['WebLinks']['EXTHOME'];
+
+        // Session - Save initial mit Array
+        $_SESSION = array();
+
+        // Session - loeschen
+        session_destroy();
+
+        // Header Redirect
+        header('Location: '.$redirectTo.'');
+
+        exit;
+    }
 }   // END class Action extends Core

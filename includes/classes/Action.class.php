@@ -7,16 +7,17 @@
  * Time: 15:08
  *
  * Vererbungsfolge der (Basis) - Klassen:
- *  	Base									Adam/Eva
- *  	'-> SystemConfig						Child
- *  	   	'-> DefaultConfig					Child
- *  			'-> Messages					Child
- *  				'-> Debug					Child
- *  					'-> Core				Child
- * 							|-> MySQLDB			Child
- * 	===>					|-> ConcreteClass1	Core - Child - AnyCreature
- * 							|-> ...				Core - Child - AnyCreatures
- * 							|-> ConcreteClass20	Core - Child - AnyCreature
+ *  	Base									            Adam/Eva
+ *  	'-> SystemConfig						            Child
+ *  	   	'-> DefaultConfig					            Child
+ *  			'-> Messages					            Child
+ *  				'-> Debug					            Child
+ * 					    '-> MySQLDB			                Child
+ *  					    '-> Query		                Child
+ *      					    '-> Core			        Child
+ * ===>	        					|-> ConcreteClass1	    Core - Child - AnyCreature
+ * 			        				|-> ...				    Core - Child - AnyCreatures
+ * 				        			|-> ConcreteClass20	    Core - Child - AnyCreature
  *
  */
 class Action extends Core
@@ -35,7 +36,6 @@ class Action extends Core
 
         // Debug - Classname ausgeben?!
         $this->debugInitOnLoad('Class', $this->getClassName(false));
-
 
         // Speichere das Öffentliche hCore - Objekt zur weiteren Verwendung lokal
         $this->hCore = $hCore;
@@ -101,7 +101,7 @@ class Action extends Core
         $hCore = $this->hCore;
 
         // Erzeuge Login - Objekt
-        $hLogin         = new Login($hCore);
+        $hLogin = new Login($hCore);
 
 
 
@@ -127,6 +127,19 @@ class Action extends Core
 
 
         //////////////////////////////////// Ab hier die Action - Steuerung //////////////////////////////////
+        if ($this->gCore['getGET']['callAction'] == 'callLogout'){
+            // Head - Datei bleibt Default!
+
+            // Body - Datei -> Verweis zum Login - Formular
+            $hCore->gCore['getLeadToBodyClass']     = 'Login';                              // Klasse die geladen werden soll
+            $hCore->gCore['getLeadToBodyMethod']    = 'loginLogoutUser';                      // Methoden - Aufruf
+            $hCore->gCore['getLeadToBodySite']      = 'includes/html/login/loginBody';      // Webseite die geladen werden soll
+            $hCore->gCore['getLeadToBodyByAction']  = 'force';                              // Erzwinge das Überschreiben von Default
+
+            // Footer - Datei bleibt Default!
+        }
+
+
 
 
 
@@ -151,10 +164,10 @@ class Action extends Core
             // Head - Datei bleibt Default!
 
             // Body - Datei -> Verweis zum Login - Formular
-            $hCore->gCore['getLeadToBodyClass']     = 'Login';                      // Klasse die geladen werden soll
-            $hCore->gCore['getLeadToBodyMethod']    = 'doNothing';                  // Methoden - Aufruf
-            $hCore->gCore['getLeadToBodySite']      = 'includes/html/loginBody';    // Webseite die geladen werden soll
-            $hCore->gCore['getLeadToBodyByAction']  = 'force';                      // Erzwinge das Überschreiben von Default
+            $hCore->gCore['getLeadToBodyClass']     = 'Login';                              // Klasse die geladen werden soll
+            $hCore->gCore['getLeadToBodyMethod']    = 'doNothing';                          // Methoden - Aufruf
+            $hCore->gCore['getLeadToBodySite']      = 'includes/html/login/loginBody';      // Webseite die geladen werden soll
+            $hCore->gCore['getLeadToBodyByAction']  = 'force';                              // Erzwinge das Überschreiben von Default
 
             // Footer - Datei bleibt Default!
         }
@@ -162,15 +175,24 @@ class Action extends Core
 
             // Benutzer eingeloggt!
 
-            // Head - Datei bleibt Default!
+            // Head - Datei -> Verweis zu Home
+            $hCore->gCore['getLeadToHeadClass']         = 'HomeHead';                       // Klasse die geladen werden soll
+            $hCore->gCore['getLeadToHeadMethod']        = 'doNothing';                      // Methoden - Aufruf
+            $hCore->gCore['getLeadToHeadSite']          = 'includes/html/home/homeHead';    // Webseite die geladen werden soll
+            $hCore->gCore['getLeadToHeadByAction']      = 'force';                          // Erzwinge das Überschreiben von Default
 
             // Body - Datei -> Verweis zu Home
-            $hCore->gCore['getLeadToBodyClass']     = 'HomeBody';                   // Klasse die geladen werden soll
-            $hCore->gCore['getLeadToBodyMethod']    = 'doNothing';                  // Methoden - Aufruf
-            $hCore->gCore['getLeadToBodySite']      = 'includes/html/homeBody';     // Webseite die geladen werden soll
-            $hCore->gCore['getLeadToBodyByAction']  = 'force';                      // Erzwinge das Überschreiben von Default
+            $hCore->gCore['getLeadToBodyClass']         = 'HomeBody';                       // Klasse die geladen werden soll
+            $hCore->gCore['getLeadToBodyMethod']        = 'doNothing';                      // Methoden - Aufruf
+            $hCore->gCore['getLeadToBodySite']          = 'includes/html/home/homeBody';    // Webseite die geladen werden soll
+            $hCore->gCore['getLeadToBodyByAction']      = 'force';                          // Erzwinge das Überschreiben von Default
 
-            // Footer - Datei bleibt Default!
+            // Footer - Datei -> Verweis zu Home
+            $hCore->gCore['getLeadToFooterClass']       = 'HomeFooter';                     // Klasse die geladen werden soll
+            $hCore->gCore['getLeadToFooterMethod']      = 'doNothing';                      // Methoden - Aufruf
+            $hCore->gCore['getLeadToFooterSite']        = 'includes/html/home/homeFooter';  // Webseite die geladen werden soll
+            $hCore->gCore['getLeadToFooterByAction']    = 'force';                          // Erzwinge das Überschreiben von Default
+
         }
     }
 

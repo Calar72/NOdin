@@ -14,7 +14,7 @@
  *          Body
  *          Footer
  *
- * 0030) Mögliche Get und Post - Argumente speichern
+ * 0030) Mögliche Get und Post - Argumente werden in der Base.class.php gespeichert!
  *
  * 0040) Action - Steuerung
  *
@@ -45,7 +45,7 @@ $hCore->debugInitOnLoad('File',__FILE__);
 // Speiechere Default - Aufruf in die Head - Steuerung
 // Wird ggf. durch die Action.class.php überschrieben (s.u.)
 $hCore->gCore['getLeadToHeadClass']     = 'DefaultHead';
-$hCore->gCore['getLeadToHeadSite']      = 'includes/html/defaultHead';
+$hCore->gCore['getLeadToHeadSite']      = 'includes/html/default/defaultHead';
 $hCore->gCore['getLeadToHeadMethod']    = 'doNothing';
 
 
@@ -53,7 +53,7 @@ $hCore->gCore['getLeadToHeadMethod']    = 'doNothing';
 // Speiechere Default - Aufruf in die Body - Steuerung
 // Wird ggf. durch die Action.class.php überschrieben (s.u.)
 $hCore->gCore['getLeadToBodyClass']     = 'DefaultBody';
-$hCore->gCore['getLeadToBodySite']      = 'includes/html/defaultBody';
+$hCore->gCore['getLeadToBodySite']      = 'includes/html/default/defaultBody';
 $hCore->gCore['getLeadToBodyMethod']    = 'doNothing';
 
 
@@ -61,17 +61,18 @@ $hCore->gCore['getLeadToBodyMethod']    = 'doNothing';
 // Speiechere Default - Aufruf in die Footer - Steuerung
 // Wird ggf. durch die Action.class.php überschrieben (s.u.)
 $hCore->gCore['getLeadToFooterClass']     = 'DefaultFooter';
-$hCore->gCore['getLeadToFooterSite']      = 'includes/html/defaultFooter';
+$hCore->gCore['getLeadToFooterSite']      = 'includes/html/default/defaultFooter';
 $hCore->gCore['getLeadToFooterMethod']    = 'doNothing';
 
 
 
 
 
-//TODO Die Get/Post Variable müssen besser abgefangen werden!
+
 // 0030) Mögliche Get und Post - Argumente speichern
-$hCore->gCore['getGET']  = $hCore->getCleanInput($_GET);
-$hCore->gCore['getPOST'] = $hCore->getCleanInput($_POST);
+// Wird jetzt in der Base.class.php durchgeführt!
+//$hCore->gCore['getGET']  = $hCore->getCleanInput($_GET);
+//$hCore->gCore['getPOST'] = $hCore->getCleanInput($_POST);
 
 
 
@@ -86,7 +87,6 @@ $hAction = new Action($hCore);
 
 
 //FIXME SICHERHEIT - LeadToXYZSite muss mit Rechte abgefangen werden!
-
 
 
 

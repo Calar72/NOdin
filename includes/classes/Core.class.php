@@ -7,21 +7,22 @@
  * Time: 15:08
  *
  * Vererbungsfolge der (Basis) - Klassen:
- *  	Base									Adam/Eva
- *  	'-> SystemConfig						Child
- *  	   	'-> DefaultConfig					Child
- *  			'-> Messages					Child
- *  				'-> Debug					Child
- * ===>					'-> Core				Child
- * 							|-> MySQLDB			Child
- * 							|-> ConcreteClass1	Core - Child - AnyCreature
- * 							|-> ...				Core - Child - AnyCreatures
- * 							|-> ConcreteClass20	Core - Child - AnyCreature
+ *  	Base							    		        Adam/Eva
+ *  	'-> SystemConfig						            Child
+ *  	   	'-> DefaultConfig					            Child
+ *  			'-> Messages					            Child
+ *  				'-> Debug					            Child
+ * 					    '-> MySQLDB			                Child
+ *  					    '-> Query	    	            Child
+ * ===>    					    '-> Core    			    Child
+ *  	    					    |-> ConcreteClass1	    Core - Child - AnyCreature
+ * 			    				    |-> ...				    Core - Child - AnyCreatures
+ * 				    			    |-> ConcreteClass20	    Core - Child - AnyCreature
  *
  */
-class Core extends Debug
+class Core extends Query
 {
-    public $gCore = array();
+    //public $gCore = array();  // Ist in der Base.class.php definiert!!!
 
 
 
@@ -35,6 +36,14 @@ class Core extends Debug
 
 
         parent::__construct();
+
+
+        // TODO Objekt-Handling optimieren! Aktuell werden viele Objekte doppelt erzeugt!
+        // Erzeuge Datenbank und passende dazu Query - Objekt
+        if (!is_object($this->gCoreDB)){
+            $this->gCoreDB      = new MySQLDB();
+            $this->gCoreQuery   = new Query();
+        }
 
     }	// END function __construct()
 
@@ -69,4 +78,4 @@ class Core extends Debug
 
 
 
-}   // END class Core extends Debug
+}   // END class Core extends Query

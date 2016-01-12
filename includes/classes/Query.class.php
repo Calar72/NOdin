@@ -7,35 +7,33 @@
  * Time: 15:08
  *
  * Vererbungsfolge der (Basis) - Klassen:
- *  	Base									Adam/Eva
- *  	'-> SystemConfig						Child
- *  	   	'-> DefaultConfig					Child
- *  			'-> Messages					Child
- *  				'-> Debug					Child
- *  					'-> Core				Child
- * 							|-> MySQLDB			Child
- * ===> 					|-> ConcreteClass1	Core - Child - AnyCreature
- * 							|-> ...				Core - Child - AnyCreatures
- * 							|-> ConcreteClass20	Core - Child - AnyCreature
+ *  	Base							    		        Adam/Eva
+ *  	'-> SystemConfig			    			        Child
+ *  	   	'-> DefaultConfig	    				        Child
+ *  			'-> Messages					            Child
+ *  				'-> Debug					            Child
+ * 					    '-> MySQLDB			                Child
+ * ===>					    '-> Query		                Child
+ *       					    '-> Core    			    Child
+ * 		    					    |-> ConcreteClass1	    Core - Child - AnyCreature
+ * 			    				    |-> ...				    Core - Child - AnyCreatures
+ * 				    			    |-> ConcreteClass20	    Core - Child - AnyCreature
  *
  */
-class Query extends Core
+class Query extends MySQLDB
 {
     public $gQuery = array();
 
-    private $hCore;	            // Privates Core Objekt
 
 
 
-    function __construct($hCore)
+    function __construct()
     {
 
         // Debug - Classname ausgeben?!
         $this->debugInitOnLoad('Class', $this->getClassName(false));
 
 
-        // Speichere das Öffentliche hCore - Objekt zur weiteren Verwendung lokal
-        $this->hCore = $hCore;
 
         parent::__construct();
 
@@ -74,13 +72,10 @@ class Query extends Core
 
     public function getQuery($queryName,$paramArray = array())
     {
-
-        $hCore = $this->hCore;
-
         $getQuery = '';
 
         switch ($queryName){
-            case 'UserLogin':
+            case 'loginCheckLoginOnDB':
                 // Login - Abfrage
 
                 $getQuery = "SELECT u.*
@@ -88,8 +83,8 @@ class Query extends Core
                                     ,r.roleName
                               FROM user u
                                 LEFT JOIN role r ON (u.userSetRoleID = r.roleID)
-                              WHERE u.userName      = '".$hCore->gCore['getPOST']['getUsername']."'
-                                AND u.userPassword  = md5('".$hCore->gCore['getPOST']['getPassword']."')
+                              WHERE u.userName      = '".$this->gCore['getPOST']['getUsername']."'
+                                AND u.userPassword  = md5('".$this->gCore['getPOST']['getPassword']."')
                                 AND u.activeStatus  = 'yes'
                                 AND r.activeStatus  = 'yes'
                                 LIMIT 1";
@@ -97,7 +92,7 @@ class Query extends Core
 
 
 
-            case 'WriteUserLoginToDB':
+            case 'loginWriteUserLoginToDB':
                 // Login - Vorgang in DB schreiben
 
                 $getQuery = "INSERT INTO log_user (userID,
@@ -120,6 +115,18 @@ class Query extends Core
 
 
 
+            case 'loginGetUserLastLogin':
+                // letzte Login-Informationen eines Betnutzers ermitteln
+
+                $getQuery = "SELECT `lastLogin`
+					          FROM log_user
+					          WHERE `userID` LIKE '".$paramArray['Login']['User']['userID']."'
+					          ORDER BY log_userID DESC
+					          LIMIT 0,2";
+            break;
+
+
+
             default:
                 echo "default";
                 break;
@@ -128,4 +135,4 @@ class Query extends Core
         return $getQuery;
     }
 
-}   // END class Query extends Coreg
+}   // END class Query extends MySQLDB

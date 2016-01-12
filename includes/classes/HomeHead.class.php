@@ -20,10 +20,10 @@
  * 				        			|-> ConcreteClass20	    Core - Child - AnyCreature
  *
  */
-class DefaultBody extends Core
+class HomeHead extends Core
 {
 
-    public $gDefaultBody = array();
+    public $gHomeHead = array();
 
     private $hCore;	            // Privates Core Objekt
 
@@ -89,4 +89,4 @@ class DefaultBody extends Core
 
 
 
-}   // END class DefaultBody extends Core
+}   // END class HomeHead extends Core

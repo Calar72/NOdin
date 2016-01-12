@@ -7,22 +7,27 @@
  * Time: 14:52
  *
  * Vererbungsfolge der (Basis) - Klassen:
- * ===>	Base									Adam/Eva
- * 		'-> SystemConfig						Child
- * 		   	'-> DefaultConfig					Child
- * 				'-> Messages					Child
- * 					'-> Debug					Child
- * 						'-> Core				Child
- * 							|-> MySQLDB			Child
- * 							|-> ConcreteClass1	Core - Child - AnyCreature
- * 							|-> ...				Core - Child - AnyCreatures
- * 							|-> ConcreteClass20	Core - Child - AnyCreature
+ * ===>	Base								    	        Adam/Eva
+ *  	'-> SystemConfig					    	        Child
+ *  	   	'-> DefaultConfig				    	        Child
+ *  			'-> Messages			    		        Child
+ *  				'-> Debug				    	        Child
+ * 					    '-> MySQLDB		    	            Child
+ *  					    '-> Query	    	            Child
+ *       					    '-> Core    			    Child
+ * 		    				    	|-> ConcreteClass1	    Core - Child - AnyCreature
+ * 			    	    			|-> ...				    Core - Child - AnyCreatures
+ * 				        			|-> ConcreteClass20	    Core - Child - AnyCreature
  *
  */
 class Base
 {
 
     public $gBase = array();
+
+    public $gCore = array();
+    public $gCoreDB;
+    public $gCoreQuery;
 
 
 
@@ -33,6 +38,12 @@ class Base
 
         // Debug - Classname ausgeben?!
         Debug::debugInitOnLoad('Class', __CLASS__);
+
+
+        //TODO Die Get/Post Variable müssen besser abgefangen werden!
+        // Post und Get - Variable speichern
+        $this->gCore['getGET']  = $this->getCleanInput($_GET);
+        $this->gCore['getPOST'] = $this->getCleanInput($_POST);
 
     }	// END function __construct()
 

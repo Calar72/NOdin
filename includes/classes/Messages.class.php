@@ -7,16 +7,17 @@
  * Time: 15:08
  *
  * Vererbungsfolge der (Basis) - Klassen:
- *  	Base									Adam/Eva
- *  	'-> SystemConfig						Child
- *  	   	'-> DefaultConfig					Child
- * ===>			'-> Messages					Child
- * 					'-> Debug					Child
- * 						'-> Core				Child
- * 							|-> MySQLDB			Child
- * 							|-> ConcreteClass1	Core - Child - AnyCreature
- * 							|-> ...				Core - Child - AnyCreatures
- * 							|-> ConcreteClass20	Core - Child - AnyCreature
+ *  	Base							    		        Adam/Eva
+ *  	'-> SystemConfig				    		        Child
+ *  	   	'-> DefaultConfig			    		        Child
+ * ===>			'-> Messages			    		        Child
+ *  				'-> Debug			    		        Child
+ * 					    '-> MySQLDB		    	            Child
+ *  					    '-> Query	    	            Child
+ *       					    '-> Core    			    Child
+ * 		    					    |-> ConcreteClass1	    Core - Child - AnyCreature
+ * 			    				    |-> ...				    Core - Child - AnyCreatures
+ * 				    			    |-> ConcreteClass20	    Core - Child - AnyCreature
  *
  */
 class Messages extends DefaultConfig
@@ -152,4 +153,4 @@ class Messages extends DefaultConfig
 
 
 
-}   // END class MessagesMessages extends DefaultConfig
+}   // END class Messages extends DefaultConfig

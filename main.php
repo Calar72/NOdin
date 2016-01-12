@@ -57,7 +57,6 @@ indexErrorHandling();
 
 
 
-
 // 0030) System - Check durchführen
 require_once 'includes/system/systemCheck.inc.php';
 
@@ -87,6 +86,7 @@ $hCore->debugInitOnLoad('File',__FILE__);
 
 // 0060) Lade die systemMain - Webseite ... in ihr wird das eigentliche Frame-Gebilde erzeugt
 require 'includes/system/systemMain.inc.php';
+
 
 
 

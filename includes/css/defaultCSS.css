@@ -9,18 +9,18 @@ body {
 }
 
 
+/* Standard Link - Color-Set */
+a.std:link, a.std:visited, a.std:hover, a.std:active {
+	color: #000000;
+	text-decoration: none;
+}
+a.std:hover {
+	background-color: lightblue;
+}
+a.std:active {
+	color: darkgreen;
+}
 
-
-/* Text Ausrichtung */
-.textCenter{ 
-	text-align: center; 
-}
-.textLeft{ 
-	text-align: left; 
-}
-.textRight{	
-	text-align: right; 
-}
 
 
 
@@ -67,16 +67,42 @@ table.standard {
 	font-size: 12px;
 	background-color: #FFFFFF;
 }
-.width_100p {
-	width: 100%;
+
+table.headUserInfo {
+	border-collapse: collapse;
+	font-family: "Arial", sans-serif;
+	font-size: 12px;
+	background-color: #FFFFFF;
+
+}
+
+
+td.standard {
+
 }
 
 
 td.loginForm {
-	
+
 }
 
 
+th {
+	border-bottom: 1px solid black;
+}
+
+
+.rPaddingSix {
+	padding-right: 6px;
+}
+.lPaddingSix {
+	padding-right: 6px;
+}
+
+
+.width_100p {
+	width: 100%;
+}
 
 
 /* Button td in Login - Form */
@@ -85,7 +111,7 @@ td.loginForm {
 }
 
 
-/* Border Steuerung f�r Tabellen */
+/* Border Steuerung für Tabellen */
 .rightLine{
 	border-right: 1px solid black;
 }
@@ -102,14 +128,30 @@ td.loginForm {
 
 
 
+
+/* AUSRICHTUNGEN */
+
+/* Text Ausrichtung */
+.textCenter{
+	text-align: center;
+}
+.textLeft{
+	text-align: left;
+}
+.textRight{
+	text-align: right;
+}
+
+
+/* Tabellen Ausrichtung */
 .alignCenter{
-	text-align: center;	
+	text-align: center;
 }
 .alignLeft{
-	text-align: left;	
+	text-align: left;
 }
 .alignRight{
-	text-align: right;	
+	text-align: right;
 }
 
 

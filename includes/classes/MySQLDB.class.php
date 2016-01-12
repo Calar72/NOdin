@@ -7,24 +7,25 @@
  * Time: 15:08
  *
  * Vererbungsfolge der (Basis) - Klassen:
- *  	Base									Adam/Eva
- *  	'-> SystemConfig						Child
- *  	   	'-> DefaultConfig					Child
- *  			'-> Messages					Child
- *  				'-> Debug					Child
- *  					'-> Core				Child
- * ===>						|-> MySQLDB			Child
- *  						|-> ConcreteClass1	Core - Child - AnyCreature
- * 							|-> ...				Core - Child - AnyCreatures
- * 							|-> ConcreteClass20	Core - Child - AnyCreature
+ *  	Base									            Adam/Eva
+ *  	'-> SystemConfig						            Child
+ *  	   	'-> DefaultConfig				    	        Child
+ *  			'-> Messages			    		        Child
+ *  				'-> Debug			    		        Child
+ * ===>				    '-> MySQLDB		    	            Child
+ *  					    '-> Query	    	            Child
+ *       					    '-> Core    			    Child
+ * 		    				    	|-> ConcreteClass1	    Core - Child - AnyCreature
+ * 			    			    	|-> ...				    Core - Child - AnyCreatures
+ * 				    		    	|-> ConcreteClass20	    Core - Child - AnyCreature
  *
  */
-class MySQLDB extends Core
+class MySQLDB extends Debug
 {
 
     public $gMySQLDB = array();
 
-    private $hCore;	            // Privates Core Objekt
+
 
 
     // Defniere Initial - Variable!
@@ -43,16 +44,11 @@ class MySQLDB extends Core
 
 
 
-    function __construct($hCore)
+    function __construct()
     {
 
         // Debug - Classname ausgeben?!
         $this->debugInitOnLoad('Class', $this->getClassName(false));
-
-
-
-        // Speichere das Öffentliche hCore - Objekt zur weiteren Verwendung lokal
-        $this->hCore = $hCore;
 
 
 
@@ -224,4 +220,4 @@ class MySQLDB extends Core
 
 
 
-}   // END class MySQLDB extends Core
+}   // END class MySQLDB extends Debug
