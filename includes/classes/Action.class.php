@@ -142,6 +142,17 @@ class Action extends Core
         }
 
 
+        if ($this->gCore['getGET']['callAction'] == 'callTest') {
+            // Head - Datei bleibt Default!
+
+            // Body - Datei -> Verweis zum Login - Formular
+            $hCore->gCore['getLeadToBodyClass']     = 'HomeBody';                              // Klasse die geladen werden soll
+            $hCore->gCore['getLeadToBodyMethod']    = 'doNothing';                      // Methoden - Aufruf
+            $hCore->gCore['getLeadToBodySite']      = 'includes/html/homeTest';      // Webseite die geladen werden soll
+            $hCore->gCore['getLeadToBodyByAction']  = 'force';                              // Erzwinge das Überschreiben von Default
+
+            // Footer - Datei bleibt Default!
+        }
 
 
 
