@@ -7,4 +7,3 @@
  */
 
 echo "Hallo Welt";
-include 'home/BodyHead/homeBodyHead.inc.php';

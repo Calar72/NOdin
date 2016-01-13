@@ -10,7 +10,7 @@
  * 0010) Debug - Dateinamen ausgeben?!
  *
  * 0020) Definiere: Default zu-landende-Datein für:
- *          Head
+ *          head
  *          Body
  *          Footer
  *
@@ -18,7 +18,7 @@
  *
  * 0040) Action - Steuerung
  *
- * 0050) Dynamischer Include HTML - Head
+ * 0050) Dynamischer Include HTML - head
  *
  * 0060) Develop - Datei includen (für diverse tmp-Ausaben bei der Entwicklung)
  *
@@ -41,8 +41,8 @@ $hCore->debugInitOnLoad('File',__FILE__);
 
 
 // 0020) Definiere: Default zu-landende-Datein für:
-// Default Head
-// Speiechere Default - Aufruf in die Head - Steuerung
+// Default head
+// Speiechere Default - Aufruf in die head - Steuerung
 // Wird ggf. durch die Action.class.php überschrieben (s.u.)
 $hCore->gCore['getLeadToHeadClass']     = 'DefaultHead';
 $hCore->gCore['getLeadToHeadSite']      = 'includes/html/default/defaultHead';
@@ -91,17 +91,33 @@ $hAction = new Action($hCore);
 
 
 
-// 0050) Dynamischer Include HTML - Head
-// Erzeuge Head - Klassen - Objekt (Dynamisch nach Default (s.o.) und ggf. Änderungen durch die Action (s.o.)
+print ('<div id="head_container">');
+
+// 0050) Dynamischer Include HTML - head
+// Erzeuge head - Klassen - Objekt (Dynamisch nach Default (s.o.) und ggf. Änderungen durch die Action (s.o.)
 $getLeadToHeadClass     =   $hCore->gCore['getLeadToHeadClass'];    // Aktuellen Wert aus gCore holen
 $getLeadToHeadSite      =   $hCore->gCore['getLeadToHeadSite'];     // Aktuellen Wert aus gCore holen
 $getLeadToHeadMethod    =   $hCore->gCore['getLeadToHeadMethod'];   // Aktuellen Wert aus gCore holen
 
-$hHead = new $getLeadToHeadClass($hCore);   // Head - Klassen - Objekt erzeugen
-$hHead->$getLeadToHeadMethod();             // Head - Methode aufrufen
-include $getLeadToHeadSite . '.inc.php';    // Head - HTML - Seite includen
+$hHead = new $getLeadToHeadClass($hCore);   // head - Klassen - Objekt erzeugen
+$hHead->$getLeadToHeadMethod();             // head - Methode aufrufen
+include $getLeadToHeadSite . '.inc.php';    // head - HTML - Seite includen
 
 
+
+
+// 0070) Debug - Variable augeben?!
+//TODO JETZT IN DER systemMain.inc.php
+// Wird das Debug - Fenster eingeblendet?
+// Wenn ja, dann css Klasse / ID für die <div> - Tags passend setzen
+$bodyContainer = 'body_container';
+if ( ($_SESSION['systemConfig']['Debug']['enableDebug'] == 'yes') && ($_SESSION['systemConfig']['Debug']['ShowOnScreen'] == 'yes') ) {
+    $bodyContainer = 'bodyDebug_container';
+}
+
+
+
+print ('</div><div id="'.$bodyContainer.'" class="topLine">');
 
 
 
@@ -109,8 +125,6 @@ include $getLeadToHeadSite . '.inc.php';    // Head - HTML - Seite includen
 if ($_SESSION['systemConfig']['Develop']['enableDevelop'] == 'yes'){
     include 'includes/develop/develop.inc.php';
 }
-
-
 
 
 
@@ -128,6 +142,22 @@ include $getLeadToBodySite . '.inc.php';    // Body - HTML - Seite includen
 
 
 
+
+// Debug - Fenster einblenden?
+if ( ($_SESSION['systemConfig']['Debug']['enableDebug'] == 'yes') && ($_SESSION['systemConfig']['Debug']['ShowOnScreen'] == 'yes') ) {
+
+    print ('</div><div id="debug_container" class="topLine">');
+
+    include 'includes/html/debug/debugFrame.inc.php';
+
+}
+
+
+
+print ('</div>');
+
+
+
 // 0080) Dynamischer Include HTML - Footer
-// Wird in der index.php geladen!
+// Wird in der main.php geladen!
 // Grund: Eine formatierte Ausgabe der Debug und Zusatzinformationen ist sonst nicht möglich.

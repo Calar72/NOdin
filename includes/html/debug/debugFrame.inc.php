@@ -7,7 +7,9 @@ $hCore->debugInitOnLoad('File',__FILE__);
 	<tr>
 		<td>Debug Frame wenn on</td>
 	</tr>
-	<tr>
-		<td>Copy Right Footer</td>
-	</tr>
 </table>
+
+<?php
+$hCore->detaileout('$gCore',$hCore->gCore); // gCore - Variable ausgeben
+$hCore->debugInitDebugVarOutput();
+?>

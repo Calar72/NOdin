@@ -130,7 +130,7 @@ class Action extends Core
 
         // Logout angefordert?
         if ($this->gCore['getGET']['callAction'] == 'callLogout'){
-            // Head - Datei bleibt Default!
+            // head - Datei bleibt Default!
 
             // Body - Datei -> Verweis zum Login - Formular
             $hCore->gCore['getLeadToBodyClass']     = 'Login';                              // Klasse die geladen werden soll
@@ -143,7 +143,7 @@ class Action extends Core
 
 
         if ($this->gCore['getGET']['callAction'] == 'callTest') {
-            // Head - Datei bleibt Default!
+            // head - Datei bleibt Default!
 
             // Body - Datei -> Verweis zum Login - Formular
             $hCore->gCore['getLeadToBodyClass']     = 'HomeBody';                              // Klasse die geladen werden soll
@@ -174,7 +174,7 @@ class Action extends Core
 
             // Benutzer noch nicht eingeloggt!
 
-            // Head - Datei bleibt Default!
+            // head - Datei bleibt Default!
 
             // Body - Datei -> Verweis zum Login - Formular
             $hCore->gCore['getLeadToBodyClass']     = 'Login';                              // Klasse die geladen werden soll
@@ -188,7 +188,7 @@ class Action extends Core
 
             // Benutzer eingeloggt!
 
-            // Head - Datei -> Verweis zu Home
+            // head - Datei -> Verweis zu Home
             $hCore->gCore['getLeadToHeadClass']         = 'HomeHead';                       // Klasse die geladen werden soll
             $hCore->gCore['getLeadToHeadMethod']        = 'doNothing';                      // Methoden - Aufruf
             $hCore->gCore['getLeadToHeadSite']          = 'includes/html/home/homeHead';    // Webseite die geladen werden soll

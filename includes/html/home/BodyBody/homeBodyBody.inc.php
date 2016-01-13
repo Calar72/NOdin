@@ -8,3 +8,9 @@ $hCore->debugInitOnLoad('File',__FILE__);
 		<td>Navigation</td><td>Content</td>
 	</tr>
 </table>
+
+<?php
+for ($i=0; $i<100; $i++){
+	echo "$i<br>";
+}
+?>

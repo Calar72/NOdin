@@ -16,13 +16,13 @@
  * 0050) Debug - Dateinamen ausgeben?!
  *
  * 0060) Lade die systemMain - Webseite ... in ihr wird das eigentliche Frame-Gebilde erzeugt
- *          Head und Body werden dort geladen
+ *          head und Body werden dort geladen
  *          Action wird dort verarbeitet bzw. includet
  *
  * 0070) Debug - Variable augeben?!
  *
  * 0080) Dynamischer Include HTML - Footer
- *          Head und Body wurdn in der includes/system/systemMain.inc.php geladen!
+ *          head und Body wurdn in der includes/system/systemMain.inc.php geladen!
  *
  */
 
@@ -93,16 +93,18 @@ require 'includes/system/systemMain.inc.php';
 
 
 // 0070) Debug - Variable augeben?!
-$hCore->detaileout('$gCore',$hCore->gCore); // gCore - Variable ausgeben
-$hCore->debugInitDebugVarOutput();
+//TODO JETZT IN DER systemMain.inc.php
 
 
+
+
+print ('<div id="footer_container">');
 
 
 
 // 0080) Dynamischer Include HTML - Footer
-// Wird in der index.php geladen!
-// Head und Body werden in der systemMain.inc.php geladen!
+// Wird in der main.php geladen!
+// head und Body werden in der systemMain.inc.php geladen!
 // Grund: Eine formatierte Ausgabe der Debug und Zusatzinformationen ist sonst nicht möglich.
 // Erzeuge Footer - Klassen - Objekt (Dynamisch nach Default (s.o. systemMain.inc.php) und ggf. Änderungen durch die Action (s.o. systemMain.inc.php)
 $getLeadToFooterClass     =   $hCore->gCore['getLeadToFooterClass'];    // Aktuellen Wert aus gCore holen
@@ -112,4 +114,8 @@ $getLeadToFooterMethod    =   $hCore->gCore['getLeadToFooterMethod'];   // Aktue
 $hBody = new $getLeadToFooterClass($hCore);   // Footer - Klassen - Objekt erzeugen
 $hBody->$getLeadToFooterMethod();             // Footer - Methode aufrufen
 include $getLeadToFooterSite . '.inc.php';    // Footer - HTML - Seite includen
+
+
+
+print ('</div></body></html>');
 
