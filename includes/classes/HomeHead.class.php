@@ -83,7 +83,79 @@ class HomeHead extends Core
 
         RETURN TRUE;
 
-    }
+    }   // END function doNothing()
+
+
+
+
+
+    // Wechselt die Ausgabe/Anzeige des Debug-Fensters (an/aus)
+    public function homeHeadSwitchDebugFrame()
+    {
+
+        $hCore = $this->hCore;
+
+        // Message Ausgabe vorebeiten
+        $hCore->gCore['Messages']['Type'][]      = 'Info';
+        $hCore->gCore['Messages']['Code'][]      = 'Debug';
+        $hCore->gCore['Messages']['Headline'][]  = 'DebugFrame on/off!';
+
+
+        if ($_SESSION['systemConfig']['Debug']['enableDebugFrame'] == 'yes'){
+            $_SESSION['systemConfig']['Debug']['enableDebugFrame'] = 'no';
+
+            // Message Ausgabe vorebeiten
+            $hCore->gCore['Messages']['Message'][] = 'Debug - Options-Fenster ausgeschaltet!';
+
+            RETURN TRUE;
+        }
+
+
+        // Message Ausgabe vorebeiten
+        $hCore->gCore['Messages']['Message'][] = 'Debug - Options-Fenster eingeschaltet!';
+
+        $_SESSION['systemConfig']['Debug']['enableDebugFrame'] = 'yes';
+
+
+        RETURN TRUE;
+
+    }   // END public function homeHeadSwitchDebugFrame()
+
+
+
+
+
+    // Wechselt die Ausgabe/Anzeige des Debug-Fensters (an/aus)
+    public function homeHeadSwitchDebugValue()
+    {
+
+        $hCore = $this->hCore;
+
+        // Message Ausgabe vorebeiten
+        $hCore->gCore['Messages']['Type'][]      = 'Info';
+        $hCore->gCore['Messages']['Code'][]      = 'Debug';
+        $hCore->gCore['Messages']['Headline'][]  = 'DebugValue on/off!';
+
+
+        if ($_SESSION['systemConfig']['Debug']['enableShowDebugValue'] == 'yes'){
+            $_SESSION['systemConfig']['Debug']['enableShowDebugValue'] = 'no';
+
+            // Message Ausgabe vorebeiten
+            $hCore->gCore['Messages']['Message'][] = 'Debug - Value - Ausgabe ausgeschaltet!';
+
+            RETURN TRUE;
+        }
+
+
+        // Message Ausgabe vorebeiten
+        $hCore->gCore['Messages']['Message'][] = 'Debug - Value - Ausgabe eingeschaltet!';
+
+        $_SESSION['systemConfig']['Debug']['enableShowDebugValue'] = 'yes';
+
+
+        RETURN TRUE;
+
+    }   // END public function homeHeadSwitchDebugFrame()
 
 
 

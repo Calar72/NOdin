@@ -3,11 +3,11 @@
 $hCore->debugInitOnLoad('File',__FILE__);
 ?>
 
-<table border=0 class="headUserInfo" align="right" style="width:300px">
+<table border=0 class="standard" align="right" style="width:300px">
 	<tr>
 		<td align="right">
 
-			<table class="textRight">
+			<table border=0 class="standard textRight">
 				<tr>
 					<td class="bottomLine rPaddingSix">Benutzer:</td><td class="bottomLine"><?php print ($_SESSION['Login']['User']['userName']); ?></td>
 				</tr>
@@ -20,9 +20,26 @@ $hCore->debugInitOnLoad('File',__FILE__);
 				<tr>
 					<td class="bottomLine rPaddingSix">Letzter Login:</td><td class="bottomLine"><?php print ($_SESSION['Login']['User']['dateLastLogin']); ?></td>
 				</tr>
-				<tr>
-					<td colspan="2"><a class="std" href="callLogout"><i class="fa fa-power-off"></i>&nbsp;Logout&nbsp;</a></td>
-				</tr>
+
+				<?php
+				// Entwickler eingeloggt?
+				// Wenn ja, dann Debug on/off hier ermöglichen
+				if ($_SESSION['Login']['User']['roleID'] == '1'){
+
+					// Icon - Anzeige steuern
+					if ($_SESSION['systemConfig']['Debug']['enableDebugFrame'] == 'yes')
+						$tmpClass = 'fa fa-check-square-o';
+					else
+						$tmpClass = 'fa fa-square-o';
+
+					// Zeile ausgeben
+					print ('<tr><td class="rPaddingSix"><a class="std" href="" onclick="javascript:show(\'debugOptions\'); return false"><i class="'.$tmpClass.'"></i>&nbsp;Debug Optionen&nbsp;</a></td><td colspan="1"><a class="std" href="callLogout"><i class="fa fa-power-off"></i>&nbsp;Logout&nbsp;</a></td></tr>');
+				}
+				else {
+					print ('<tr><td colspan="2"><a class="std" href="callLogout"><i class="fa fa-power-off"></i>&nbsp;Logout&nbsp;</a></td></tr>');
+				}
+				?>
+
 			</table>
 
 		</td>

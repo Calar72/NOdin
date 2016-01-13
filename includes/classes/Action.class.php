@@ -93,77 +93,6 @@ class Action extends Core
 
 
 
-    // INITIAL Default Aufruf
-    // Methode wird aufgerufen sobald ein Action-Objekt erzeugt wird!
-    private function actionInitOnDefault()
-    {
-
-        $hCore = $this->hCore;
-
-        // Erzeuge Login - Objekt
-        $hLogin = new Login($hCore);
-
-
-
-
-        // Login Aufgerufen?
-        if ( (isset($hCore->gCore['getPOST']['callAction'])) && ($hCore->gCore['getPOST']['callAction'] == 'callLogin') )
-        {
-            // Rufe Initial - Methode für den Login auf
-            // Rückgabe egal, weiter in deiser Methode werden alle Fälle abehandelt
-            $hLogin->loginInitCallLogin();
-        }
-
-
-
-        // Aktuell Benutzer ID ermitteln (wenn vorhanden)
-        $getCurUserID   = $hLogin->loginGetLoginUserID();
-
-
-
-        // Login - Formular aufrufen oder Home - Webseite ausgeben?
-        $this->actionGetLoginPageOrHomePage($getCurUserID);
-
-
-
-        //////////////////////////////////// Ab hier die Action - Steuerung //////////////////////////////////
-
-        // Logout angefordert?
-        if ($this->gCore['getGET']['callAction'] == 'callLogout'){
-            // head - Datei bleibt Default!
-
-            // Body - Datei -> Verweis zum Login - Formular
-            $hCore->gCore['getLeadToBodyClass']     = 'Login';                              // Klasse die geladen werden soll
-            $hCore->gCore['getLeadToBodyMethod']    = 'loginLogoutUser';                      // Methoden - Aufruf
-            $hCore->gCore['getLeadToBodySite']      = 'includes/html/login/loginBody';      // Webseite die geladen werden soll
-            $hCore->gCore['getLeadToBodyByAction']  = 'force';                              // Erzwinge das Überschreiben von Default
-
-            // Footer - Datei bleibt Default!
-        }
-
-
-        if ($this->gCore['getGET']['callAction'] == 'callTest') {
-            // head - Datei bleibt Default!
-
-            // Body - Datei -> Verweis zum Login - Formular
-            $hCore->gCore['getLeadToBodyClass']     = 'HomeBody';                              // Klasse die geladen werden soll
-            $hCore->gCore['getLeadToBodyMethod']    = 'doNothing';                      // Methoden - Aufruf
-            $hCore->gCore['getLeadToBodySite']      = 'includes/html/homeTest';      // Webseite die geladen werden soll
-            $hCore->gCore['getLeadToBodyByAction']  = 'force';                              // Erzwinge das Überschreiben von Default
-
-            // Footer - Datei bleibt Default!
-        }
-
-
-
-        RETURN TRUE;
-
-    }   // END function initOnDefault()
-
-
-
-
-
     // Setzt Seitenaufruf auf Home (wenn güliter Login) oder auf Login - Formular (wenn kein gülitger Login (Session) vorhanden ist
     private function actionGetLoginPageOrHomePage($getCurUserID = 0)
     {
@@ -208,6 +137,112 @@ class Action extends Core
 
         }
     }
+
+
+
+
+
+    // INITIAL Default Aufruf
+    // Methode wird aufgerufen sobald ein Action-Objekt erzeugt wird!
+    private function actionInitOnDefault()
+    {
+
+        $hCore = $this->hCore;
+
+        // Erzeuge Login - Objekt
+        $hLogin = new Login($hCore);
+
+
+
+
+        // Login Aufgerufen?
+        if ( (isset($hCore->gCore['getPOST']['callAction'])) && ($hCore->gCore['getPOST']['callAction'] == 'callLogin') )
+        {
+            // Rufe Initial - Methode für den Login auf
+            // Rückgabe egal, weiter in deiser Methode werden alle Fälle abehandelt
+            $hLogin->loginInitCallLogin();
+        }
+
+
+
+        // Aktuell Benutzer ID ermitteln (wenn vorhanden)
+        $getCurUserID   = $hLogin->loginGetLoginUserID();
+
+
+
+        // Login - Formular aufrufen oder Home - Webseite ausgeben?
+        $this->actionGetLoginPageOrHomePage($getCurUserID);
+
+
+
+        //////////////////////////////////// Ab hier die Action - Steuerung //////////////////////////////////
+
+        // Logout angefordert?
+        if ($this->gCore['getGET']['callAction'] == 'callLogout'){
+            // Head - Datei bleibt Default!
+
+            // Body - Datei -> Verweis zur Klasse: Login | Methode: loginLogoutUser
+            $hCore->gCore['getLeadToBodyClass']     = 'Login';                              // Klasse die geladen werden soll
+            $hCore->gCore['getLeadToBodyMethod']    = 'loginLogoutUser';                    // Methoden - Aufruf
+            $hCore->gCore['getLeadToBodySite']      = 'includes/html/login/loginBody';      // Webseite die geladen werden soll
+            $hCore->gCore['getLeadToBodyByAction']  = 'force';                              // Erzwinge das Überschreiben von Default
+
+            $hCore->gCore['showNoMessage'] = 'yes';         // Verhindere weitere Monitor-Ausgaben bzw. Header - Ausgaben, ein php-redirect folgt!
+
+            // Footer - Datei bleibt Default!
+        }
+
+
+
+        // Test - Seite
+        if ($this->gCore['getGET']['callAction'] == 'callTest'){
+            // Head - Datei bleibt Default!
+
+            // Body - Datei -> Verweis zur Klasse: HomeBody | Methode: doNothing
+            $hCore->gCore['getLeadToBodyClass']     = 'HomeBody';                    // Klasse die geladen werden soll
+            $hCore->gCore['getLeadToBodyMethod']    = 'doNothing';                   // Methoden - Aufruf
+            $hCore->gCore['getLeadToBodySite']      = 'includes/html/homeTest';      // Webseite die geladen werden soll
+            $hCore->gCore['getLeadToBodyByAction']  = 'force';                       // Erzwinge das Überschreiben von Default
+
+            // Footer - Datei bleibt Default!
+        }
+
+
+
+        // Debug - Optionen - Fenster ein/ausblenden?
+        if ($this->gCore['getGET']['callAction'] == 'callDebugFrame'){
+
+            // Head - Datei -> Verweis zur Klasse: HomeHead | Methode: homeHeadSwitchDebugFrame
+            $hCore->gCore['getLeadToHeadClass']     = 'HomeHead';                           // Klasse die geladen werden soll
+            $hCore->gCore['getLeadToHeadMethod']    = 'homeHeadSwitchDebugFrame';           // Methoden - Aufruf
+            $hCore->gCore['getLeadToHeadByAction']  = 'force';                              // Erzwinge das Überschreiben von Default
+
+            // Body - Datei bleibt Default!
+
+            // Footer - Datei bleibt Default!
+        }
+
+
+
+        // Debug - Value - Fenster ein/ausblenden?
+        if ($this->gCore['getGET']['callAction'] == 'callDebugValue'){
+
+            // Head - Datei -> Verweis zur Klasse: HomeHead | Methode: homeHeadSwitchDebugValue
+            $hCore->gCore['getLeadToHeadClass']     = 'HomeHead';                           // Klasse die geladen werden soll
+            $hCore->gCore['getLeadToHeadMethod']    = 'homeHeadSwitchDebugValue';           // Methoden - Aufruf
+            $hCore->gCore['getLeadToHeadByAction']  = 'force';                              // Erzwinge das Überschreiben von Default
+
+            // Body - Datei bleibt Default!
+
+            // Footer - Datei bleibt Default!
+        }
+
+
+
+
+        RETURN TRUE;
+
+    }   // END function initOnDefault()
 
 
 

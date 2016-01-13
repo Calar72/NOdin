@@ -1,4 +1,4 @@
-<?php include 'headCenterInfo.inc.php'; ?>
+<?php include 'loginCenterInfo.inc.php'; ?>
 
 <form action="" method="post">
 

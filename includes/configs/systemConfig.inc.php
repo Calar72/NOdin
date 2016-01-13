@@ -14,6 +14,7 @@ $_SESSION['systemConfig']['Develop']['enableDevelop'] = 'yes';          // Enabl
 
 
 // Debug Modus?
+//$_SESSION['systemConfig']['Debug']['enableDebugFrame']   = 'yes';       // Enable - Disble Debug - Frame ausgabe      (yes/no)      (Default = yes)
 $_SESSION['systemConfig']['Debug']['enableDebug']   = 'yes';            // Enable - Disble jegliche Debug - Aktivität (yes/no)      (Default = no)
 $_SESSION['systemConfig']['Debug']['ShowOnScreen']  = 'yes';            // Debug - Meldungen auf dem Bildschirm ausgeben? (yes/no)  (Default = yes)
 $_SESSION['systemConfig']['Debug']['ShowGET']       = 'yes';            // $_GET - Variable ausgeben? (yes/no)                      (Default = no)

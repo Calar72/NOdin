@@ -15,7 +15,7 @@ $hCore->gCore['Messages']['Message'][]   = 'Willkommen '.$_SESSION['Login']['Use
 if (array_key_exists('Messages',$hCore->gCore)){
 
     ?>
-    <table border=0 class="headUserInfo" align="center" style="width:40%">
+    <table border=0 class="headInfo" align="center" style="width:40%">
         <tr>
             <td style="width:12px; font-size: 80%;">M<br>E<br>S<br>S<br>A<br>G<br>E</td>
 
@@ -33,7 +33,7 @@ if (array_key_exists('Messages',$hCore->gCore)){
 
                         ?>
 
-                        <table border=0 class="headUserInfo" style="width:100%">
+                        <table border=0 class="headInfo" style="width:100%">
                             <tr>
                                 <td style="width:80px" class="topLine bottomLine leftLine">Headline:</td>
                                 <td colspan="6" class="topLine bottomLine rightLine"><?php print ($headlineValue); ?></td>

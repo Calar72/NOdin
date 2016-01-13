@@ -10,6 +10,19 @@
 	padding: 10px;
 }
 
+
+.showDebugValues
+{
+	background: rgb(197, 209, 230);
+	height: 600px;
+	overflow: auto;
+	width: 99%;
+	border: 1px solid #000;
+	/*padding: 10px;*/
+	padding-top: 4px;
+}
+
+
 /* head - Message Window (ausgeblendet)*/
 .headInfoMessageHidden {
 	background: rgb(255, 255, 255);
@@ -32,14 +45,13 @@
 }
 
 
-.paul {
-	background-color: orange;
-	position: fixed;
-	width: 99%;
-	height: 175px;
-	bottom: 10px;
+.debugOptionLeiste {
+	background-color: #ffffff;
+	position: absolute;
+	width: 98%;
+	/*height: 20px;*/
+	top: 130px;
 	left: 10px;
-	z-index: -1;
 }
 
 
@@ -64,14 +76,14 @@
 #bodyDebug_container {
 	/*height:600px;*/
 	padding-top:0px;
-	height:61%;
+	height:41%;
 	overflow:auto;
 }
 
 #debug_container {
 	/*height:600px;*/
 	padding-top:0px;
-	height:20%;
+	height:40%;
 	overflow:auto;
 }
 

@@ -97,6 +97,10 @@ class Messages extends DefaultConfig
     private function simpleoutString($value)
     {
 
+        // Message unterdrücken wegen php-redirect und header-already-send - Problem?
+        if ( (isset($this->gCore['showNoMessage'])) && ($this->gCore['showNoMessage'] == 'yes') )
+            RETURN TRUE;
+
         print ("<br><pre><br>");
             print_r($value);
         print ("<br></pre><br>");
@@ -136,6 +140,11 @@ class Messages extends DefaultConfig
     // Gibt den übergebenen Content in einem HTML Pre-Tag aus!
     private function detailoutString($value, $getHeadline = '')
     {
+
+        // Message unterdrücken wegen php-redirect und header-already-send - Problem?
+        if ( (isset($this->gCore['showNoMessage'])) && ($this->gCore['showNoMessage'] == 'yes') )
+            RETURN TRUE;
+
         //TODO CSS Für debugHeadLine anlegen
         if (strlen($getHeadline) > 0)
             print ('<br><pre><div class="debugHeadline" style="text-decoration: underline;">&nbsp;' .$getHeadline. '&nbsp;</div><br>');
