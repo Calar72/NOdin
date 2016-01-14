@@ -266,6 +266,7 @@ class Login extends Core
         // Setze initial Entwicklungs- und Debug- Steuer-Variable
         $_SESSION['systemConfig']['Debug']['enableDebugFrame']      = 'yes';    // Enable - Disble Debug - Frame ausgabe      (yes/no)      (Default = yes)
         $_SESSION['systemConfig']['Debug']['enableShowDebugValue']  = 'no';     // Enable - Disble Debug - Value Fenster      (yes/no)      (Default = no)
+        $_SESSION['systemConfig']['Debug']['enableShowDebugLinks']  = 'no';     // Enable - Disble Debug - Link Fenster      (yes/no)      (Default = no)
 
         RETURN TRUE;
 

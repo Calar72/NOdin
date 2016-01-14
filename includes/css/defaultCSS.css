@@ -67,6 +67,40 @@ input[id=DefaultGetData]:focus {
 
 
 
+.debugHeadlineInformation {
+	background: rgba(204, 252, 255, 1);
+	text-align: center;
+	padding-left:0px;
+}
+
+
+table.debugHeadlineInformation {
+	text-align: left;
+	border-collapse: collapse;
+	font-family: "Arial", sans-serif;
+	font-size: 12px;
+	background-color: rgba(204, 252, 255, 1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -90,19 +124,34 @@ td.standard {
 
 }
 
+
 .footer{
-	background: rgba(204, 252, 255, 1);
+
 	text-align: right;
 	padding-right:10px;
-	color: rgba(74, 74, 74, 0.76);
+	color: rgba(70, 70, 70, 0.76);
+	#background-image: linear-gradient(90deg, transparent, rgba(204, 252, 255, 1));
+	#background-image: linear-gradient(90deg, rgba(204, 252, 255, 1), rgb(122, 167, 170));
+	background-image: linear-gradient(90deg, rgba(204, 252, 255, 1), transparent);
 }
 
 
 .debugOptions{
 	background: rgba(204, 252, 255, 1);
+	text-align: center;
+	padding-left:0px;
+}
+
+.debugOptionsSubline{
+	background: transparent;
 	text-align: left;
-	padding-right:10px;
-	color: rgba(74, 74, 74, 0.76);
+	padding-left:0px;
+}
+
+.debugOptionsReverse{
+	background-image: linear-gradient(90deg, rgba(204, 252, 255, 1), transparent);
+	text-align: left;
+	padding-right:0px;
 }
 
 
@@ -134,10 +183,6 @@ th {
 }
 
 
-.showDebugValuesDetail
-{
-	background: rgb(197, 209, 230);
-}
 
 .width_100p {
 	width: 100%;

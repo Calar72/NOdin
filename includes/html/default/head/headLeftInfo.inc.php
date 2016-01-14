@@ -4,8 +4,9 @@ $hCore->debugInitOnLoad('File',__FILE__);
 
 
 
-
 ?>
+
+
 
 <table border=0 class="headInfo" style="width:230px">
 	<tr>

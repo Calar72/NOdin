@@ -47,6 +47,7 @@ $hCore->debugInitOnLoad('File',__FILE__);
 $hCore->gCore['getLeadToHeadClass']     = 'DefaultHead';
 $hCore->gCore['getLeadToHeadSite']      = 'includes/html/default/defaultHead';
 $hCore->gCore['getLeadToHeadMethod']    = 'doNothing';
+$hCore->gCore['getLeadToHeadArg']       = '';
 
 
 // Default Body
@@ -55,6 +56,7 @@ $hCore->gCore['getLeadToHeadMethod']    = 'doNothing';
 $hCore->gCore['getLeadToBodyClass']     = 'DefaultBody';
 $hCore->gCore['getLeadToBodySite']      = 'includes/html/default/defaultBody';
 $hCore->gCore['getLeadToBodyMethod']    = 'doNothing';
+$hCore->gCore['getLeadToBodyArg']       = '';
 
 
 // Default Footer
@@ -63,6 +65,7 @@ $hCore->gCore['getLeadToBodyMethod']    = 'doNothing';
 $hCore->gCore['getLeadToFooterClass']     = 'DefaultFooter';
 $hCore->gCore['getLeadToFooterSite']      = 'includes/html/default/defaultFooter';
 $hCore->gCore['getLeadToFooterMethod']    = 'doNothing';
+$hCore->gCore['getLeadToFooterArg']       = '';
 
 
 
@@ -97,10 +100,11 @@ print ('<div id="head_container">');
 $getLeadToHeadClass     =   $hCore->gCore['getLeadToHeadClass'];    // Aktuellen Wert aus gCore holen
 $getLeadToHeadSite      =   $hCore->gCore['getLeadToHeadSite'];     // Aktuellen Wert aus gCore holen
 $getLeadToHeadMethod    =   $hCore->gCore['getLeadToHeadMethod'];   // Aktuellen Wert aus gCore holen
+$getLeadToHeadArg       =   $hCore->gCore['getLeadToHeadArg'];      // Aktuellen Wert aus gCore holen
 
 
 $hHead = new $getLeadToHeadClass($hCore);   // head - Klassen - Objekt erzeugen
-$hHead->$getLeadToHeadMethod();             // head - Methode aufrufen
+$hHead->$getLeadToHeadMethod($getLeadToHeadArg);             // head - Methode aufrufen
 include $getLeadToHeadSite . '.inc.php';    // head - HTML - Seite includen
 
 
@@ -138,9 +142,10 @@ if ($_SESSION['systemConfig']['Develop']['enableDevelop'] == 'yes'){
 $getLeadToBodyClass     =   $hCore->gCore['getLeadToBodyClass'];    // Aktuellen Wert aus gCore holen
 $getLeadToBodySite      =   $hCore->gCore['getLeadToBodySite'];     // Aktuellen Wert aus gCore holen
 $getLeadToBodyMethod    =   $hCore->gCore['getLeadToBodyMethod'];   // Aktuellen Wert aus gCore holen
+$getLeadToBodyArg       =   $hCore->gCore['getLeadToBodyArg'];      // Aktuellen Wert aus gCore holen
 
 $hBody = new $getLeadToBodyClass($hCore);   // Body - Klassen - Objekt erzeugen
-$hBody->$getLeadToBodyMethod();             // Body - Methode aufrufen
+$hBody->$getLeadToBodyMethod($getLeadToBodyArg);             // Body - Methode aufrufen
 include $getLeadToBodySite . '.inc.php';    // Body - HTML - Seite includen
 
 

@@ -161,4 +161,40 @@ class HomeHead extends Core
 
 
 
+    // Wechselt die Ausgabe/Anzeige des Debug-Fensters (an/aus)
+    public function homeHeadSwitchDebugLinks()
+    {
+
+        $hCore = $this->hCore;
+
+        // Message Ausgabe vorebeiten
+        $hCore->gCore['Messages']['Type'][]      = 'Info';
+        $hCore->gCore['Messages']['Code'][]      = 'Debug';
+        $hCore->gCore['Messages']['Headline'][]  = 'Link - Fenster on/off!';
+
+
+        if ($_SESSION['systemConfig']['Debug']['enableShowDebugLinks'] == 'yes'){
+            $_SESSION['systemConfig']['Debug']['enableShowDebugLinks'] = 'no';
+
+            // Message Ausgabe vorebeiten
+            $hCore->gCore['Messages']['Message'][] = 'Debug - Link - Ausgabe ausgeschaltet!';
+
+            RETURN TRUE;
+        }
+
+
+        // Message Ausgabe vorebeiten
+        $hCore->gCore['Messages']['Message'][] = 'Debug - Link - Ausgabe eingeschaltet!';
+
+        $_SESSION['systemConfig']['Debug']['enableShowDebugLinks'] = 'yes';
+
+
+        RETURN TRUE;
+
+    }   // END public function homeHeadSwitchDebugFrame()
+
+
+
+
+
 }   // END class HomeHead extends Core

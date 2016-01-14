@@ -110,9 +110,10 @@ print ('<div id="footer_container">');
 $getLeadToFooterClass     =   $hCore->gCore['getLeadToFooterClass'];    // Aktuellen Wert aus gCore holen
 $getLeadToFooterSite      =   $hCore->gCore['getLeadToFooterSite'];     // Aktuellen Wert aus gCore holen
 $getLeadToFooterMethod    =   $hCore->gCore['getLeadToFooterMethod'];   // Aktuellen Wert aus gCore holen
+$getLeadToFooterArg       =   $hCore->gCore['getLeadToFooterArg'];      // Aktuellen Wert aus gCore holen
 
 $hBody = new $getLeadToFooterClass($hCore);   // Footer - Klassen - Objekt erzeugen
-$hBody->$getLeadToFooterMethod();             // Footer - Methode aufrufen
+$hBody->$getLeadToFooterMethod($getLeadToFooterArg);             // Footer - Methode aufrufen
 include $getLeadToFooterSite . '.inc.php';    // Footer - HTML - Seite includen
 
 

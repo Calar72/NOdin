@@ -3,6 +3,7 @@
 $hCore->debugInitOnLoad('File',__FILE__);
 
 
+
 // Lade den Body Content (Navigation | Content)
 ?>
 <table border=0 class="standard" style="width:100%;">

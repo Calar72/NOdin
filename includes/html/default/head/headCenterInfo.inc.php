@@ -2,6 +2,8 @@
 // Debug - Dateinamen ausgeben?!
 $hCore->debugInitOnLoad('File',__FILE__);
 
+
+
 /*
 // Beispiel:
 $hCore->gCore['Messages']['Type'][]      = 'Info';
@@ -9,21 +11,20 @@ $hCore->gCore['Messages']['Code'][]      = 'Login';
 $hCore->gCore['Messages']['Headline'][]  = 'Erfolgreicher Login!';
 $hCore->gCore['Messages']['Message'][]   = 'Willkommen '.$_SESSION['Login']['User']['userName'].'!';
 */
-?>
 
-<?php
+
+
 if (array_key_exists('Messages',$hCore->gCore)){
 
     ?>
-    <table border=0 class="headInfo" align="center" style="width:40%">
+    <table border=0 class="headInfo" style="width:100%">
         <tr>
-            <td style="width:12px; font-size: 80%;">M<br>E<br>S<br>S<br>A<br>G<br>E</td>
+            <td style="width:12px;" class="messageWord">M<br>E<br>S<br>S<br>A<br>G<br>E</td>
 
             <td>
                 <div class="headInfoMessage">
 
                     <?php
-
 
                     foreach ($hCore->gCore['Messages']['Type'] as $index=>$typeValue){
 
@@ -57,12 +58,12 @@ if (array_key_exists('Messages',$hCore->gCore)){
                                 </td>
                             </tr>
                         </table>
-                        <br>
+
+                        <br><br>
 
                         <?php
                     }
                     ?>
-
 
                 </div>
             </td>
@@ -77,5 +78,3 @@ else {
 }
 
 ?>
-
-

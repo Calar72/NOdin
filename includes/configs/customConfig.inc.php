@@ -20,6 +20,9 @@ $_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT'] = '/NOdin/';
 // Path - Upload - Directory
 $_SESSION['customConfig']['WebLinks']['MAINUPLOADPATH'] = '/var/www/html/NOdin/uploads/';
 
+// Link - PHP MyAdmin
+$_SESSION['customConfig']['WebLinks']['PHPMYADMIN'] = '"http://192.168.6.11/phpmyadmin/';
+
 
 
 // Title Header

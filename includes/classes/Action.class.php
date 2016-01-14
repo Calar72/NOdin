@@ -240,6 +240,39 @@ class Action extends Core
 
 
 
+
+        // Debug - Link - Fenster ein/ausblenden?
+        if ($this->gCore['getGET']['callAction'] == 'callDebugLinks'){
+
+            // Head - Datei -> Verweis zur Klasse: HomeHead | Methode: homeHeadSwitchDebugLinks
+            $hCore->gCore['getLeadToHeadClass']     = 'HomeHead';                           // Klasse die geladen werden soll
+            $hCore->gCore['getLeadToHeadMethod']    = 'homeHeadSwitchDebugLinks';           // Methoden - Aufruf
+            $hCore->gCore['getLeadToHeadByAction']  = 'force';                              // Erzwinge das Überschreiben von Default
+
+            // Body - Datei bleibt Default!
+
+            // Footer - Datei bleibt Default!
+        }
+
+
+
+
+        // Debug - Optionen - XYZ ein/ausblenden?
+        if ( ($this->gCore['getGET']['callAction'] == 'callDebugFrame') && (isset($this->gCore['getGET']['subAction'])) ){
+
+            // Head - Datei -> Verweis zur Klasse: HomeHead | Methode: homeHeadSwitchDebugFrame
+            $hCore->gCore['getLeadToHeadClass']     = 'HomeHead';                           // Klasse die geladen werden soll
+            $hCore->gCore['getLeadToHeadMethod']    = 'homeHeadSwitchDebugFrame';           // Methoden - Aufruf
+            $hCore->gCore['getLeadToHeadByAction']  = 'force';                              // Erzwinge das Überschreiben von Default
+
+            // Body - Datei bleibt Default!
+
+            // Footer - Datei bleibt Default!
+        }
+
+
+
+
         RETURN TRUE;
 
     }   // END function initOnDefault()
