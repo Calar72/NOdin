@@ -34,10 +34,11 @@ $_SESSION['customConfig']['TextCharset']['Website'] = 'UTF-8';
 
 
 // Database Settings
-$_SESSION['customConfig']['DBSettings']['DBHOST'] 		= 'localhost';
-$_SESSION['customConfig']['DBSettings']['DBNAME'] 		= 'NOdin';
-$_SESSION['customConfig']['DBSettings']['DBUSER'] 		= 'root';
-$_SESSION['customConfig']['DBSettings']['DBPASSWORD'] 	= 'OdinDev';
+include 'databaseConfig.inc.php';
+//$_SESSION['customConfig']['DBSettings']['DBHOST'] 		= '';
+//$_SESSION['customConfig']['DBSettings']['DBNAME'] 		= '';
+//$_SESSION['customConfig']['DBSettings']['DBUSER'] 		= '';
+//$_SESSION['customConfig']['DBSettings']['DBPASSWORD'] 	= '';
 
 
 
