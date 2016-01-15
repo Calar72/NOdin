@@ -13,7 +13,7 @@ $hCore->debugInitOnLoad('File',__FILE__);
 
 			<table class="textLeft">
 				<tr>
-					<td class="bottomLine rPaddingSix"><a href="home"><img src="<?php print ($_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT']); ?>includes/images/logo_tkrz.png" width="213" height="85" alt="LOGO"></a></td>
+					<td class="bottomLine rPaddingSix"><a href="<?php print ($_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT']); ?>home"><img src="<?php print ($_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT']); ?>includes/images/logo_tkrz.png" width="213" height="85" alt="LOGO"></a></td>
 				</tr>
 			</table>
 

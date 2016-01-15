@@ -71,16 +71,6 @@ $hCore->gCore['getLeadToFooterArg']       = '';
 
 
 
-
-// 0030) Mögliche Get und Post - Argumente speichern
-// Wird jetzt in der Base.class.php durchgeführt!
-//$hCore->gCore['getGET']  = $hCore->getCleanInput($_GET);
-//$hCore->gCore['getPOST'] = $hCore->getCleanInput($_POST);
-
-
-
-
-
 // 0040) Action - Steuerung
 // Starte die Action Steuereung ... UEBERSCHREIBE GGF. DIE DEFAULT EINSTELLUNGEN
 $hAction = new Action($hCore);
@@ -94,77 +84,71 @@ $hAction = new Action($hCore);
 
 
 
-print ('<div id="head_container">');
+
 // 0050) Dynamischer Include HTML - head
 // Erzeuge head - Klassen - Objekt (Dynamisch nach Default (s.o.) und ggf. Änderungen durch die Action (s.o.)
-$getLeadToHeadClass     =   $hCore->gCore['getLeadToHeadClass'];    // Aktuellen Wert aus gCore holen
-$getLeadToHeadSite      =   $hCore->gCore['getLeadToHeadSite'];     // Aktuellen Wert aus gCore holen
-$getLeadToHeadMethod    =   $hCore->gCore['getLeadToHeadMethod'];   // Aktuellen Wert aus gCore holen
-$getLeadToHeadArg       =   $hCore->gCore['getLeadToHeadArg'];      // Aktuellen Wert aus gCore holen
+print ('<div id="head_container">');
+
+    $getLeadToHeadClass     =   $hCore->gCore['getLeadToHeadClass'];    // Aktuellen Wert aus gCore holen
+    $getLeadToHeadSite      =   $hCore->gCore['getLeadToHeadSite'];     // Aktuellen Wert aus gCore holen
+    $getLeadToHeadMethod    =   $hCore->gCore['getLeadToHeadMethod'];   // Aktuellen Wert aus gCore holen
+    $getLeadToHeadArg       =   $hCore->gCore['getLeadToHeadArg'];      // Aktuellen Wert aus gCore holen
 
 
-$hHead = new $getLeadToHeadClass($hCore);   // head - Klassen - Objekt erzeugen
-$hHead->$getLeadToHeadMethod($getLeadToHeadArg);             // head - Methode aufrufen
-include $getLeadToHeadSite . '.inc.php';    // head - HTML - Seite includen
+    // Core Klasse aufgerufen? -> Dann das aktuelle und globale hCore - Objekt verwenden
+    if ($getLeadToHeadClass == 'Core')
+        $hHead = $hCore;
+    else
+        $hHead = new $getLeadToHeadClass($hCore);   // head - Klassen - Objekt erzeugen
+
+
+    $hHead->$getLeadToHeadMethod($getLeadToHeadArg);             // head - Methode aufrufen
+    include $getLeadToHeadSite . '.inc.php';    // head - HTML - Seite includen
+
+print ('</div>');
 
 
 
 
-// 0070) Debug - Variable augeben?!
-//TODO JETZT IN DER systemMain.inc.php
-// Wird das Debug - Fenster eingeblendet?
-// Wenn ja, dann css Klasse / ID für die <div> - Tags passend setzen
-$bodyContainer = 'body_container';
-/*
-if ( ($_SESSION['systemConfig']['Debug']['enableDebug'] == 'yes') && ($_SESSION['systemConfig']['Debug']['enableDebugFrame'] == 'yes') ) {
-    $bodyContainer = 'bodyDebug_container';
-}
-*/
 
 
-print ('</div><div id="'.$bodyContainer.'" class="topLine">');
 
 
 
 //Debug - Leiste includen
-include 'includes/html/debug/debugFrame.inc.php';
+print ('<div id="body_container">');
 
-
-// 0060) Develop - Datei includen (für diverse tmp-Ausaben bei der Entwicklung)
-if ($_SESSION['systemConfig']['Develop']['enableDevelop'] == 'yes'){
-    include 'includes/develop/develop.inc.php';
-}
-
-
-
-// 0070) Dynamischer Include HTML - Body
-// Erzeuge Body - Klassen - Objekt (Dynamisch nach Default (s.o.) und ggf. Änderungen durch die Action (s.o.)
-$getLeadToBodyClass     =   $hCore->gCore['getLeadToBodyClass'];    // Aktuellen Wert aus gCore holen
-$getLeadToBodySite      =   $hCore->gCore['getLeadToBodySite'];     // Aktuellen Wert aus gCore holen
-$getLeadToBodyMethod    =   $hCore->gCore['getLeadToBodyMethod'];   // Aktuellen Wert aus gCore holen
-$getLeadToBodyArg       =   $hCore->gCore['getLeadToBodyArg'];      // Aktuellen Wert aus gCore holen
-
-$hBody = new $getLeadToBodyClass($hCore);   // Body - Klassen - Objekt erzeugen
-$hBody->$getLeadToBodyMethod($getLeadToBodyArg);             // Body - Methode aufrufen
-include $getLeadToBodySite . '.inc.php';    // Body - HTML - Seite includen
-
-
-
-
-
-/*
-// Debug - Fenster einblenden?
-if ( ($_SESSION['systemConfig']['Debug']['enableDebug'] == 'yes') && ($_SESSION['systemConfig']['Debug']['enableDebugFrame'] == 'yes') ) {
-
-    print ('</div><div id="debug_container" class="topLine">');
-
+    // Debug Optionen/Framework includen
     include 'includes/html/debug/debugFrame.inc.php';
 
-}
-*/
 
+    // 0060) Develop - Datei includen (für diverse tmp-Ausaben bei der Entwicklung)
+    if ($_SESSION['systemConfig']['Develop']['enableDevelop'] == 'yes'){
+        include 'includes/develop/develop.inc.php';
+    }
+
+
+    // 0070) Dynamischer Include HTML - Body
+    // Erzeuge Body - Klassen - Objekt (Dynamisch nach Default (s.o.) und ggf. Änderungen durch die Action (s.o.)
+    $getLeadToBodyClass     =   $hCore->gCore['getLeadToBodyClass'];    // Aktuellen Wert aus gCore holen
+    $getLeadToBodySite      =   $hCore->gCore['getLeadToBodySite'];     // Aktuellen Wert aus gCore holen
+    $getLeadToBodyMethod    =   $hCore->gCore['getLeadToBodyMethod'];   // Aktuellen Wert aus gCore holen
+    $getLeadToBodyArg       =   $hCore->gCore['getLeadToBodyArg'];      // Aktuellen Wert aus gCore holen
+
+
+    // Core Klasse aufgerufen? -> Dann das aktuelle und globale hCore - Objekt verwenden
+    if ($getLeadToBodyClass == 'Core')
+        $hBody = $hCore;
+    else
+        $hBody = new $getLeadToBodyClass($hCore);   // Body - Klassen - Objekt erzeugen
+
+
+    $hBody->$getLeadToBodyMethod($getLeadToBodyArg);             // Body - Methode aufrufen
+    include $getLeadToBodySite . '.inc.php';    // Body - HTML - Seite includen
 
 print ('</div>');
+
+
 
 
 

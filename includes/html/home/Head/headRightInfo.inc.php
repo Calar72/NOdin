@@ -32,7 +32,7 @@ $hCore->debugInitOnLoad('File',__FILE__);
 				<?php
 				// Entwickler eingeloggt?
 				// Wenn ja, dann Debug on/off hier ermöglichen
-				if ($_SESSION['Login']['User']['roleID'] == '1'){
+				if ( (isset($_SESSION['Login']['User']['roleID'])) && ($_SESSION['Login']['User']['roleID'] == '1') ) {
 
 					// Icon - Anzeige steuern
 					if ($_SESSION['systemConfig']['Debug']['enableDebugFrame'] == 'yes')
@@ -41,10 +41,10 @@ $hCore->debugInitOnLoad('File',__FILE__);
 						$tmpClass = 'fa fa-square-o';
 
 					// Zeile ausgeben
-					print ('<tr><td class="rPaddingSix"><a class="std" href="" onclick="javascript:show(\'divDebugOptions\'); return false"><i class="'.$tmpClass.'"></i>&nbsp;Debug Optionen&nbsp;</a></td><td colspan="1"><a class="std" href="callLogout"><i class="fa fa-power-off"></i>&nbsp;Logout&nbsp;</a></td></tr>');
+					print ('<tr><td class="rPaddingSix"><a class="std" href="" onclick="javascript:show(\'divDebugOptions\'); return false"><i class="'.$tmpClass.'"></i>&nbsp;Debug Optionen&nbsp;</a></td><td colspan="1"><a class="std" href="'.$_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT'].'callLogout"><i class="fa fa-power-off"></i>&nbsp;Logout&nbsp;</a></td></tr>');
 				}
 				else {
-					print ('<tr><td colspan="2"><a class="std" href="callLogout"><i class="fa fa-power-off"></i>&nbsp;Logout&nbsp;</a></td></tr>');
+					print ('<tr><td colspan="2"><a class="std" href="'.$_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT'].'callLogout"><i class="fa fa-power-off"></i>&nbsp;Logout&nbsp;</a></td></tr>');
 				}
 				?>
 			</table>

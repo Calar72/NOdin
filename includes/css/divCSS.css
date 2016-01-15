@@ -3,6 +3,7 @@
 
 /* Main-Div für die Debug-Variablen - Ausgabe */
 .divDebugOptionsOuter {
+    z-index: 10;
 	position: absolute;
 	overflow: auto;
 	top: 132px;
@@ -15,11 +16,12 @@
 
 
 .divDebugOptionShow {
+    z-index: 10;
 	position: absolute;
 	overflow: auto;
 	top: 1px;
-	#left: 6px;
-	#height: 18px;
+	/*#left: 6px;*/
+	/*#height: 18px;*/
 	padding-right: 6px;
 	padding-left: 6px;
 
@@ -27,7 +29,7 @@
 }
 
 .divDebugOptionShowValue {
-	left: 160px;
+	left: 260px;
 }
 
 .divDebugOptionShowLinks {
@@ -43,10 +45,11 @@
 
 /* Main-Div für die Debug-Variablen - Ausgabe */
 .divDebugValueOuter {
+    z-index: 10;
 	position: absolute;
 	overflow: auto;
 	top: 161px;
-	left: 170px;
+	left: 270px;
 	width: 1200px;
 	height: 70%;
 	border: 1px solid rgb(122, 167, 170);
@@ -55,14 +58,13 @@
 
 /* Inneres-Div für die Debug-Variablen - Ausgabe */
 .divDebugValueInner {
+    z-index: 10;
 	position: absolute;
 	overflow: auto;
 	top: 19px;
 	left: 19px;
 	right: 19px;
 	bottom: 19px;
-	width: %;
-	height: %;
 	border: 1px solid rgb(122, 167, 170);
 	background: rgb(208, 208, 208);
 }
@@ -72,11 +74,12 @@
 
 /* Main-Div für die Debug-Link(s) - Ausgabe */
 .divDebugLinkOuter {
+    z-index: 10;
 	position: absolute;
 	overflow: auto;
 	top: 161px;
-	#left: 1230px;
-	right: 20px;
+	/*left: 1230px;*/
+	right: 30px;
 	width: 200px;
 	height: 70%;
 	border: 1px solid rgb(122, 167, 170);
@@ -85,6 +88,7 @@
 
 /* Inneres-Div für die Debug-Link(s) - Ausgabe */
 .divDebugLinkInner {
+    z-index: 10;
 	position: absolute;
 	overflow: auto;
 	top: 19px;
@@ -93,11 +97,46 @@
 	bottom: 19px;
 	padding-left: 10px;
 	padding-top: 10px;
-	width: %;
-	height: %;
 	border: 1px solid rgb(122, 167, 170);
 	background: rgb(208, 208, 208);
 }
+
+
+
+
+
+
+
+
+
+
+.divLeftNavigationOuter{
+    position: absolute;
+    overflow: auto;
+    top: 160px;
+    left: 6px;
+    bottom: 36px;
+    width: 160px;
+    border: 1px solid rgb(122, 167, 170);
+
+}
+
+
+
+
+
+.divContentOuter{
+    position: absolute;
+    overflow: auto;
+    top: 160px;
+    left: 174px;
+    right: 6px;
+    bottom: 36px;
+    border: 1px solid rgb(122, 167, 170);
+
+}
+
+
 
 
 
@@ -213,10 +252,11 @@
 
 #footer_container {
 	/*height:23px;*/
-	height:3%;
-	text-align:center;
-	padding-top:2px;
-	padding-bottom:0px;
+    position: absolute;
+    bottom: 10px;
+    left: 6px;
+    right: 6px;
+    border: 1px solid rgb(122, 167, 170);
 }
 
 

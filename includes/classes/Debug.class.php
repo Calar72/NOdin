@@ -121,6 +121,14 @@ class Debug extends Messages
     function debugInitDebugVarOutput()
     {
 
+        // SICHERHEIT
+        // 1. Abfangen ob der Benutzer eingeloggt ist
+        // 2. Abfangen ob der Benutzer den Status 'Entwickler' hat
+        // Wenn nicht, hier abbrechen und nichts weiter ausgeben
+        if ( (!isset($_SESSION['Login']['User']['roleID'])) || ($_SESSION['Login']['User']['roleID'] > '1') )
+            RETURN TRUE;
+
+
         $curVarArray = array(	'ShowGET' 		=> $_GET,
                                 'ShowPOST' 		=> $_POST,
                                 'ShowSession' 	=> $_SESSION,
@@ -160,6 +168,39 @@ class Debug extends Messages
         RETURN TRUE;
 
     }   // END function initDebugVarOutput()
+
+
+
+
+
+    // Wechselt die Ausgabe/Anzeige des angegebenen Debug-Fensters (div-Tag) (an/aus)
+    public function debugViewChange($arg)
+    {
+
+        // Message Ausgabe vorebeiten
+        $this->gCore['Messages']['Type'][]      = 'Info';
+        $this->gCore['Messages']['Code'][]      = 'Debug';
+        $this->gCore['Messages']['Headline'][]  = 'Debug Informations- Fenster ein/aus!';
+
+
+        if ($_SESSION['systemConfig']['Debug'][$arg] == 'yes'){
+            $_SESSION['systemConfig']['Debug'][$arg] = 'no';
+
+            // Message Ausgabe vorebeiten
+            $this->gCore['Messages']['Message'][] = 'Debug Informations- Fenster ausgeschaltet!';
+
+            RETURN TRUE;
+        }
+
+
+        // Message Ausgabe vorebeiten
+        $this->gCore['Messages']['Message'][] = 'Debug Informations- Fenster eingeschaltet!';
+
+        $_SESSION['systemConfig']['Debug'][$arg] = 'yes';
+
+        RETURN TRUE;
+
+    }   // END public function debugViewChange(...)
 
 
 

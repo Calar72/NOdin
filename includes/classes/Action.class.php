@@ -194,6 +194,8 @@ class Action extends Core
 
 
 
+
+
         // Test - Seite
         if ($this->gCore['getGET']['callAction'] == 'callTest'){
             // Head - Datei bleibt Default!
@@ -209,61 +211,16 @@ class Action extends Core
 
 
 
-        // Debug - Optionen - Fenster ein/ausblenden?
-        if ($this->gCore['getGET']['callAction'] == 'callDebugFrame'){
-
-            // Head - Datei -> Verweis zur Klasse: HomeHead | Methode: homeHeadSwitchDebugFrame
-            $hCore->gCore['getLeadToHeadClass']     = 'HomeHead';                           // Klasse die geladen werden soll
-            $hCore->gCore['getLeadToHeadMethod']    = 'homeHeadSwitchDebugFrame';           // Methoden - Aufruf
-            $hCore->gCore['getLeadToHeadByAction']  = 'force';                              // Erzwinge das Überschreiben von Default
-
-            // Body - Datei bleibt Default!
-
-            // Footer - Datei bleibt Default!
-        }
-
-
-
-        // Debug - Value - Fenster ein/ausblenden?
-        if ($this->gCore['getGET']['callAction'] == 'callDebugValue'){
-
-            // Head - Datei -> Verweis zur Klasse: HomeHead | Methode: homeHeadSwitchDebugValue
-            $hCore->gCore['getLeadToHeadClass']     = 'HomeHead';                           // Klasse die geladen werden soll
-            $hCore->gCore['getLeadToHeadMethod']    = 'homeHeadSwitchDebugValue';           // Methoden - Aufruf
-            $hCore->gCore['getLeadToHeadByAction']  = 'force';                              // Erzwinge das Überschreiben von Default
-
-            // Body - Datei bleibt Default!
-
-            // Footer - Datei bleibt Default!
-        }
-
-
-
-
-
-        // Debug - Link - Fenster ein/ausblenden?
-        if ($this->gCore['getGET']['callAction'] == 'callDebugLinks'){
-
-            // Head - Datei -> Verweis zur Klasse: HomeHead | Methode: homeHeadSwitchDebugLinks
-            $hCore->gCore['getLeadToHeadClass']     = 'HomeHead';                           // Klasse die geladen werden soll
-            $hCore->gCore['getLeadToHeadMethod']    = 'homeHeadSwitchDebugLinks';           // Methoden - Aufruf
-            $hCore->gCore['getLeadToHeadByAction']  = 'force';                              // Erzwinge das Überschreiben von Default
-
-            // Body - Datei bleibt Default!
-
-            // Footer - Datei bleibt Default!
-        }
-
-
 
 
         // Debug - Optionen - XYZ ein/ausblenden?
-        if ( ($this->gCore['getGET']['callAction'] == 'callDebugFrame') && (isset($this->gCore['getGET']['subAction'])) ){
+        if ( ($this->gCore['getGET']['callAction'] == 'callDebug') && ($this->gCore['getGET']['subAction'] == 'debugViewChange') && (isset($this->gCore['getGET']['valueAction'])) ){
 
             // Head - Datei -> Verweis zur Klasse: HomeHead | Methode: homeHeadSwitchDebugFrame
-            $hCore->gCore['getLeadToHeadClass']     = 'HomeHead';                           // Klasse die geladen werden soll
-            $hCore->gCore['getLeadToHeadMethod']    = 'homeHeadSwitchDebugFrame';           // Methoden - Aufruf
-            $hCore->gCore['getLeadToHeadByAction']  = 'force';                              // Erzwinge das Überschreiben von Default
+            $hCore->gCore['getLeadToHeadClass']     = 'Core';                                   // Klasse die geladen werden soll
+            $hCore->gCore['getLeadToHeadMethod']    = 'debugViewChange';                        // Methoden - Aufruf
+            $hCore->gCore['getLeadToHeadByAction']  = 'force';                                  // Erzwinge das Überschreiben von Default
+            $hCore->gCore['getLeadToHeadArg']       = $this->gCore['getGET']['valueAction'];    // Übergebe Argumente
 
             // Body - Datei bleibt Default!
 

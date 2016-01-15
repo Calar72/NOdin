@@ -89,8 +89,8 @@ class HomeHead extends Core
 
 
 
-    // Wechselt die Ausgabe/Anzeige des Debug-Fensters (an/aus)
-    public function homeHeadSwitchDebugFrame()
+// Wechselt die Ausgabe/Anzeige des angegebenen Debug-Fensters (div-Tag) (an/aus)
+    public function OLDdebugViewChange($arg)
     {
 
         $hCore = $this->hCore;
@@ -98,100 +98,28 @@ class HomeHead extends Core
         // Message Ausgabe vorebeiten
         $hCore->gCore['Messages']['Type'][]      = 'Info';
         $hCore->gCore['Messages']['Code'][]      = 'Debug';
-        $hCore->gCore['Messages']['Headline'][]  = 'DebugFrame on/off!';
+        $hCore->gCore['Messages']['Headline'][]  = 'Debug Informations- Fenster ein/aus!';
 
 
-        if ($_SESSION['systemConfig']['Debug']['enableDebugFrame'] == 'yes'){
-            $_SESSION['systemConfig']['Debug']['enableDebugFrame'] = 'no';
+        if ($_SESSION['systemConfig']['Debug'][$arg] == 'yes'){
+            $_SESSION['systemConfig']['Debug'][$arg] = 'no';
 
             // Message Ausgabe vorebeiten
-            $hCore->gCore['Messages']['Message'][] = 'Debug - Options-Fenster ausgeschaltet!';
+            $hCore->gCore['Messages']['Message'][] = 'Debug Informations- Fenster ausgeschaltet!';
 
             RETURN TRUE;
         }
 
 
         // Message Ausgabe vorebeiten
-        $hCore->gCore['Messages']['Message'][] = 'Debug - Options-Fenster eingeschaltet!';
+        $hCore->gCore['Messages']['Message'][] = 'Debug Informations- Fenster eingeschaltet!';
 
-        $_SESSION['systemConfig']['Debug']['enableDebugFrame'] = 'yes';
-
-
-        RETURN TRUE;
-
-    }   // END public function homeHeadSwitchDebugFrame()
-
-
-
-
-
-    // Wechselt die Ausgabe/Anzeige des Debug-Fensters (an/aus)
-    public function homeHeadSwitchDebugValue()
-    {
-
-        $hCore = $this->hCore;
-
-        // Message Ausgabe vorebeiten
-        $hCore->gCore['Messages']['Type'][]      = 'Info';
-        $hCore->gCore['Messages']['Code'][]      = 'Debug';
-        $hCore->gCore['Messages']['Headline'][]  = 'DebugValue on/off!';
-
-
-        if ($_SESSION['systemConfig']['Debug']['enableShowDebugValue'] == 'yes'){
-            $_SESSION['systemConfig']['Debug']['enableShowDebugValue'] = 'no';
-
-            // Message Ausgabe vorebeiten
-            $hCore->gCore['Messages']['Message'][] = 'Debug - Value - Ausgabe ausgeschaltet!';
-
-            RETURN TRUE;
-        }
-
-
-        // Message Ausgabe vorebeiten
-        $hCore->gCore['Messages']['Message'][] = 'Debug - Value - Ausgabe eingeschaltet!';
-
-        $_SESSION['systemConfig']['Debug']['enableShowDebugValue'] = 'yes';
+        $_SESSION['systemConfig']['Debug'][$arg] = 'yes';
 
 
         RETURN TRUE;
 
-    }   // END public function homeHeadSwitchDebugFrame()
-
-
-
-
-
-    // Wechselt die Ausgabe/Anzeige des Debug-Fensters (an/aus)
-    public function homeHeadSwitchDebugLinks()
-    {
-
-        $hCore = $this->hCore;
-
-        // Message Ausgabe vorebeiten
-        $hCore->gCore['Messages']['Type'][]      = 'Info';
-        $hCore->gCore['Messages']['Code'][]      = 'Debug';
-        $hCore->gCore['Messages']['Headline'][]  = 'Link - Fenster on/off!';
-
-
-        if ($_SESSION['systemConfig']['Debug']['enableShowDebugLinks'] == 'yes'){
-            $_SESSION['systemConfig']['Debug']['enableShowDebugLinks'] = 'no';
-
-            // Message Ausgabe vorebeiten
-            $hCore->gCore['Messages']['Message'][] = 'Debug - Link - Ausgabe ausgeschaltet!';
-
-            RETURN TRUE;
-        }
-
-
-        // Message Ausgabe vorebeiten
-        $hCore->gCore['Messages']['Message'][] = 'Debug - Link - Ausgabe eingeschaltet!';
-
-        $_SESSION['systemConfig']['Debug']['enableShowDebugLinks'] = 'yes';
-
-
-        RETURN TRUE;
-
-    }   // END public function homeHeadSwitchDebugFrame()
+    }
 
 
 

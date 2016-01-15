@@ -6,10 +6,23 @@ $hCore->debugInitOnLoad('File',__FILE__);
 
 // Lade den Body Content (Navigation | Content)
 ?>
-<table border=0 class="standard" style="width:100%;">
-	<tr>
-		<td style="width:140px; padding-bottom:0px" valign="top"><?php include 'body/bodyLeftNavigation.inc.php'; ?></td>
 
-		<td style="width:%; padding-bottom:0px" valign="top"><?php include 'body/bodyContent.inc.php'; ?></td>
-	</tr>
-</table>
+
+
+
+<?php
+// Deklariere Div-Tag Navigation
+?>
+<div style="display: block" id="divLeftNavigationOuter" class="divLeftNavigationOuter">
+	<?php include 'body/bodyLeftNavigation.inc.php'; ?>
+</div>
+
+
+
+
+<?php
+// Deklariere Div-Tag Content
+?>
+<div style="display: block" id="divContentOuter" class="divContentOuter">
+	<?php include 'body/bodyContent.inc.php'; ?>
+</div>

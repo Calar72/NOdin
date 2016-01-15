@@ -55,17 +55,17 @@ else {
 <div style="display: <?php print ($myDisplayOptions); ?>" id="divDebugOptions" class="divDebugOptionsOuter">
 
     <div style="display: block" id="divDebugOptionShowOptions" class="divDebugOptionShow divDebugOptionShowOptions">
-        <a class="std" href="callDebugFrame"><i class="fa fa-floppy-o"></i>&nbsp;&nbsp;<i class="<?php print ($tmpClassOptions); ?>"></i></a>&nbsp;&nbsp;<a class="std" href="" onclick="javascript:show('divDebugOptions'); return false">Debug Optionen</a>&nbsp;|
+        <a class="std" href="<?php print ($_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT']); ?>callDebug/debugViewChange/enableDebugFrame"><i class="fa fa-floppy-o"></i>&nbsp;&nbsp;<i class="<?php print ($tmpClassOptions); ?>"></i></a>&nbsp;&nbsp;<a class="std" href="" onclick="javascript:show('divDebugOptions'); return false">Debug Optionen</a>&nbsp;|
     </div>
 
 
     <div style="display: block" id="divDebugOptionShowValue" class="divDebugOptionShow divDebugOptionShowValue">
-        |&nbsp;&nbsp;<a class="std" href="callDebugValue"><i class="fa fa-floppy-o"></i>&nbsp;&nbsp;<i class="<?php print ($tmpClassDebugValue); ?>"></i></a>&nbsp;&nbsp;<a class="std" href="" onclick="javascript:show('divDebugValue'); return false">Debug Value</a>&nbsp;&nbsp;|
+        |&nbsp;&nbsp;<a class="std" href="<?php print ($_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT']); ?>callDebug/debugViewChange/enableShowDebugValue"><i class="fa fa-floppy-o"></i>&nbsp;&nbsp;<i class="<?php print ($tmpClassDebugValue); ?>"></i></a>&nbsp;&nbsp;<a class="std" href="" onclick="javascript:show('divDebugValue'); return false">Debug Value</a>&nbsp;&nbsp;|
     </div>
 
 
     <div style="display: block" id="divDebugOptionShowLinks" class="divDebugOptionShow divDebugOptionShowLinks">
-        |&nbsp;&nbsp;<a class="std" href="callDebugLinks/Links"><i class="fa fa-floppy-o"></i>&nbsp;&nbsp;<i class="<?php print ($tmpClassDebugLinks); ?>"></i></a>&nbsp;&nbsp;<a class="std" href="" onclick="javascript:show('divDebugLink'); return false">Debug Links</a></a>&nbsp;&nbsp;|
+        |&nbsp;&nbsp;<a class="std" href="<?php print ($_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT']); ?>callDebug/debugViewChange/enableShowDebugLinks"><i class="fa fa-floppy-o"></i>&nbsp;&nbsp;<i class="<?php print ($tmpClassDebugLinks); ?>"></i></a>&nbsp;&nbsp;<a class="std" href="" onclick="javascript:show('divDebugLink'); return false">Debug Links</a></a>&nbsp;&nbsp;|
     </div>
 
 </div>
