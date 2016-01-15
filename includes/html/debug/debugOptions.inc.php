@@ -112,13 +112,26 @@ else {
         <tr>
             <td>
                 <div style="display: block" id="divDebugValue" class="divDebugLinkInner">
-                    &bull;  <a href=<?php print ($_SESSION['customConfig']['WebLinks']['PHPMYADMIN']); ?>" target="_blank" class="std">PHP MyAdmin</a>
+                    &bull; <a href=<?php print ($_SESSION['customConfig']['WebLinks']['PHPMYADMIN']); ?>" target="_blank" class="std">PHP MyAdmin</a>
                     <br><br>
-                    &bull;  <a href="http://fortawesome.github.io/Font-Awesome/icons/" target="_blank" class="std">Awesome Font</a>
+                    &bull; <a href="http://fortawesome.github.io/Font-Awesome/icons/" target="_blank" class="std">Awesome Font</a>
+                    <br><br><hr>
+
+                    <br>
+                    &bull; <a href="https://github.com/" target="_blank" class="std">GitHub</a>
+                    <br><br><hr>
+
+
+                    <br>
+                    &bull; <a href="http://php.net/manual/de/" target="_blank" class="std">PHP Manual</a>
                     <br><br>
-                    &bull;  <a href="http://php.net/manual/de/" target="_blank" class="std">PHP Manual</a>
+                    &bull;  <a href="http://dev.mysql.com/doc/" target="_blank" class="std">MySQL Manual</a>
+                    <br><br><hr>
+
+                    <br>
+                    &bull; <a href="http://www.w3schools.com/css/default.asp" target="_blank" class="std">CSS3</a>
                     <br><br>
-                    &bull;  <a href="http://www.w3schools.com/css/default.asp" target="_blank" class="std">CSS3</a>
+                    &bull; <a href="http://wiki.selfhtml.org/wiki/Startseite" target="_blank" class="std">Self HTML Wiki</a>
                 </div>
             </td>
         </tr>
