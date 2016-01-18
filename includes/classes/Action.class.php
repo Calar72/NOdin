@@ -179,7 +179,7 @@ class Action extends Core
 
         // Logout angefordert?
         if ($this->gCore['getGET']['callAction'] == 'callLogout'){
-            // Head - Datei bleibt Default!
+            // head - Datei bleibt Default!
 
             // Body - Datei -> Verweis zur Klasse: Login | Methode: loginLogoutUser
             $hCore->gCore['getLeadToBodyClass']     = 'Login';                              // Klasse die geladen werden soll
@@ -198,7 +198,7 @@ class Action extends Core
 
         // Test - Seite
         if ($this->gCore['getGET']['callAction'] == 'callTest'){
-            // Head - Datei bleibt Default!
+            // head - Datei bleibt Default!
 
             // Body - Datei -> Verweis zur Klasse: HomeBody | Methode: doNothing
             $hCore->gCore['getLeadToBodyClass']     = 'HomeBody';                    // Klasse die geladen werden soll
@@ -216,7 +216,7 @@ class Action extends Core
         // Debug - Optionen - XYZ ein/ausblenden?
         if ( ($this->gCore['getGET']['callAction'] == 'callDebug') && ($this->gCore['getGET']['subAction'] == 'debugViewChange') && (isset($this->gCore['getGET']['valueAction'])) ){
 
-            // Head - Datei -> Verweis zur Klasse: HomeHead | Methode: homeHeadSwitchDebugFrame
+            // head - Datei -> Verweis zur Klasse: HomeHead | Methode: homeHeadSwitchDebugFrame
             $hCore->gCore['getLeadToHeadClass']     = 'Core';                                   // Klasse die geladen werden soll
             $hCore->gCore['getLeadToHeadMethod']    = 'debugViewChange';                        // Methoden - Aufruf
             $hCore->gCore['getLeadToHeadByAction']  = 'force';                                  // Erzwinge das Überschreiben von Default

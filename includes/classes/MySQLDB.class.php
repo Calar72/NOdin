@@ -129,6 +129,8 @@ class MySQLDB extends Debug
         // DB Verbindung fehlgeschlagen?
         if ($mysqli->connect_errno) {
 
+            header('Content-Type: text/html; charset='.$_SESSION['customConfig']['TextCharset']['Website'].'');
+
             print ("<pre>");
             $message = "FEHLER -KRITISCH FÜHRT ZU EXIT-<br>";
             $message .= "Versuch Aufbau Datenbankverbindung fehlgeschlagen!<br>";

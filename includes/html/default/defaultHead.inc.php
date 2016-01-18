@@ -1,5 +1,5 @@
 <?php
-// Standard Head - Datei laden
+// Standard head - Datei laden
 include 'includes/html/standard/standardHead.inc.php';
 
 

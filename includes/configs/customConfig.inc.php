@@ -6,13 +6,17 @@
  * Time: 10:02
  */
 
+// Aktueller Host oder IP des Servers
+//$myHost = '192.168.6.11';  // Emsdetten
+$myHost = '192.168.178.42';  // Rheine
+
 
 // Path & Links
 // Link - Full external link
-$_SESSION['customConfig']['WebLinks']['EXTHOME'] = 'http://192.168.6.11/NOdin/index.php';
+$_SESSION['customConfig']['WebLinks']['EXTHOME'] = 'http://'.$myHost.'/NOdin/index.php';
 
 // Link - External (short) link
-$_SESSION['customConfig']['WebLinks']['EXTHOMESHORT'] = 'http://192.168.6.11/NOdin/';
+$_SESSION['customConfig']['WebLinks']['EXTHOMESHORT'] = 'http://'.$myHost.'/NOdin/';
 
 // Path - Internal (short) link ... Notice: leading- and end / (slash) required
 $_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT'] = '/NOdin/';
@@ -21,7 +25,7 @@ $_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT'] = '/NOdin/';
 $_SESSION['customConfig']['WebLinks']['MAINUPLOADPATH'] = '/var/www/html/NOdin/uploads/';
 
 // Link - PHP MyAdmin
-$_SESSION['customConfig']['WebLinks']['PHPMYADMIN'] = '"http://192.168.6.11/phpmyadmin/';
+$_SESSION['customConfig']['WebLinks']['PHPMYADMIN'] = '"http://'.$myHost.'/phpmyadmin/';
 
 
 

@@ -3,7 +3,7 @@
 
 /* Main-Div für die Debug-Variablen - Ausgabe */
 .divDebugOptionsOuter {
-    z-index: 10;
+    z-index: 500;
 	position: absolute;
 	overflow: auto;
 	top: 132px;
@@ -16,7 +16,7 @@
 
 
 .divDebugOptionShow {
-    z-index: 10;
+    z-index: 500;
 	position: absolute;
 	overflow: auto;
 	top: 1px;
@@ -45,7 +45,7 @@
 
 /* Main-Div für die Debug-Variablen - Ausgabe */
 .divDebugValueOuter {
-    z-index: 10;
+    z-index: 500;
 	position: absolute;
 	overflow: auto;
 	top: 171px;
@@ -58,7 +58,7 @@
 
 /* Inneres-Div für die Debug-Variablen - Ausgabe */
 .divDebugValueInner {
-    z-index: 10;
+    z-index: 500;
 	position: absolute;
 	overflow: auto;
 	top: 19px;
@@ -74,7 +74,7 @@
 
 /* Main-Div für die Debug-Link(s) - Ausgabe */
 .divDebugLinkOuter {
-    z-index: 10;
+    z-index: 500;
 	position: absolute;
 	overflow: auto;
 	top: 171px;
@@ -88,7 +88,7 @@
 
 /* Inneres-Div für die Debug-Link(s) - Ausgabe */
 .divDebugLinkInner {
-    z-index: 10;
+    z-index: 500;
 	position: absolute;
 	overflow: auto;
 	top: 19px;
@@ -112,12 +112,13 @@
 
 .divLeftNavigationOuter{
     position: absolute;
-    overflow: auto;
+    /*overflow: auto;*/
     top: 160px;
     left: 6px;
     bottom: 36px;
     width: 160px;
     border: 1px solid rgb(122, 167, 170);
+
 
 }
 
@@ -133,7 +134,7 @@
     right: 6px;
     bottom: 36px;
     border: 1px solid rgb(122, 167, 170);
-
+	z-index: 100;
 }
 
 
