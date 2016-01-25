@@ -55,7 +55,7 @@
     position:absolute;
     top:10px;
     left:144px;
-    background: rgb(204, 250, 254);
+    background: rgb(255, 255, 255);
     padding:1px;
     border: 1px solid black;
     z-index: 600;
@@ -65,12 +65,14 @@
 {
     float:none;
     width:150px;
+    z-index: 600;
 }
 
 #primary_nav_wrap ul ul a
 {
     line-height:120%;
-    padding:10px 15px
+    padding:10px 15px;
+    z-index: 600;
 }
 
 /* Dimari, Centron usw.*/
@@ -78,9 +80,10 @@
 {
     top:10px;
     left:96%;
+    z-index: 600;
 }
 
 #primary_nav_wrap ul li:hover > ul
 {
-    display:block
+    display:block;
 }

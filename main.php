@@ -92,7 +92,9 @@ require 'includes/system/systemMain.inc.php';
 
 
 // 0070) Debug - Variable augeben?!
-//TODO JETZT IN DER systemMain.inc.php
+// Debug Optionen/Framework includen
+include 'includes/html/debug/debugFrame.inc.php';
+
 
 
 

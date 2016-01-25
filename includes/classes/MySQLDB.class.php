@@ -64,12 +64,16 @@ class MySQLDB extends Debug
 
 
 
-        // Erzeuge Datenbankverbindung
-        if ($this->mysqli == NULL){
-            $this->mysqliConnect();
-        }
+//        // Erzeuge Datenbankverbindung
+//        if ($this->mysqli == NULL){
+//            $this->mysqliConnect();
+//        }
+//
+//
+//
+//        return($this->mysqli);
 
-        return($this->mysqli);
+        return true;
 
     }    // END function __construct()
 
@@ -125,7 +129,6 @@ class MySQLDB extends Debug
         else
             $mysqli = new mysqli($this->DBHOST, $this->DBUSER, $this->DBPASSWORD, $this->DBNAME);
 
-
         // DB Verbindung fehlgeschlagen?
         if ($mysqli->connect_errno) {
 
@@ -156,6 +159,12 @@ class MySQLDB extends Debug
     // MySQLi Query
     public function query($query, $debug=false)
     {
+
+        // Verbindung hersellen?
+        // Erzeuge Datenbankverbindung
+        if ($this->mysqli == NULL){
+            $this->mysqliConnect();
+        }
 
         $mysqli = $this->mysqli;
 

@@ -119,7 +119,7 @@ print ('</div>');
 print ('<div id="body_container">');
 
     // Debug Optionen/Framework includen
-    include 'includes/html/debug/debugFrame.inc.php';
+    // include 'includes/html/debug/debugFrame.inc.php';
 
 
     // 0060) Develop - Datei includen (für diverse tmp-Ausaben bei der Entwicklung)

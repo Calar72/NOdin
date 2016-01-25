@@ -89,4 +89,22 @@ class HomeBody extends Core
 
 
 
+//    // INITIAL Erstellt die Navigationspunkte auf der linken Seite im Body
+//    public function homeBodyGetLeftNavigation()
+//    {
+//
+//        $hCore = $this->hCore;
+//
+//        $hLeftNavi = new LeftNavigation($hCore);
+//        $hLeftNavi->leftNavigationGetLeftNavigation();
+//
+//        RETURN TRUE;
+//
+//    }   // END function homeBodyGetLeftNavigation()
+
+
+
+
+
+
 }   // END class HomeBody extends Core

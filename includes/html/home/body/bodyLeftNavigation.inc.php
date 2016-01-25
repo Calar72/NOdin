@@ -9,56 +9,80 @@ $hCore->debugInitOnLoad('File',__FILE__);
 
 		<li><a href="#"><i class="fa fa-upload"></i>&nbsp;&nbsp;Datei - Upload</a>
 			<ul>
-				<li><a href="#">Stammdaten</a>
-					<ul>
-						<li><a href="#">Dimari</a></li>
-						<li><a href="#">Centron</a></li>
-					</ul>
-				</li>
+				<?php
 
-				<li><a href="#">Buchungssatz</a>
-					<ul>
-						<li><a href="#">Dimari</a></li>
-						<li><a href="#">Centron</a></li>
-					</ul>
-				</li>
+				// Konvertierungs Typ (Stammdaten , Buchungssatz usw)
+				foreach ($hCore->gCore['LNav']['ConvertType'] as $typeKey=>$souceTypeName) {
+
+					print ('<li><a href="#">'.$souceTypeName.'</a><ul>');
+
+						// Konvertierungs System (Dimari, Centron usw.)
+						foreach ($hCore->gCore['LNav']['ConvertSystem'] as $systemKey=>$sourceSystemName){
+
+							$sourceTypeID 	= $hCore->gCore['LNav']['ConvertTypeID'][$typeKey];
+							$sourceSystemID = $hCore->gCore['LNav']['ConvertSystemID'][$systemKey];
+
+							print ('<li><a href="'.$_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT'].'fileUpload/'.$sourceTypeID.'/'.$sourceSystemID.'">'.$sourceSystemName.'</a></li>');
+						}
+
+					print ('</ul></li>');
+				}
+
+				?>
 			</ul>
 		</li>
+
 
 
 		<li><a href="#"><i class="fa fa-database"></i>&nbsp;&nbsp;DB - Import</a>
 			<ul>
-				<li><a href="#">Stammdaten</a>
-					<ul>
-						<li><a href="#">Dimari</a></li>
-						<li><a href="#">Centron</a></li>
-					</ul>
-				</li>
+				<?php
 
-				<li><a href="#">Buchungssatz</a>
-					<ul>
-						<li><a href="#">Dimari</a></li>
-						<li><a href="#">Centron</a></li>
-					</ul>
-				</li>
+				// Konvertierungs Typ (Stammdaten , Buchungssatz usw)
+				foreach ($hCore->gCore['LNav']['ConvertType'] as $typeKey=>$souceTypeName) {
+
+					print ('<li><a href="#">'.$souceTypeName.'</a><ul>');
+
+					// Konvertierungs System (Dimari, Centron usw.)
+					foreach ($hCore->gCore['LNav']['ConvertSystem'] as $systemKey=>$sourceSystemName){
+
+						$sourceTypeID 	= $hCore->gCore['LNav']['ConvertTypeID'][$typeKey];
+						$sourceSystemID = $hCore->gCore['LNav']['ConvertSystemID'][$systemKey];
+
+						print ('<li><a href="'.$_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT'].'dbImport/'.$sourceTypeID.'/'.$sourceSystemID.'">'.$sourceSystemName.'</a></li>');
+					}
+
+					print ('</ul></li>');
+				}
+
+				?>
 			</ul>
 		</li>
 
+
+
 		<li><a href="#"><i class="fa fa-database"></i>&nbsp;&nbsp;DB - Export</a>
 			<ul>
-				<li><a href="#">Stammdaten</a>
-					<ul>
-						<li><a href="#">Dimari</a></li>
-						<li><a href="#">Centron</a></li>
-					</ul>
-				</li>
+				<?php
 
-				<li><a href="#">Buchungssatz</a>
-					<ul>
-						<li><a href="#">Dimari</a></li>
-						<li><a href="#">Centron</a></li>
-					</ul>
-				</li>
+				// Konvertierungs Typ (Stammdaten , Buchungssatz usw)
+				foreach ($hCore->gCore['LNav']['ConvertType'] as $typeKey=>$souceTypeName) {
+
+					print ('<li><a href="#">'.$souceTypeName.'</a><ul>');
+
+					// Konvertierungs System (Dimari, Centron usw.)
+					foreach ($hCore->gCore['LNav']['ConvertSystem'] as $systemKey=>$sourceSystemName){
+
+						$sourceTypeID 	= $hCore->gCore['LNav']['ConvertTypeID'][$typeKey];
+						$sourceSystemID = $hCore->gCore['LNav']['ConvertSystemID'][$systemKey];
+
+						print ('<li><a href="'.$_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT'].'dbExport/'.$sourceTypeID.'/'.$sourceSystemID.'">'.$sourceSystemName.'</a></li>');
+					}
+
+					print ('</ul></li>');
+				}
+
+				?>
 			</ul>
 		</li>
 

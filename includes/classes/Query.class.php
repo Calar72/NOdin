@@ -127,6 +127,31 @@ class Query extends MySQLDB
 
 
 
+            case 'leftNavigationGetConvertTypes':
+                // KonvertierungsTypen einlesen
+
+                $getQuery = "SELECT `sourceTypeName`,
+                                    `shortCut`,
+                                    `sourceTypeID`
+					          FROM sourceType
+					          WHERE `active` LIKE 'yes'
+					          ORDER BY sourceTypeName ASC";
+            break;
+
+
+
+            case 'leftNavigationGetConvertSystems':
+                // KonvertierungsSysteme einlesen
+
+                $getQuery = "SELECT `sourceSystemName`,
+                                    `sourceSystemID`
+					          FROM sourceSystem
+					          WHERE `active` LIKE 'yes'
+					          ORDER BY sourceSystemName ASC";
+                break;
+
+
+
             default:
                 echo "default";
                 break;

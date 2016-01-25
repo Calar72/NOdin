@@ -34,5 +34,5 @@ $_SESSION['systemConfig']['Requirement']['requirePHPVersion'] = '5.3.0';
 
 
 // Datenbank soll permanent - Verbunding genutzt werden? (connect/pconnect) (Default = pconnect)
-$_SESSION['systemConfig']['Setting']['DBConnectionType'] = 'pconnect';
+$_SESSION['systemConfig']['Setting']['DBConnectionType'] = 'connect';
 

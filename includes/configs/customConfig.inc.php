@@ -7,8 +7,8 @@
  */
 
 // Aktueller Host oder IP des Servers
-//$myHost = '192.168.6.11';  // Emsdetten
-$myHost = '192.168.178.42';  // Rheine
+$myHost = '192.168.6.11';  // Emsdetten
+//$myHost = '192.168.178.42';  // Rheine
 
 
 // Path & Links

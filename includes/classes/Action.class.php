@@ -190,7 +190,17 @@ class Action extends Core
             $hCore->gCore['showNoMessage'] = 'yes';         // Verhindere weitere Monitor-Ausgaben bzw. Header - Ausgaben, ein php-redirect folgt!
 
             // Footer - Datei bleibt Default!
-        }
+        }   // END Logout angefordert?
+
+
+
+
+        //TODO will ich das schicker machen?
+        // INITIAL Erstellt die Navigationspunkte auf der linken Seite im Body
+        $hCore = $this->hCore;
+
+        $hLeftNavi = new LeftNavigation($hCore);
+        $hLeftNavi->leftNavigationGetLeftNavigation();
 
 
 
@@ -207,7 +217,7 @@ class Action extends Core
             $hCore->gCore['getLeadToBodyByAction']  = 'force';                       // Erzwinge das Überschreiben von Default
 
             // Footer - Datei bleibt Default!
-        }
+        }   // END  Test - Seite
 
 
 
@@ -225,7 +235,96 @@ class Action extends Core
             // Body - Datei bleibt Default!
 
             // Footer - Datei bleibt Default!
-        }
+        }   // END Debug - Optionen - XYZ ein/ausblenden?
+
+
+
+
+
+
+
+        // Datei Upload
+        if ($this->gCore['getGET']['callAction'] == 'fileUpload'){
+
+            // Step Steuerung
+            $curStep = 0;
+
+            if ( (isset($this->gCore['getGET']['subAction'])) && (isset($this->gCore['getGET']['valueAction'])) && ($this->gCore['getGET']['subAction'] > 0) && ($this->gCore['getGET']['valueAction'] > 0) ){
+
+                // File - Upload - Daten liegen vom Server vor?
+                if ( (isset($_FILES['fileToUpload']['tmp_name'])) && ($_FILES['fileToUpload']['error'] == 0) ){
+                    // Ja ... dann führe den Datei - Upload durch
+                    $curStep = 2;
+                }
+                else {
+                    // Nein ... dann geben das Datei - Upload - Formular aus
+                    $curStep = 1;
+                }
+
+            }
+
+
+
+            // Seite 1 von 2 ... Datei zum Upload auswählen lassen
+            if ($curStep == 1){
+                // head - Datei
+                $hCore->gCore['getLeadToHeadClass']     = 'FileUpload';                                 // Klasse die geladen werden soll
+                $hCore->gCore['getLeadToHeadMethod']    = 'doNothing';                                  // Methoden - Aufruf
+
+                // Body - Datei -> Verweis zur Klasse: FileUpload | Methode: doNothing
+                $hCore->gCore['getLeadToBodySite']      = 'includes/html/fileUpload/fileUploadMain';    // Webseite die geladen werden soll
+                $hCore->gCore['getLeadToBodyByAction']  = 'force';                                      // Erzwinge das Überschreiben von Default
+
+                // Footer - Datei bleibt Default!
+            }
+
+
+
+            // Seite 2 von 2 ... führe Datei - Upload durch
+            if ($curStep == 2){
+                // head - Datei
+                $hCore->gCore['getLeadToHeadClass']     = 'FileUpload';                                 // Klasse die geladen werden soll
+                $hCore->gCore['getLeadToHeadMethod']    = 'fileUploadPerformUpload';                    // Methoden - Aufruf
+
+                // Body - Datei -> Verweis zur Klasse: FileUpload | Methode: doNothing
+                $hCore->gCore['getLeadToBodySite']      = 'includes/html/fileUpload/fileUploadMain';    // Webseite die geladen werden soll
+                $hCore->gCore['getLeadToBodyByAction']  = 'force';                                      // Erzwinge das Überschreiben von Default
+
+                // Footer - Datei bleibt Default!
+            }
+
+        }   // END Datei Upload
+
+
+
+
+        // DB Import
+        if ($this->gCore['getGET']['callAction'] == 'dbImport'){
+
+            // Step Steuerung
+            $curStep = 0;
+
+            if ( (isset($this->gCore['getGET']['subAction'])) && (isset($this->gCore['getGET']['valueAction'])) && ($this->gCore['getGET']['subAction'] > 0) && ($this->gCore['getGET']['valueAction'] > 0) ){
+                $curStep = 1;
+            }
+
+
+            // Datei zum Import auswählen
+            if ($curStep == 1){
+                // head - Datei
+                $hCore->gCore['getLeadToHeadClass']     = 'DBImport';                                 // Klasse die geladen werden soll
+                $hCore->gCore['getLeadToHeadMethod']    = 'getImports';                               // Methoden - Aufruf
+
+                // Body - Datei -> Verweis zur Klasse: FileUpload | Methode: doNothing
+                $hCore->gCore['getLeadToBodySite']      = 'includes/html/dbImport/dbImportMain';      // Webseite die geladen werden soll
+                $hCore->gCore['getLeadToBodyByAction']  = 'force';                                    // Erzwinge das Überschreiben von Default
+
+                // Footer - Datei bleibt Default!
+            }
+
+
+        }   // END DB Import
+
 
 
 

@@ -13,6 +13,9 @@ $hCore->debugInitOnLoad('File',__FILE__);
 		<td>
 			Content<br>
 			<?php
+
+
+
 			for ($i=0; $i<100; $i++){
 				echo "$i<br>";
 			}

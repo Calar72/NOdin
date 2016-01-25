@@ -23,4 +23,4 @@ RewriteRule ^([^/.]+)(/)+?.php|.class.php|.inc.php|.htm/?$ main.php?callAction=f
 RewriteRule ^([^/.]+)/?$ main.php?callAction=$1 [L]
 RewriteRule ^([^/.]+)/([^/.]+)/?$ main.php?callAction=$1&subAction=$2 [L]
 RewriteRule ^([^/.]+)/([^/.]+)/([^/.]+)/?$ main.php?callAction=$1&subAction=$2&valueAction=$3 [L]
-RewriteRule ^([^/.]+)/([^/.]+)/([^/.]+)/(.*)/?$ main.php?callAction=$1&subAction=$2&valueAction=$3&parseAction=$4 [L]
+#RewriteRule ^([^/.]+)/([^/.]+)/([^/.]+)/(.*)/?$ main.php?callAction=$1&subAction=$2&valueAction=$3&parseAction=$4 [L]
