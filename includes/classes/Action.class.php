@@ -306,6 +306,11 @@ class Action extends Core
 
             if ( (isset($this->gCore['getGET']['subAction'])) && (isset($this->gCore['getGET']['valueAction'])) && ($this->gCore['getGET']['subAction'] > 0) && ($this->gCore['getGET']['valueAction'] > 0) ){
                 $curStep = 1;
+
+                // Datei gewählt?
+                if ( (isset($this->gCore['getPOST']['sel_fileUploadID'])) && ($this->gCore['getPOST']['sel_fileUploadID'] > 0) ){
+                    $curStep = 2;
+                }
             }
 
 
@@ -314,6 +319,20 @@ class Action extends Core
                 // head - Datei
                 $hCore->gCore['getLeadToHeadClass']     = 'DBImport';                                 // Klasse die geladen werden soll
                 $hCore->gCore['getLeadToHeadMethod']    = 'getImports';                               // Methoden - Aufruf
+
+                // Body - Datei -> Verweis zur Klasse: FileUpload | Methode: doNothing
+                $hCore->gCore['getLeadToBodySite']      = 'includes/html/dbImport/dbImportMain';      // Webseite die geladen werden soll
+                $hCore->gCore['getLeadToBodyByAction']  = 'force';                                    // Erzwinge das Überschreiben von Default
+
+                // Footer - Datei bleibt Default!
+            }
+
+
+            // Datei in DB importieren
+            if ($curStep == 2){
+                // head - Datei
+                $hCore->gCore['getLeadToHeadClass']     = 'DBImport';                                 // Klasse die geladen werden soll
+                $hCore->gCore['getLeadToHeadMethod']    = 'dbImportPerformImport';                    // Methoden - Aufruf
 
                 // Body - Datei -> Verweis zur Klasse: FileUpload | Methode: doNothing
                 $hCore->gCore['getLeadToBodySite']      = 'includes/html/dbImport/dbImportMain';      // Webseite die geladen werden soll

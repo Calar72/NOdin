@@ -138,7 +138,7 @@ class DBImport extends Core
            $this->hCore->gCore['DBImportFiles'][$indexCnt]['fileUploadID'] = $row->fileUploadID;
            $this->hCore->gCore['DBImportFiles'][$indexCnt]['fileOriginName'] = $row->fileOriginName;
            $this->hCore->gCore['DBImportFiles'][$indexCnt]['uploadDateTime'] = $row->uploadDateTime;
-           $this->hCore->gCore['DBImportFiles'][$indexCnt]['fileSize'] = $row->fileSize;
+           $this->hCore->gCore['DBImportFiles'][$indexCnt]['fileSize'] = $this->formatSizeUnits($row->fileSize);
            $this->hCore->gCore['DBImportFiles'][$indexCnt]['userName'] = $row->userName;
            $this->hCore->gCore['DBImportFiles'][$indexCnt]['importCounter'] = $row->importCounter;
            $this->hCore->gCore['DBImportFiles'][$indexCnt]['downloadLink'] = $row->downloadLink;
@@ -152,6 +152,111 @@ class DBImport extends Core
         RETURN TRUE;
 
     }   // END public function getImports()
+
+
+
+
+
+    // INITIAL Datei in DB importieren
+    public function dbImportPerformImport()
+    {
+
+        $hCore = $this->hCore;
+
+        // Daten (Ort auf Server usw.) der zu importierenden Datei ermitteln
+        $query = "SELECT *
+                    FROM `fileUpload`
+                    WHERE fileUploadID = '".$hCore->gCore['getPOST']['sel_fileUploadID']."'
+                    LIMIT 1";
+
+        // Resultat der Login - Prüfung
+        $result = $this->gCoreDB->query($query);
+
+        // Betroffene Zeilen, bzw. erhaltene
+        $num_rows = $this->gCoreDB->num_rows($result);
+
+
+        // Keine Import Datei gefunden!
+        if (!$num_rows == '1'){
+
+            // Breche Methode hier ab und liefere false - Wert zurück
+
+            RETURN FALSE;
+        }
+
+        // Ergebnis in $row speichern
+        $row = $result->fetch_object();
+
+        $this->hCore->gCore['curDownloadLink'] 	    = $row->downloadLink;       // Link zur gewählten Datei
+        $this->hCore->gCore['curSourceTypeID']      = $row->sourceTypeID;       // IDt = ID Type    (Stammdaten, Buchungssatz)
+        $this->hCore->gCore['curSourceSystemID']    = $row->sourceSystemID;     // IDs = ID System  (Diamri, Centron usw)
+
+        // Datei öffnen und via getcsv in Array speichern
+        $filepath = $row->fileTargetFullPath;
+        $Data = array_map('str_getcsv', file($filepath));
+        foreach ($Data as $index=>$row){
+            $eachValueArray = str_getcsv($row[0], ";");
+
+            $myData[$index] = $eachValueArray;
+        }
+
+        // Speichere csv - Daten zur weiteren Verarbeitung in der globalen - Klassen - Variable
+        $this->hCore->gCore['csvValue'] = $myData;
+
+        // Rufe Schnittstellen - Controller auf... in dem wird zwischen den verschiedenen Systemen unterschieden
+        $this->OBSchnittstellenController();
+
+
+        // Gebe DB - Speicher wieder frei
+        $this->gCoreDB->free_result($result);
+
+
+        RETURN TRUE;
+
+    }   // END public function dbImportPerformImport()
+
+
+
+
+
+    // OBSchnittstellen - Controller
+    // Hier wird zwischen Systemen und Typen unterschieden, entsprechend werden weitere Methoden hier aufgerufen
+    private function OBSchnittstellenController()
+    {
+
+        $hCore = $this->hCore;
+
+        // Stammdaten
+        if ($this->hCore->gCore['curSourceTypeID'] == '1'){
+
+            // Dimari - System?
+            if ($this->hCore->gCore['curSourceSystemID'] == '1'){
+                //TODO Dimari Stammdaten - Import
+            }
+
+            // Centron - System?
+            elseif ($this->hCore->gCore['curSourceSystemID'] == '2'){
+                //TODO Centron Stammdaten - Import
+                $hDBImport = new DBImportCentron($hCore);
+                $hDBImport->importFileToDB();
+            }
+
+            // Webfakt - System?
+            elseif ($this->hCore->gCore['curSourceSystemID'] == '2'){
+                //TODO Centron Stammdaten - Import
+            }
+
+        }
+
+
+        // Buchnungssatz
+        elseif ($this->hCore->gCore['curSourceTypeID'] == '2'){
+            //TODO Buchungssatz verarbeiten
+        }
+
+        RETURN TRUE;
+
+    }   // END private function OBSchnittstellenController()
 
 
 
