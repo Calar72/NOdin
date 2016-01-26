@@ -303,6 +303,8 @@ class DBImportCentron extends Core
                                `Email`                  = '".$Email."'
             ";
 
+
+            //TODO Eintrag nur wenn kein Fehler passiert ist... das fange ich hier nicht ab!
             // DB Eintrag erstellen oder Updaten (Query erstellen)!
             $query = "INSERT INTO baseDataCentron ".$dynInsertQuery." ON DUPLICATE KEY UPDATE ".$dynUpdateQuery;
 

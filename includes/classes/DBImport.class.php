@@ -98,7 +98,7 @@ class DBImport extends Core
         $req_sourceTypeID   = $hCore->gCore['getGET']['subAction'];
 
         // System bekannt!
-        $req_sourceSystemID = $hCore->gCore['getGET']['valueAction'];;
+        $req_sourceSystemID = $hCore->gCore['getGET']['valueAction'];
 
 
         // Daten einlesen

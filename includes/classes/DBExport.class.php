@@ -88,9 +88,7 @@ class DBExport extends Core
 
 
 
-
-    // INITIAL Daten Importieren
-    public function getExports()
+    public function getExportsBaseDataCentron()
     {
         $hCore = $this->hCore;
 
@@ -98,7 +96,320 @@ class DBExport extends Core
         $req_sourceTypeID   = $hCore->gCore['getGET']['subAction'];
 
         // System bekannt!
-        $req_sourceSystemID = $hCore->gCore['getGET']['valueAction'];;
+        $req_sourceSystemID = $hCore->gCore['getGET']['valueAction'];
+
+        // Daten einlesen
+
+        // Summe der Datensätze
+        $query = "SELECT COUNT(*) AS sumBaseData FROM baseDataCentron WHERE 1";
+        $result = $this->gCoreDB->query($query);
+        $num_rows = $this->gCoreDB->num_rows($result);
+
+        if (!$num_rows == '1'){
+            $getSumBaseData = 0;
+        }
+        else{
+            $row = $result->fetch_object();
+            $getSumBaseData = $row->sumBaseData;
+        }
+        $hCore->gCore['baseDataInfo']['getSumBaseData'] = $getSumBaseData;
+        $this->gCoreDB->free_result($result);
+
+
+
+        // Ältester Datensatz
+        $query = "SELECT lastUpdate FROM baseDataCentron WHERE 1 ORDER BY lastUpdate ASC LIMIT 1";
+        $result = $this->gCoreDB->query($query);
+        $num_rows = $this->gCoreDB->num_rows($result);
+
+        if (!$num_rows == '1'){
+            $getOldestBaseData = 0;
+        }
+        else{
+            $row = $result->fetch_object();
+            $getOldestBaseData = $row->lastUpdate;
+        }
+        $hCore->gCore['baseDataInfo']['getOldestBaseData'] = $getOldestBaseData;
+        $this->gCoreDB->free_result($result);
+
+
+
+        // Aktuellste Datensatz
+        $query = "SELECT lastUpdate FROM baseDataCentron WHERE 1 ORDER BY lastUpdate DESC LIMIT 1";
+        $result = $this->gCoreDB->query($query);
+        $num_rows = $this->gCoreDB->num_rows($result);
+
+        if (!$num_rows == '1'){
+            $getNewestBaseData = 0;
+        }
+        else{
+            $row = $result->fetch_object();
+            $getNewestBaseData = $row->lastUpdate;
+        }
+        $hCore->gCore['baseDataInfo']['getNewestBaseData'] = $getNewestBaseData;
+        $this->gCoreDB->free_result($result);
+
+
+
+        // Benutzer
+        $query = "SELECT userName FROM user u, baseDataCentron as b WHERE u.userID = b.userID GROUP BY u.userID";
+        $result = $this->gCoreDB->query($query);
+        $num_rows = $this->gCoreDB->num_rows($result);
+
+        if (!$num_rows >= '1'){
+            $userNames[] = '';
+        }
+        else{
+            while($row = $result->fetch_object()){
+                $userNames[] = $row->userName;
+            }
+        }
+        $hCore->gCore['baseDataInfo']['userNames'] = $userNames;
+        $this->gCoreDB->free_result($result);
+
+
+
+
+        // Sammelkonten
+        $query = "SELECT Sammelkonto FROM baseDataCentron WHERE 1 GROUP BY Sammelkonto";
+        $result = $this->gCoreDB->query($query);
+        $num_rows = $this->gCoreDB->num_rows($result);
+
+        if (!$num_rows >= '1'){
+            $Sammelkonten[] = '';
+        }
+        else{
+            while($row = $result->fetch_object()){
+                $Sammelkonten[] = $row->Sammelkonto;
+            }
+        }
+        $hCore->gCore['baseDataInfo']['Sammelkonten'] = $Sammelkonten;
+        $this->gCoreDB->free_result($result);
+
+
+
+
+        // Zahlungsart
+        $query = "SELECT Zahlungsart FROM baseDataCentron WHERE 1 GROUP BY Zahlungsart";
+        $result = $this->gCoreDB->query($query);
+        $num_rows = $this->gCoreDB->num_rows($result);
+
+        if (!$num_rows >= '1'){
+            $Zahlungsarten[] = '';
+        }
+        else{
+            while($row = $result->fetch_object()){
+                $Zahlungsarten[] = $row->Zahlungsart;
+            }
+        }
+        $hCore->gCore['baseDataInfo']['Zahlungsarten'] = $Zahlungsarten;
+        $this->gCoreDB->free_result($result);
+
+        RETURN TRUE;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function doExportsBaseDataCentron()
+    {
+        $hCore = $this->hCore;
+
+        // Feldnamen einlesen
+        $query = "SHOW COLUMNS FROM baseDataCentron";
+        $result = $this->gCoreDB->query($query);
+        $num_rows = $this->gCoreDB->num_rows($result);
+
+        if (!$num_rows >= '1'){
+            RETURN FALSE;
+        }
+
+        while($row = $result->fetch_object()) {
+            $dbFieldnames[] = $row->Field;
+        }
+        $this->gCoreDB->free_result($result);
+
+
+
+
+
+
+        // Stammdaten einlesen
+        $query = "SELECT * FROM baseDataCentron ORDER BY Name1, Name2";
+        $result = $this->gCoreDB->query($query);
+        $num_rows = $this->gCoreDB->num_rows($result);
+
+        if (!$num_rows >= '1'){
+            RETURN FALSE;
+        }
+
+
+        $cntIndex = 0;
+        while($row = $result->fetch_object()) {
+
+            foreach ($dbFieldnames as $curFieldname){
+                $hCore->gCore['csvDaten'][$cntIndex][$curFieldname] = $row->$curFieldname;  // Automatisch die Feldnamen als Variable benutzen
+            }
+            $cntIndex++;
+        }
+        $this->gCoreDB->free_result($result);
+
+
+
+
+
+        $csv = "";
+
+        $cnt_kunden = 0;
+
+        foreach ($hCore->gCore['csvDaten'] as $kunde){
+
+            $cnt_kunden++;
+
+            $personenkonto 	= trim($kunde['Personenkonto']);	// Personenkonto sprich Kundennummer
+
+            $tilde = '~';
+
+            $csv .= "S~";
+            $csv .= $personenkonto . $tilde;    // Personenkonto
+            $csv .= $kunde['Name1'] . "~";               // Name1
+            $csv .= $kunde['Name2'] . "~";               // Name2
+            $csv .= $kunde['Sammelkonto']. "~";                  // Sammelkonto
+            $csv .= $kunde['Zahlungsart']. "~";                      // Zahlungsart
+            $csv .= "~";                        // Mandatsreferenznummer
+            $csv .= "~";                        // Ländercode
+            $csv .= "~";                        // BLZ
+            $csv .= "~";                        // BIC
+            $csv .= "~";                        // Kontonummer
+            $csv .= "~";                        // IBAN
+            $csv .= "~";                        // Anrede Brief
+            $csv .= "~";                        // Anschrift - Anrede
+            $csv .= $kunde['Anschrift_Name1'] . "~";    // Anschrift - Name1
+            $csv .= $kunde['Anschrift_Name2'] . "~";    // Anschrift - Name2
+            $csv .= "~";                        // Anschrift - Name3
+            $csv .= "~";                        // Anschrift - Länderkennzeichen
+            $csv .= $kunde['Anschrift_PLZ'] . $tilde;              // Anschrift - PLZ
+            $csv .= $kunde['Anschrift_Ort'] . $tilde;              // Anschrift - Ort
+            $csv .= $kunde['Anschrift_Strasse'] . "~";        // Anschrift - Straße
+            $csv .= $kunde['Anschrift_Hausnummer'] . "~";          // Anschrift - Hausnummer
+            $csv .= $kunde['Zusatzhausnummer'] . "~";    // Zusatzhausnummer
+            $csv .= "~";                        // Anschrift - Postfach
+            $csv .= "~";                        // Anschrift Name1 abw. Kontoinhaber
+            $csv .= "~";                        // Anschrift Name2 abw. Kontoinhaber
+            $csv .= "~";                        // Anschrift PLZ abw. Kontoinhaber
+            $csv .= "~";                        // Anschrift Ort abw. Kontoinhaber
+            $csv .= "~";                        // Anschrift Stra�e abw. Kontoinhaber
+            $csv .= "~";                        // Anschrift Hnr abw. Kontoinhaber
+            $csv .= "~";                        // Anschrift zus. Hnr abw. Kontoinhaber
+            $csv .= $kunde['Telefon'] . $tilde;          // Telefon
+            $csv .= "~";                        // Fax
+            $csv .= $kunde['Email'] . $tilde;            // Email
+            $csv .= "~";                        // Aktennummer
+            $csv .= "~";                        // Sortierkennzeichen
+            $csv .= "~";                        // EG-Identnummer
+            $csv .= "~";                        // Branche
+            $csv .= "~";                        // Zahl-bed. Auftr.wes
+            $csv .= "~";                        // Preisgruppe Auftr.wes
+
+            $csv .= "\r\n";
+
+        }   // END foreach ($hCore->gCore['csvDaten'] as $kunde){
+
+        // Prüfsumme
+        $csv .= "P~";
+        $csv .= $cnt_kunden . "~";
+        $csv .= "~"; // Gesamtanzahl der Sätze "A" innerhalb der Datei
+        $csv .= "~"; // Gesamtsumme aller Bruttobeträge der Sätze "A"
+        $csv .= "~"; // Gesamtanzahl der Sätze "B" innerhalb der Datei
+        $csv .= "~"; // Gesamtsumme aller Bruttobeträge der Sätze "B"
+        $csv .= "~"; // Gesamtanzahl der Sätze "C" innerhalb der Datei
+        $csv .= "~"; // Gesamtsumme aller Nettobeträge der Sätze "A"
+        $csv .= "~"; // Gesamtsumme aller Steuerbeträge der Sätze "A"
+
+        $csv .= "\r\n";
+
+
+        // Informationen aufbereiten
+        $typeIndex = array_search($hCore->gCore['getGET']['subAction'], $hCore->gCore['LNav']['ConvertTypeID']);
+        $typeInfo = $hCore->gCore['LNav']['ConvertType'][$typeIndex];
+
+        $systemIndex = array_search($hCore->gCore['getGET']['valueAction'], $hCore->gCore['LNav']['ConvertSystemID']);
+        $systemInfo = $hCore->gCore['LNav']['ConvertSystem'][$systemIndex];
+
+
+        // TODO Export - Verzeichnis Funktion erstellen (Centron)
+
+        $downloadLink = 'CentronStammdatenExport';
+
+        // '/var/www/html/www/uploads/';
+        $exportpath = $_SESSION['customConfig']['WebLinks']['MAINUPLOADPATH'];
+        $storeFile = 'uploads/' . $downloadLink . '_exp.csv';
+        $newDownloadLink = $_SESSION['customConfig']['WebLinks']['EXTHOMESHORT'].$storeFile;
+
+        $fp = fopen($storeFile, 'w');
+        fwrite($fp, $csv);
+        fclose($fp);
+
+        // Message Ausgabe vorebeiten
+        $hCore->gCore['Messages']['Type'][]      = 'Done';
+        $hCore->gCore['Messages']['Code'][]      = 'DBImport';
+        $hCore->gCore['Messages']['Headline'][]  = 'DB - Import <i class="fa fa-arrow-right"></i> '.$typeInfo.' <i class="fa fa-arrow-right"></i> '.$systemInfo;
+        $hCore->gCore['Messages']['Message'][]   = 'DB - Import erfolgreich!<br>Die Datei kann jetzt <a href="'.$newDownloadLink.'" class="std" target=_blank>HIER</a> heruntergeladen werden!';
+
+
+        $hCore->gCore['getLeadToBodySite']          = 'includes/html/home/homeBody';    // Webseite die geladen werden soll
+
+
+        RETURN TRUE;
+
+    }   // END public function doExportsBaseDataCentron()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // INITIAL Daten Importieren
+    public function OLD_getExports()
+    {
+        $hCore = $this->hCore;
+
+        // Typ bekannt!
+        $req_sourceTypeID   = $hCore->gCore['getGET']['subAction'];
+
+        // System bekannt!
+        $req_sourceSystemID = $hCore->gCore['getGET']['valueAction'];
 
 
         // Daten einlesen
