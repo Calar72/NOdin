@@ -8,18 +8,10 @@ $hCore->debugInitOnLoad('File',__FILE__);
 
 
 
-<table border=1 class="standard" style="width:100%">
+<table border=0 class="standard" style="width:100%">
 	<tr>
 		<td>
-			Content<br>
-			<?php
-
-
-
-			for ($i=0; $i<100; $i++){
-				echo "$i<br>";
-			}
-			?>
+			...<br>
 		</td>
 	</tr>
 </table>

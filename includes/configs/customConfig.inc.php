@@ -7,8 +7,16 @@
  */
 
 // Aktueller Host oder IP des Servers
-//$myHost = '192.168.6.11';  // Emsdetten
-$myHost = '192.168.178.42';  // Rheine
+$myHost = '192.168.6.11';  // Emsdetten
+//$myHost = '192.168.178.42';  // Rheine
+
+
+// Buchung und System
+// Stammdaten - Sammelkonto für Centron Kunden
+$_SESSION['customConfig']['Centron']['Sammelkonto'] = '122800';
+
+// Stammdaten - Zahlungsart (Selbstzahler sprich Überweiser) ?!
+$_SESSION['customConfig']['Centron']['Zahlungsart'] = 'SZ';
 
 
 // Path & Links

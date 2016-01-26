@@ -20,10 +20,10 @@
  * 				        			|-> ConcreteClass20	    Core - Child - AnyCreature
  *
  */
-class DBImport extends Core
+class DBExport extends Core
 {
 
-    public $gLeftNavigation = array();
+    public $gDBExport = array();
 
     private $hCore;	            // Privates Core Objekt
 
@@ -90,7 +90,7 @@ class DBImport extends Core
 
 
     // INITIAL Daten Importieren
-    public function getImports()
+    public function getExports()
     {
         $hCore = $this->hCore;
 
@@ -154,7 +154,7 @@ class DBImport extends Core
     }   // END public function getImports()
 
 
-
+/*
 
 
     // INITIAL Datei in DB importieren
@@ -295,9 +295,9 @@ class DBImport extends Core
 
     }   // END private function OBSchnittstellenController()
 
+*/
 
 
 
 
-
-}   // END class DBImport extends Core
+}   // END class DBExport extends Core

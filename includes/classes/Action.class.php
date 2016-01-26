@@ -348,6 +348,54 @@ class Action extends Core
 
 
 
+        // DB Export
+        if ($this->gCore['getGET']['callAction'] == 'dbExport'){
+
+            // Step Steuerung
+            $curStep = 0;
+
+            if ( (isset($this->gCore['getGET']['subAction'])) && (isset($this->gCore['getGET']['valueAction'])) && ($this->gCore['getGET']['subAction'] > 0) && ($this->gCore['getGET']['valueAction'] > 0) ){
+                $curStep = 1;
+
+                // Datei gewählt?
+                if ( (isset($this->gCore['getPOST']['sel_fileUploadID'])) && ($this->gCore['getPOST']['sel_fileUploadID'] > 0) ){
+                    $curStep = 2;
+                }
+            }
+
+
+            // Datei zum Export auswählen
+            if ($curStep == 1){
+                // head - Datei
+                $hCore->gCore['getLeadToHeadClass']     = 'DBExport';                                 // Klasse die geladen werden soll
+                $hCore->gCore['getLeadToHeadMethod']    = 'getExports';                               // Methoden - Aufruf
+
+                // Body - Datei -> Verweis zur Klasse: FileUpload | Methode: doNothing
+                $hCore->gCore['getLeadToBodySite']      = 'includes/html/dbExport/dbExportMain';      // Webseite die geladen werden soll
+                $hCore->gCore['getLeadToBodyByAction']  = 'force';                                    // Erzwinge das Überschreiben von Default
+
+                // Footer - Datei bleibt Default!
+            }
+
+
+            // Datei in DB importieren
+            if ($curStep == 2){
+                // head - Datei
+                $hCore->gCore['getLeadToHeadClass']     = 'DBExport';                                 // Klasse die geladen werden soll
+                $hCore->gCore['getLeadToHeadMethod']    = 'dbExportPerformExport';                    // Methoden - Aufruf
+
+                // Body - Datei -> Verweis zur Klasse: FileUpload | Methode: doNothing
+                $hCore->gCore['getLeadToBodySite']      = 'includes/html/dbExport/dbExportMain';      // Webseite die geladen werden soll
+                $hCore->gCore['getLeadToBodyByAction']  = 'force';                                    // Erzwinge das Überschreiben von Default
+
+                // Footer - Datei bleibt Default!
+            }
+
+
+        }   // END DB Export
+
+
+
         RETURN TRUE;
 
     }   // END function initOnDefault()

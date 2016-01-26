@@ -89,11 +89,11 @@ class DBImportCentron extends Core
 
 
 
-    // INITIAL Daten aufbereiten und in DB speichern
-    public function importFileToDB()
+    // INITIAL Daten (Stammdaten) aufbereiten und in DB speichern
+    public function importBaseDataFileToDB()
     {
         // OBSchnittstelle klassenspezifisch aufrufen
-        $this->OBSchnittstelleCentron();
+        $this->OBSchnittstelleBaseDataCentron();
 
         RETURN TRUE;
 
@@ -103,8 +103,22 @@ class DBImportCentron extends Core
 
 
 
+    // INITIAL Daten (Buchungssatz) aufbereiten und in DB speichern
+    public function importBookingDataFileToDB()
+    {
+        // OBSchnittstelle klassenspezifisch aufrufen
+        $this->OBSchnittstelleBookingDataCentron();
+
+        RETURN TRUE;
+
+    }   // END public function importBookingDataFileToDB()
+
+
+
+
+
     // csv Daten aufbereiten
-    private function OBSchnittstelleCentron()
+    private function OBSchnittstelleBaseDataCentron()
     {
 
         $hCore = $this->hCore;
@@ -238,64 +252,64 @@ class DBImportCentron extends Core
 
             $personenkonto 	= trim($kunde[0]);	// Personenkonto sprich Kundennummer
 
-            $tilde = '~';
+            $dynInsertQuery = "(
+                                `userID`,
+                                `Personenkonto`,
+                                `Name1`,
+                                `Name2`,
+                                `Sammelkonto`,
+                                `Zahlungsart`,
+                                `Anschrift_Name1`,
+                                `Anschrift_Name2`,
+                                `Anschrift_PLZ`,
+                                `Anschrift_Ort`,
+                                `Anschrift_Strasse`,
+                                `Anschrift_Hausnummer`,
+                                `Zusatzhausnummer`,
+                                `Telefon`,
+                                `Email`
+                                ) VALUES (
+                                '".$_SESSION['Login']['User']['userID']."',
+                                '".$personenkonto."',
+                                '".$name1."',
+                                '".$name2."',
+                                '".$_SESSION['customConfig']['Centron']['Sammelkonto']."',
+                                '".$_SESSION['customConfig']['Centron']['Zahlungsart']."',
+                                '".$anschrifts_name1."',
+                                '".$anschrifts_name2."',
+                                '".$PLZ."',
+                                '".$Ort."',
+                                '".$strassenname."',
+                                '".$hausnummer."',
+                                '".$hausnummerzusatz."',
+                                '".$Telefon."',
+                                '".$Email."'
+                                )
+                                ";
 
-            $csv .= "S~";
-            $csv .= $personenkonto . $tilde;    // Personenkonto
-            $csv .= $name1 . "~";               // Name1
-            $csv .= $name2 . "~";               // Name2
-            $csv .= "122800~";                  // Sammelkonto
-            $csv .= "SZ~";                      // Zahlungsart
-            $csv .= "~";                        // Mandatsreferenznummer
-            $csv .= "~";                        // Ländercode
-            $csv .= "~";                        // BLZ
-            $csv .= "~";                        // BIC
-            $csv .= "~";                        // Kontonummer
-            $csv .= "~";                        // IBAN
-            $csv .= "~";                        // Anrede Brief
-            $csv .= "~";                        // Anschrift - Anrede
-            $csv .= $anschrifts_name1 . "~";    // Anschrift - Name1
-            $csv .= $anschrifts_name2 . "~";    // Anschrift - Name2
-            $csv .= "~";                        // Anschrift - Name3
-            $csv .= "~";                        // Anschrift - Länderkennzeichen
-            $csv .= $PLZ . $tilde;              // Anschrift - PLZ
-            $csv .= $Ort . $tilde;              // Anschrift - Ort
-            $csv .= $strassenname . "~";        // Anschrift - Straße
-            $csv .= $hausnummer . "~";          // Anschrift - Hausnummer
-            $csv .= $hausnummerzusatz . "~";    // Zusatzhausnummer
-            $csv .= "~";                        // Anschrift - Postfach
-            $csv .= "~";                        // Anschrift Name1 abw. Kontoinhaber
-            $csv .= "~";                        // Anschrift Name2 abw. Kontoinhaber
-            $csv .= "~";                        // Anschrift PLZ abw. Kontoinhaber
-            $csv .= "~";                        // Anschrift Ort abw. Kontoinhaber
-            $csv .= "~";                        // Anschrift Stra�e abw. Kontoinhaber
-            $csv .= "~";                        // Anschrift Hnr abw. Kontoinhaber
-            $csv .= "~";                        // Anschrift zus. Hnr abw. Kontoinhaber
-            $csv .= $Telefon . $tilde;          // Telefon
-            $csv .= "~";                        // Fax
-            $csv .= $Email . $tilde;            // Email
-            $csv .= "~";                        // Aktennummer
-            $csv .= "~";                        // Sortierkennzeichen
-            $csv .= "~";                        // EG-Identnummer
-            $csv .= "~";                        // Branche
-            $csv .= "~";                        // Zahl-bed. Auftr.wes
-            $csv .= "~";                        // Preisgruppe Auftr.wes
+            $dynUpdateQuery = "`userID`                 = '".$_SESSION['Login']['User']['userID']."',
+                               `Name1`                  = '".$name1."',
+                               `Name2`                  = '".$name2."',
+                               `Sammelkonto`            = '".$_SESSION['customConfig']['Centron']['Sammelkonto']."',
+                               `Zahlungsart`            = '".$_SESSION['customConfig']['Centron']['Zahlungsart']."',
+                               `Anschrift_Name1`        = '".$anschrifts_name1."',
+                               `Anschrift_Name2`        = '".$anschrifts_name2."',
+                               `Anschrift_PLZ`          = '".$PLZ."',
+                               `Anschrift_Ort`          = '".$Ort."',
+                               `Anschrift_Strasse`      = '".$strassenname."',
+                               `Anschrift_Hausnummer`   = '".$hausnummer."',
+                               `Zusatzhausnummer`       = '".$hausnummerzusatz."',
+                               `Telefon`                = '".$Telefon."',
+                               `Email`                  = '".$Email."'
+            ";
 
-            $csv .= "\r\n";
-        }
+            // DB Eintrag erstellen oder Updaten (Query erstellen)!
+            $query = "INSERT INTO baseDataCentron ".$dynInsertQuery." ON DUPLICATE KEY UPDATE ".$dynUpdateQuery;
 
-        // Prüfsumme
-        $csv .= "P~";
-        $csv .= $cnt_kunden . "~";
-        $csv .= "~"; // Gesamtanzahl der Sätze "A" innerhalb der Datei
-        $csv .= "~"; // Gesamtsumme aller Bruttobeträge der Sätze "A"
-        $csv .= "~"; // Gesamtanzahl der Sätze "B" innerhalb der Datei
-        $csv .= "~"; // Gesamtsumme aller Bruttobeträge der Sätze "B"
-        $csv .= "~"; // Gesamtanzahl der Sätze "C" innerhalb der Datei
-        $csv .= "~"; // Gesamtsumme aller Nettobeträge der Sätze "A"
-        $csv .= "~"; // Gesamtsumme aller Steuerbeträge der Sätze "A"
+            // DB Eintrag erstellen oder Updaten!
+            $this->gCoreDB->query($query);
 
-        $csv .= "\r\n";
+        }   // END foreach ($zeilen as $kunde){
 
 
         // Informationen aufbereiten
@@ -317,9 +331,6 @@ class DBImportCentron extends Core
                     $infoOut .= "<br>" . $varname . ": " . $info;
 
             }
-            $hMessage->storeMessage('ERROR','Export-Datei nicht erstellt! Fehler bei folgenden Kundennummer(n): '.$infoOut);
-
-
 
             // Message Ausgabe vorebeiten
             $hCore->gCore['Messages']['Type'][]      = 'Error';
@@ -329,71 +340,129 @@ class DBImportCentron extends Core
         }
         else{
 
-            // TODO Export - Verzeichnis Funktion erstellen (Centron)
-
-            // '/var/www/html/www/uploads/';
-            $exportpath = $_SESSION['customConfig']['WebLinks']['MAINUPLOADPATH'];
-            $storeFile = $downloadLink . '_exp.csv';
-            $newDownloadLink = $_SESSION['customConfig']['WebLinks']['EXTHOMESHORT'].$storeFile;
-
-            $fp = fopen($storeFile, 'w');
-            fwrite($fp, $csv);
-            fclose($fp);
+            // Import Counter aktuallisieren
+            $query = "UPDATE fileUpload SET importCounter = importCounter+1 WHERE fileUploadID = '".$hCore->gCore['getPOST']['sel_fileUploadID']."' LIMIT 1";
+            $this->gCoreDB->query($query);
 
             // Message Ausgabe vorebeiten
             $hCore->gCore['Messages']['Type'][]      = 'Done';
             $hCore->gCore['Messages']['Code'][]      = 'DBImport';
             $hCore->gCore['Messages']['Headline'][]  = 'DB - Import <i class="fa fa-arrow-right"></i> '.$typeInfo.' <i class="fa fa-arrow-right"></i> '.$systemInfo;
-            $hCore->gCore['Messages']['Message'][]   = 'DB - Import erfolgreich!<br>Die Datei kann jetzt <a href="'.$newDownloadLink.'" class="std" target=_blank>HIER</a> heruntergeladen werden!';
-
+            $hCore->gCore['Messages']['Message'][]   = 'DB - Import erfolgreich!<br>Die Datei kann jetzt über "DB - Export" exportiert werden!';
 
             $hCore->gCore['getLeadToBodySite']          = 'includes/html/home/homeBody';    // Webseite die geladen werden soll
         }
 
 
+        RETURN TRUE;
 
-        /*
-        // Fehler aufgetreten?
-        if ( (count($errorArray) > 0) && ($_SESSION['Develop']['ForceExportBaseData'] == 'no') ){
+    }   // END private function OBSchnittstelleCentron()
 
-            $infoOut = '';
-            foreach ($errorArray as $key){
 
-                foreach ($key as $varname=>$info)
-                    $infoOut .= "<br>" . $varname . ": " . $info;
 
+
+
+
+
+
+    /////////////////////////////////// Buchungssatz //////////////////////////////////
+
+
+
+
+
+    // Importiert .txt Buchungsdatei in DB
+    private function OBSchnittstelleBookingDataCentron()
+    {
+        $hCore = $this->hCore;
+
+        $zeilen         = $hCore->gCore['csvValue'];
+
+        foreach ($zeilen as $bookingSet){
+
+            preg_match_all("/(\d+)\.(\d+)\.(\d+)/i", trim($bookingSet[0]), $splitDate);
+
+            $Datum          = '20' . $splitDate[3][0] . '-' . $splitDate[2][0] . '-' . $splitDate[1][0];
+            $RechnungsNr    = trim($bookingSet[1]);
+            $Buchungstext   = trim($bookingSet[2]);
+            $Erloeskonto    = trim($bookingSet[3]);
+            $KundenNummer   = trim($bookingSet[4]);
+            $Brutto         = trim($bookingSet[5]);
+            $MwSt           = trim($bookingSet[6]);
+            $Kostenstelle   = trim($bookingSet[7]);
+
+            if (strlen($RechnungsNr) < 1){
+                continue;
             }
-            $hMessage->storeMessage('ERROR','Export-Datei nicht erstellt! Fehler bei folgenden Kundennummer(n): '.$infoOut);
-        }
-        else{
 
-            // TODO Export - Verzeichnis Funktion erstellen (Centron)
-
-            // '/var/www/html/www/uploads/';
-            $exportpath = $_SESSION['CONFIG']['cMainUploadPath'];
-            $storeFile = $downloadLink . '_exp.csv';
-
-            $fp = fopen($storeFile, 'w');
-            fwrite($fp, $csv);
-            fclose($fp);
-
-            $hMessage->storeMessage('DONE','Export-Datei erstellt! Download: <a href="'.$storeFile.'" class="std" target=_blank>HIER</a>!');
-        }
-        */
+            // NULL - Werte abfangen
+            if (strlen($Datum) < 1) { $Datum = '0000-00-00'; }
+            if (strlen($Buchungstext) < 1) { $Buchungstext = '0'; }
+            if (strlen($Erloeskonto) < 1) { $Erloeskonto = '0'; }
+            if (strlen($KundenNummer) < 1) { $KundenNummer = '0'; }
+            if (strlen($Brutto) < 1) { $Brutto = '0'; }
+            if (strlen($MwSt) < 1) { $MwSt = '0'; }
+            if (strlen($Kostenstelle) < 1) { $Kostenstelle = '0'; }
 
 
-        /*
-        echo "<pre><hr>";
-        print_r($csv);
-        echo "<hr>Fehler:<br><br>";
-        print_r($errorArray);
-        echo "<hr></pre>";
-        */
-    }   // END private function OBSchnittstelleCentron(...)
+            // Zeit jetzt
+            $curTime = date("Y-m-d H:i:s");
+
+            // DB Einträge erstellen
+            $query = "INSERT INTO bookingDataCentron (
+                                                      `importDate`,
+                                                      `userID`,
+                                                      `Datum`,
+                                                      `RechnungsNr`,
+                                                      `Buchungstext`,
+                                                      `Erloeskonto`,
+                                                      `KundenNummer`,
+                                                      `Brutto`,
+                                                      `MwSt`,
+                                                      `Kostenstelle`
+                                                      ) VALUES (
+                                                      '".$curTime."',
+                                                      '".$_SESSION['Login']['User']['userID']."',
+                                                      '".$Datum."',
+                                                      '".$RechnungsNr."',
+                                                      '".$Buchungstext."',
+                                                      '".$Erloeskonto."',
+                                                      '".$KundenNummer."',
+                                                      '".$Brutto."',
+                                                      '".$MwSt."',
+                                                      '".$Kostenstelle."'
+                                                      )";
+
+            // DB Eintrag erstellen!
+            $this->gCoreDB->query($query);
 
 
+        }   // END foreach ($zeilen as $bookingSet){
 
 
+        // Import Counter aktuallisieren
+        $query = "UPDATE fileUpload SET importCounter = importCounter+1 WHERE fileUploadID = '".$hCore->gCore['getPOST']['sel_fileUploadID']."' LIMIT 1";
+        $this->gCoreDB->query($query);
+
+
+        // Informationen aufbereiten
+        $typeIndex = array_search($hCore->gCore['curSourceTypeID'], $hCore->gCore['LNav']['ConvertTypeID']);
+        $typeInfo = $hCore->gCore['LNav']['ConvertType'][$typeIndex];
+
+        $systemIndex = array_search($hCore->gCore['curSourceSystemID'], $hCore->gCore['LNav']['ConvertSystemID']);
+        $systemInfo = $hCore->gCore['LNav']['ConvertSystem'][$systemIndex];
+
+        // Message Ausgabe vorebeiten
+        $hCore->gCore['Messages']['Type'][]      = 'Done';
+        $hCore->gCore['Messages']['Code'][]      = 'DBImport';
+        $hCore->gCore['Messages']['Headline'][]  = 'DB - Import <i class="fa fa-arrow-right"></i> '.$typeInfo.' <i class="fa fa-arrow-right"></i> '.$systemInfo;
+        $hCore->gCore['Messages']['Message'][]   = 'DB - Import erfolgreich!<br>Die Datei kann jetzt über "DB - Export" exportiert werden!';
+
+        $hCore->gCore['getLeadToBodySite']          = 'includes/html/home/homeBody';    // Webseite die geladen werden soll
+
+        RETURN TRUE;
+
+    }   // END private function OBSchnittstelleBookingDataCentron()
 
 
 

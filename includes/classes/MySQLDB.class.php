@@ -129,6 +129,7 @@ class MySQLDB extends Debug
         else
             $mysqli = new mysqli($this->DBHOST, $this->DBUSER, $this->DBPASSWORD, $this->DBNAME);
 
+
         // DB Verbindung fehlgeschlagen?
         if ($mysqli->connect_errno) {
 
