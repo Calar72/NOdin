@@ -395,7 +395,27 @@ class Action extends Core
             }
 
 
-        }   // END DB Export
+
+
+            // Centron Buchungssatz?
+            if ( (isset($this->gCore['getGET']['subAction']) && ($this->gCore['getGET']['subAction'] == '2')) && (isset($this->gCore['getGET']['valueAction']) && ($this->gCore['getGET']['valueAction'] == '2')) ){
+                // head - Datei
+                $hCore->gCore['getLeadToHeadClass']     = 'DBExport';                                 // Klasse die geladen werden soll
+                $hCore->gCore['getLeadToHeadMethod']    = 'getExportsBookingDataCentronInitial';                // Methoden - Aufruf
+
+                // Body - Datei -> Verweis zur Klasse: FileUpload | Methode: doNothing
+                $hCore->gCore['getLeadToBodySite']      = 'includes/html/dbExport/dbExportMainBookingDataCentron';  // Webseite die geladen werden soll
+                $hCore->gCore['getLeadToBodyByAction']  = 'force';                                    // Erzwinge das Überschreiben von Default
+
+                // Footer - Datei bleibt Default!
+            }
+
+
+
+
+
+
+            }   // END DB Export
 
 
 

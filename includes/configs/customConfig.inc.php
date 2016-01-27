@@ -18,6 +18,13 @@ $_SESSION['customConfig']['Centron']['Sammelkonto'] = '122800';
 // Stammdaten - Zahlungsart (Selbstzahler sprich Überweiser) ?!
 $_SESSION['customConfig']['Centron']['Zahlungsart'] = 'SZ';
 
+// Centron Geschäftsbereich Geschäfts-Kunden ?!
+$_SESSION['customConfig']['Centron']['GeschaeftsbereichNonPrivate'] = '814';
+// Centron Geschäftsbereich Privat-Kunden ?!
+$_SESSION['customConfig']['Centron']['GeschaeftsbereichPrivate'] = '813';
+// Währung
+$_SESSION['customConfig']['Centron']['Waehrung'] = 'EUR';
+
 
 // Path & Links
 // Link - Full external link

@@ -20,7 +20,7 @@
  * 				        			|-> ConcreteClass20	    Core - Child - AnyCreature
  *
  */
-class DBExport extends Core
+class OLD_DBExport extends Core
 {
 
     public $gDBExport = array();
@@ -540,21 +540,6 @@ class DBExport extends Core
         $lastCustomerNumber = 0;
         $lastBookingNumber = 0;
 
-        $curIndex = 0;
-        $curIndexC = 0;
-        $curIndexB = 0;
-        $curIndexA = 0;
-
-        $mainArrayIndex = 0;
-
-
-        $indexMain = 0;
-        $indexA = 0;
-        $indexB = 0;
-        $indexC =0;
-
-        $setCnt =0;
-
         foreach ($hCore->gCore['BuchungsDaten'] as $bookingSet){
 
 
@@ -569,195 +554,31 @@ class DBExport extends Core
             // ... Satz C (Also Detail) anfügen
 
 
-
-            // A Satz
-            if ($curCustomerNumber != $lastCustomerNumber){
-                // A Satz hinzufügen
-                $hCore->gCore['ExportBuchungsDaten'][$setCnt]['A']['Satzart']         = 'A';                            // Satzart
-
-                $indexB = 0;
-            }
-
-
-
-            // B Satz
-            if ($curBookingNumber != $lastBookingNumber){
-                // B Satz hinzufügen
-                $hCore->gCore['ExportBuchungsDaten'][$setCnt]['B'][$indexB]['Satzart']    = 'B';
-
-                // Zähler erhöhen falls innerhalb von A noch ein Durchlauf mit B kommt
-                $indexB++;
-            }
-
-
-
-            // C Satz
-
-
-
-
-            // Neuer Satz?
-            if ($curCustomerNumber != $lastCustomerNumber)
-            {
-                $setCnt++;
-            }
-
-
-/*
-            // A Satz
-            // Wenn aktuelle KundenNr. != der vorherigen... dann gibt es einen neuen Array eintrag
-            if ($curCustomerNumber != $lastCustomerNumber){
-
-                // Array Zähler erhöhen
-                $mainArrayIndex++;
-
-                // Array Zähler für B resetten
-                $indexB = 0;
-
-                // Array Zähler für C resetten
-                $indexC = 0;
-
-                // Erzeuge A Satz
-                $hCore->gCore['ExportBuchungsDaten'][$mainArrayIndex][$bookingSet['KundenNummer']]['A']['Satzart']         = 'A';                            // Satzart
-                $hCore->gCore['ExportBuchungsDaten'][$mainArrayIndex][$bookingSet['KundenNummer']]['A']['Personenkonto']   = $bookingSet['KundenNummer'];    // Personenkonto
-                $hCore->gCore['ExportBuchungsDaten'][$mainArrayIndex][$bookingSet['KundenNummer']]['A']['Belegnummer']     = $bookingSet['KundenNummer'];    // Belegnummer
-                $hCore->gCore['ExportBuchungsDaten'][$mainArrayIndex][$bookingSet['KundenNummer']]['A']['Rechnungsnummer'] = $bookingSet['RechnungsNr'];     // Rechnungsnummer
-            }
-
-
-            // B Satz
-            // Wenn aktuelle Rechnungsnummer != der vorherigen... dann gibt es einen neuen B eintrag
-            if ($curBookingNumber != $lastBookingNumber){
-
-                // Array Zähler für C resetten
-                $indexC = 0;
-
-                $hCore->gCore['ExportBuchungsDaten'][$mainArrayIndex][$bookingSet['KundenNummer']]['B'][$indexB]['Satzart'] = 'B';                          // Satzart
-
-//                // B Index Zähler erhöhen
-//                $indexB++;
-            }
-
-
-            // C Satz
-            //$hCore->gCore['ExportBuchungsDaten'][$mainArrayIndex][$bookingSet['KundenNummer']]['C'][$indexB][$indexC]['Satzart'] = 'C';                          // Satzart
-            $hCore->gCore['ExportBuchungsDaten'][$mainArrayIndex][$bookingSet['KundenNummer']]['B'][$indexB]['C'][$indexC]['Satzart'] = 'C';                          // Satzart
-
-            //B Index Zähler erhöhen
-            $indexB++;
-            $indexC++;
-
-*/
-
-            /*
-
             // Wenn die aktuelle KundenNR. nicht der vorherigen entspricht, haben wir einen neuen Satz A
             if ($curCustomerNumber != $lastCustomerNumber){
                 // Neuen A Satz erzeugen
-//                echo "Erzeuge A KNr: $curCustomerNumber<br>";
-                $curIndexC = 0;
-                $curIndexB = 0;
-
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Satzart']         = 'A';  // Satzart
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Personenkonto']         = $bookingSet['KundenNummer'];  // Personenkonto
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Belegnummer']     = $bookingSet['KundenNummer']; // Belegnummer
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Rechnungsnummer'] = $bookingSet['RechnungsNr']; // Rechnungsnummer
-
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Buchungsperiode'] = '';    // Buchungsperiode
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Belegnummer'] = ''; // Belegdatum
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Buchungsdatum'] = ''; // Buchungsdatum
-
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Bruttobetrag'] = ''; // Bruttobetrag
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Waehrung'] = $_SESSION['customConfig']['Centron']['Waehrung'];   // Waehrung
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Skonto'] = '';            // Skontofähiger Betrag
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Zahlungsbedingungen'] = '';    // Zahlungsbedingungen
-
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['ABWZahlungsart'] = '';   // Abweichende Zahlungsart
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Faelligkeit'] = '';   // Fälligkeit
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Valuta'] = '';   // Valuta
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Ort'] = '';   // Ort
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Strasse'] = '';   // Strasse
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Hausnummer'] = '';   // Hausnummer
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Zusatzhausnummer'] = '';   // Zusatzhausnummer
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Wohnungsnummer'] = '';   // Wohnungsnummer
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['ABWKontoInhaberName1'] = '';   // Abweichen-der-Kontoinhaber_Name1
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['ABWKontoInhaberName2'] = '';   // Abweichen-der-Kontoinhaber_Name2
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Laendercode'] = '';   // Laendercode
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['ABWBLZ'] = '';   // BLZ abw. Kontoinhaber
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['ABWKontoNr'] = '';   // Konto_Nr abw. Kontoinhaber
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['ABWIBAN'] = '';   // IBAN abw. Kontoinhaber
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['ABWAnschriftName1'] = '';   // Anschrift - Name 1 abw. Kontoinhaber
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['ABWAnschriftName2'] = '';   // Anschrift - Name 2 abw. Kontoinhaber
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['ABWAnschriftPLZ'] = '';   // Anschrift - PLZ abw. Kontoinhaber
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['ABWAnschriftOrt'] = '';   // Anschrift - Ort abw. Kontoinhaber
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['ABWAnschriftStrasse'] = '';   // Anschrift - Strasse abw. Kontoinhaber
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['ABWAnschriftHausNr'] = '';   // Anschrift - HausNr. abw. Kontoinhaber
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['ABWAnschriftHausNrZusatz'] = '';   // Anschrift - Zus. HausNr. abw. Kontoinhaber
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['Prenotifcation'] = '';   // Prenotification erfolgt (J)
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['MandatsRefNr'] = '';   // Mandatsreferenz-nummer
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['AnkZahlungseinzgZum'] = '';   // Anküendigung des Zahlungseinzugs zum
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['AnkZahlungseinzgAm'] = '';   // Ankündigung des Zahlungseinzugs am
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['ABWAnkZahlungseinzg'] = '';   // Ankündigung des Zahlunseinzugs am für den abw. Kontoinhaber
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexA]['A']['BuchungszeichenAvviso'] = '';   // Buchungszeichen Avviso
-
-
-
-                $curIndexA = 0;
-
             }
-            else {
-                $curIndexA++;
-            }
-
-
 
 
             // Wenn die aktuelle RechnungsNr. nicht der vorherigen entspricht, haben wir einen neuen Satz B
             if ($curBookingNumber != $lastBookingNumber){
-                // Neuen B Satz erzeugen
-//                echo "&nbsp;&nbsp;&nbsp;&nbsp;Erzeuge B RNr: $curBookingNumber<br>";
-                $curIndexC = 0;
 
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexB]['B']['Satzart'] = 'B';                          // Satzart
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexB]['B']['Bruttobetrag'] = '';                      // Bruttobetrag
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexB]['B']['Nettobetrag'] = '';                       // Nettobetrag
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexB]['B']['Nettobetrag'] = $bookingSet['MwSt'];      // Steuerkennzeichen
-                $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexB]['B']['Geschaeftsbereich'] = $_SESSION['customConfig']['Centron']['GeschaeftsbereichNonPrivate'];    // Geschäftsbereich
-                $curIndexB++;
             }
 
-
-
             // ... Satz C (Also Detail) anfügen
-//            echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Erzeuge C KNr: $curCustomerNumber | RNr: $curBookingNumber<br>";
-//            $hCore->gCore['ExportBuchungsDaten'][''] =
-
-
-            $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexC]['C']['Satzart'] = 'C';                          // Satzart
-            $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexC]['C']['Erloeskonto'] = $bookingSet['Erloeskonto'];   // Konto/Erlöskonto
-            $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexC]['C']['Nettobetrag'] = '';                       // Nettobetrag
-            $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexC]['C']['Steuerbetrag'] = '';                      // Steuerbetrag
-            $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexC]['C']['KST'] = $bookingSet['Kostenstelle'];      // KST
-            $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexC]['C']['KTR'] = '';                               // KTR
-            $hCore->gCore['ExportBuchungsDaten'][$curCustomerNumber][$curBookingNumber][$curIndexC]['C']['Buchungstext'] = 'Buchungstext';          // Buchungstext
-
-            $curIndexC++;
-*/
-//
 
 
             // Wenn die aktuell Rechnungsnummer nicht der vorhergegangenen entspricht, haben wir eine neue Rechnug
-//            echo "<pre>";
-//            print_r($curBookingNumber);
-//            echo "</pre>";
-//            echo "<br>";
+            echo "<pre>";
+            print_r($curBookingNumber);
+            echo "</pre>";
+            echo "<br>";
 
 
 
             // Verarbeitete Rechnungsnummer speichern
             $lastBookingNumber = $curBookingNumber;
             $lastCustomerNumber = $curCustomerNumber;
-
 
         }   // END foreach ($hCore->gCore['BuchungsDaten'] as $bookingSet){
 
@@ -789,6 +610,73 @@ class DBExport extends Core
 
 
 
+
+
+
+
+    // INITIAL Daten Importieren
+    public function OLD_getExports()
+    {
+        $hCore = $this->hCore;
+
+        // Typ bekannt!
+        $req_sourceTypeID   = $hCore->gCore['getGET']['subAction'];
+
+        // System bekannt!
+        $req_sourceSystemID = $hCore->gCore['getGET']['valueAction'];
+
+
+        // Daten einlesen
+
+        $query = "SELECT *
+                      FROM `fileUpload`
+                        LEFT JOIN `sourceSystem`  ON sourceSystem.sourceSystemID 	= fileUpload.sourceSystemID
+                        LEFT JOIN `sourceType` 	  ON sourceType.sourceTypeID 	    = fileUpload.sourceTypeID
+                        LEFT JOIN `user`          ON user.userID                    = fileUpload.userID
+                      WHERE fileUpload.sourceTypeID     = '".$req_sourceTypeID."'
+                        AND fileUpload.sourceSystemID   = '".$req_sourceSystemID."'
+                        AND sourceType.active           = 'yes'
+                        AND sourceSystem.active         = 'yes'
+                      ORDER BY fileUpload.uploadDateTime DESC
+                        ";
+
+
+        // Resultat der Login - Prüfung
+        $result = $this->gCoreDB->query($query);
+
+        // Betroffene Zeilen, bzw. erhaltene
+        $num_rows = $this->gCoreDB->num_rows($result);
+
+
+        // Keine Import Datein gefunden!
+        if (!$num_rows >= '1'){
+
+            // Breche Methode hier ab und liefere false - Wert zurück
+
+            RETURN FALSE;
+        }
+
+
+        $indexCnt = 0;
+        while ($row = $result->fetch_object()){
+
+           $this->hCore->gCore['DBImportFiles'][$indexCnt]['fileUploadID'] = $row->fileUploadID;
+           $this->hCore->gCore['DBImportFiles'][$indexCnt]['fileOriginName'] = $row->fileOriginName;
+           $this->hCore->gCore['DBImportFiles'][$indexCnt]['uploadDateTime'] = $row->uploadDateTime;
+           $this->hCore->gCore['DBImportFiles'][$indexCnt]['fileSize'] = $this->formatSizeUnits($row->fileSize);
+           $this->hCore->gCore['DBImportFiles'][$indexCnt]['userName'] = $row->userName;
+           $this->hCore->gCore['DBImportFiles'][$indexCnt]['importCounter'] = $row->importCounter;
+           $this->hCore->gCore['DBImportFiles'][$indexCnt]['downloadLink'] = $row->downloadLink;
+
+            $indexCnt++;
+        }
+
+        $this->gCoreDB->free_result($result);
+
+
+        RETURN TRUE;
+
+    }   // END public function getImports()
 
 
 
