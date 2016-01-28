@@ -41,6 +41,8 @@ class MySQLDB extends Debug
     private $lastResult	    = '';   // MySQLi Letztes Resultat
     private $last_insert_id = 0;    // Letzte eingefügte ID in einer Tabelle
 
+    // Verbindungszähler
+    private $cntConnection = 0;
 
 
 
@@ -123,12 +125,22 @@ class MySQLDB extends Debug
     private function mysqliConnect()
     {
 
+        $this->gCore['test'] = 'hallo';
+
         // Permanente Verbindung?
         if ($_SESSION['systemConfig']['Setting']['DBConnectionType'] == 'pconnect')
             $mysqli = new mysqli('p:'.$this->DBHOST, $this->DBUSER, $this->DBPASSWORD, $this->DBNAME);
         else
             $mysqli = new mysqli($this->DBHOST, $this->DBUSER, $this->DBPASSWORD, $this->DBNAME);
 
+        // Verbindungen zählen
+        if (!isset($this->gCore['MySQLVerbindungen'])){
+            $this->gCore['MySQLVerbindungen'] = 0;
+        }
+
+        $this->gCore['MySQLVerbindungen'] = $this->gCore['MySQLVerbindungen'] + 1;
+
+//        echo "Verbinde: ".$this->gCore['MySQLVerbindungen']."<br>";
 
         // DB Verbindung fehlgeschlagen?
         if ($mysqli->connect_errno) {

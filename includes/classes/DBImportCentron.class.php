@@ -139,6 +139,15 @@ class DBImportCentron extends Core
 
         $errorArray = array();
 
+        // Setting in welcher Spalte steht was?
+        $setRowKDNummer     = 0;
+        $setRowName1        = 1;
+        $setRowStrasseHnr   = 2;
+        $setRowPLZ          = 3;
+        $setRowOrt          = 4;
+        $setRowTelefon      = 5;
+        $setRowEmail        = 6;
+
 
         ////////////////////////////////////////////////////////////////////
         foreach ($zeilen as $kunde){
@@ -152,20 +161,23 @@ class DBImportCentron extends Core
 
             $cnt_kunden++;
 
-            if (trim($kunde[0]) == ""){
+//            if (trim($kunde[0]) == ""){
+            if (trim($kunde[$setRowKDNummer]) == ""){
                 continue;
             }
 
 
 
             // Strassenstring auseinandernehmen
-            if (!isset($kunde[3])){
+//            if (!isset($kunde[3])){
+            if (!isset($kunde[$setRowStrasseHnr])){
                 $strassenname = 'unset';
                 $hausnummer = 'unset';
-                $daten['errorArray']['Kd.-Nr.'] = $kunde[0];
+                $daten['errorArray']['Kd.-Nr.'] = $kunde[$setRowKDNummer];
             }
             else {
-                $strassenname = trim($kunde[3]);
+//                $strassenname = trim($kunde[3]);
+                $strassenname = trim($kunde[$setRowStrasseHnr]);
                 $hausnummer = "";
                 if ( preg_match('/([^\d]+)\s?(.+)/i', $strassenname, $result)) {
                     $strassenname = trim($result[1]);
@@ -174,39 +186,43 @@ class DBImportCentron extends Core
             }
 
 
-            if (!isset($kunde[4])){
+//            if (!isset($kunde[4])){
+            if (!isset($kunde[$setRowPLZ])){
                 $PLZ = 'unset';
-                $daten['errorArray']['Kd.-Nr.'] = $kunde[0];
+                $daten['errorArray']['Kd.-Nr.'] = $kunde[$setRowKDNummer];
             }
             else {
-                $PLZ = trim($kunde[4]);
+                $PLZ = trim($kunde[$setRowPLZ]);
             }
 
 
-            if (!isset($kunde[5])){
+            if (!isset($kunde[$setRowOrt])){
+//            if (!isset($kunde[5])){
                 $Ort = 'unset';
-                $daten['errorArray']['Kd.-Nr.'] = $kunde[0];
+                $daten['errorArray']['Kd.-Nr.'] = $kunde[$setRowKDNummer];
             }
             else {
-                $Ort = trim($kunde[5]);
+                $Ort = trim($kunde[$setRowOrt]);
             }
 
 
-            if (!isset($kunde[6])){
+//            if (!isset($kunde[6])){
+            if (!isset($kunde[$setRowTelefon])){
                 $Telefon = 'unset';
-                $daten['errorArray']['Kd.-Nr.'] = $kunde[0];
+                $daten['errorArray']['Kd.-Nr.'] = $kunde[$setRowKDNummer];
             }
             else {
-                $Telefon = trim($kunde[6]);
+                $Telefon = trim($kunde[$setRowTelefon]);
             }
 
 
-            if (!isset($kunde[7])){
+            if (!isset($kunde[$setRowEmail])){
+//            if (!isset($kunde[7])){
                 $Email = 'unset';
-                $daten['errorArray']['Kd.-Nr.'] = $kunde[0];
+                $daten['errorArray']['Kd.-Nr.'] = $kunde[$setRowKDNummer];
             }
             else {
-                $Email = trim($kunde[7]);
+                $Email = trim($kunde[$setRowEmail]);
             }
 
 
@@ -221,7 +237,8 @@ class DBImportCentron extends Core
             }
 
 
-            $name1 = trim($kunde[1]);
+            $name1 = trim($kunde[$setRowName1]);
+//            $name1 = trim($kunde[1]);
             $name2 = "";
             if (strlen($name1) > 30) {
                 $name2 = substr($name1, 29);
@@ -230,7 +247,7 @@ class DBImportCentron extends Core
 
 
             // Anschriftsname
-            $anschrifts_name1 = trim($kunde[1]);
+            $anschrifts_name1 = trim($kunde[$setRowName1]);
             $anschrifts_name2 = "";
             if (strlen($anschrifts_name1) > 35) {
                 $anschrifts_name2 = substr($anschrifts_name1, 34);
@@ -238,7 +255,7 @@ class DBImportCentron extends Core
             }
 
 
-            $name1 = trim($kunde[1]);
+            $name1 = trim($kunde[$setRowName1]);
             $name2 = "";
             if (strlen($name1) > 30) {
                 $name2 = substr($name1, 29);
@@ -250,7 +267,7 @@ class DBImportCentron extends Core
             }
 
 
-            $personenkonto 	= trim($kunde[0]);	// Personenkonto sprich Kundennummer
+            $personenkonto 	= trim($kunde[$setRowKDNummer]);	// Personenkonto sprich Kundennummer
 
             $dynInsertQuery = "(
                                 `userID`,

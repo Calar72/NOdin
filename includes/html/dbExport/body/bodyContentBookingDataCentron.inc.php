@@ -60,6 +60,7 @@ $formAction = $preForm . $postForm;
 
 echo "<pre>";
 //print_r($hCore->gCore);
+//print_r($hCore->gCore['ExportBuchungsDaten']);
 print_r($hCore->gCore['BookingCSV']);
 echo "</pre>";
 ?>

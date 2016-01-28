@@ -24,6 +24,7 @@ $_SESSION['customConfig']['Centron']['GeschaeftsbereichNonPrivate'] = '814';
 $_SESSION['customConfig']['Centron']['GeschaeftsbereichPrivate'] = '813';
 // Währung
 $_SESSION['customConfig']['Centron']['Waehrung'] = 'EUR';
+$_SESSION['customConfig']['Centron']['Zahlungsbedingung'] = '10';
 
 
 // Path & Links
