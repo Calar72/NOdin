@@ -525,7 +525,6 @@ class DBExport extends Core
         // Buchungssatz einlesen
 //        $query = "SELECT * FROM bookingDataCentron WHERE KundenNummer > '10881' ORDER BY RechnungsNr, KundenNummer";
         $query = "SELECT * FROM bookingDataCentron WHERE 1 ORDER BY RechnungsNr, KundenNummer";
-        echo "$query";
         $result = $this->gCoreDB->query($query);
         $num_rows = $this->gCoreDB->num_rows($result);
 
@@ -916,6 +915,11 @@ class DBExport extends Core
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 
 
 

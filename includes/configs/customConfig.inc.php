@@ -27,6 +27,7 @@ $_SESSION['customConfig']['Centron']['Waehrung'] = 'EUR';
 $_SESSION['customConfig']['Centron']['Zahlungsbedingung'] = '10';
 
 
+
 // Path & Links
 // Link - Full external link
 $_SESSION['customConfig']['WebLinks']['EXTHOME'] = 'http://'.$myHost.'/NOdin/index.php';
