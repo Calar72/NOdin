@@ -42,7 +42,7 @@ $_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT'] = '/NOdin/';
 $_SESSION['customConfig']['WebLinks']['MAINUPLOADPATH'] = '/var/www/html/NOdin/uploads/';
 
 // Link - PHP MyAdmin
-$_SESSION['customConfig']['WebLinks']['PHPMYADMIN'] = '"http://'.$myHost.'/phpmyadmin/';
+$_SESSION['customConfig']['WebLinks']['PHPMYADMIN'] = 'http://'.$myHost.'/phpmyadmin/';
 
 
 

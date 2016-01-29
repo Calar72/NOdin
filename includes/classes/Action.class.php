@@ -411,11 +411,20 @@ class Action extends Core
             }
 
 
-
-
-
-
             }   // END DB Export
+
+
+
+        if ($this->gCore['getGET']['callAction'] == 'test'){
+            // head - Datei
+
+            // Body - Datei -> Verweis zur Klasse: FileUpload | Methode: doNothing
+            $hCore->gCore['getLeadToBodySite']      = 'includes/html/homeTest';  // Webseite die geladen werden soll
+            $hCore->gCore['getLeadToBodyByAction']  = 'force';                                    // Erzwinge das Überschreiben von Default
+
+            // Footer - Datei bleibt Default!
+        }
+
 
 
 

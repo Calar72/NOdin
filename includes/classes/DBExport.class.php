@@ -703,10 +703,19 @@ class DBExport extends Core
 
 
             // C Satz hinzufügen
-            $a = $bookingSet['Brutto'];
-            $b = $bookingSet['MwSt'];
-            $curCSteuerbetrag =  $a * ($b/100);
-            $curCNetto = $a - $curCSteuerbetrag;
+            $brutto = $bookingSet['Brutto'];
+            $brutto = $this->cleanMoney($brutto);
+
+            $mwst = $bookingSet['MwSt'];
+            $mwst = $this->cleanMoney($mwst);
+
+
+            $prozentBerechnung = 100 + $mwst;
+//            $curCSteuerbetrag =  $brutto * ($b/100);
+            $curCSteuerbetrag =  $brutto * ($mwst/$prozentBerechnung);
+            $curCSteuerbetrag = $this->cleanMoney($curCSteuerbetrag);
+            $curCNetto = $brutto - $curCSteuerbetrag;
+            $curCNetto = $this->cleanMoney($curCNetto);
 
             $curBNetto = 0;
             $curBBrutto = 0;
@@ -715,7 +724,9 @@ class DBExport extends Core
                 $curBBrutto = $hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Bruttobetrag'];
             }
             $curNewNetto = $curBNetto + $curCNetto;
-            $curNewBBrutto = $curBBrutto + $a;
+            $curNewNetto = $this->cleanMoney($curNewNetto);
+            $curNewBBrutto = $curBBrutto + $brutto;
+            $curNewBBrutto = $this->cleanMoney($curNewBBrutto);
 
             // B Netto / Brutto Betrag:
             $hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Nettobetrag'] = $curNewNetto;
@@ -730,13 +741,13 @@ class DBExport extends Core
             else{
                 $curABrutto = 0;
             }
-            $curNewABrutto = $curABrutto + $a;
+            $curNewABrutto = $curABrutto + $brutto;
+            $curNewABrutto = $this->cleanMoney($curNewABrutto);
             $hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['A']['Bruttobetrag'] = $curNewABrutto;
 
 
 
 
-//            $info = "Brutto: ".$a . " Netto: " . $curCNetto . " Betrag: " . $curCSteuerbetrag;
             $hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['C'][$indexC]['Satzart']        = 'C';
             $hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['C'][$indexC]['Erloeskonto']    = $bookingSet['Erloeskonto'];          // Konto/Erlöskonto
             $hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['C'][$indexC]['Nettobetrag']    = $curCNetto;                          // Nettobetrag
@@ -765,6 +776,14 @@ class DBExport extends Core
 
 
 
+    private function cleanMoney($arg)
+    {
+        $arg = str_replace(",",".", $arg);
+        $arg = round($arg, 2);
+        $arg = number_format($arg, 2, '.', '');
+
+        return $arg;
+    }
 
 
 

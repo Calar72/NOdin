@@ -112,9 +112,11 @@ else {
         <tr>
             <td>
                 <div style="display: block" id="divDebugValue" class="divDebugLinkInner">
-                    &bull; <a href=<?php print ($_SESSION['customConfig']['WebLinks']['PHPMYADMIN']); ?>" target="_blank" class="std">PHP MyAdmin</a>
+                    &bull; <a href="<?php print ($_SESSION['customConfig']['WebLinks']['PHPMYADMIN']); ?>" target="_blank" class="std">PHP MyAdmin</a>
                     <br><br>
                     &bull; <a href="http://fortawesome.github.io/Font-Awesome/icons/" target="_blank" class="std">Awesome Font</a>
+                    <br><br>
+                    &bull; <a href="<?php print ($_SESSION['customConfig']['WebLinks']['EXTHOMESHORT']); ?>test" class="std">Test - Seite</a>
                     <br><br><hr>
 
                     <br>

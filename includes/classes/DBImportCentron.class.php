@@ -423,6 +423,10 @@ class DBImportCentron extends Core
             if (strlen($MwSt) < 1) { $MwSt = '0'; }
             if (strlen($Kostenstelle) < 1) { $Kostenstelle = '0'; }
 
+            // Brutto Komma in Punkt umwandeln
+            $Brutto = str_replace(",",".", $Brutto);
+            $Brutto = round($Brutto, 2);
+            $Brutto = number_format($Brutto, 2, '.', '');
 
             // Zeit jetzt
             $curTime = date("Y-m-d H:i:s");
