@@ -368,7 +368,7 @@ class Action extends Core
                 // Seite 1 mit Informationen ausgeben und Bestätigung für den Export einholen
                 if ($curStep == '1'){
                     // head - Datei
-                    $hCore->gCore['getLeadToHeadClass']     = 'DBExport';                                 // Klasse die geladen werden soll
+                    $hCore->gCore['getLeadToHeadClass']     = 'DBExportCentron';                                 // Klasse die geladen werden soll
                     $hCore->gCore['getLeadToHeadMethod']    = 'getExportsBaseDataCentron';                // Methoden - Aufruf
 
                     // Body - Datei -> Verweis zur Klasse: FileUpload | Methode: doNothing
@@ -382,7 +382,7 @@ class Action extends Core
                 // Exportiere die Daten
                 if ($curStep == '2'){
                     // head - Datei
-                    $hCore->gCore['getLeadToHeadClass']     = 'DBExport';                                 // Klasse die geladen werden soll
+                    $hCore->gCore['getLeadToHeadClass']     = 'DBExportCentron';                                 // Klasse die geladen werden soll
                     $hCore->gCore['getLeadToHeadMethod']    = 'doExportsBaseDataCentron';                // Methoden - Aufruf
 
                     // Body - Datei -> Verweis zur Klasse: FileUpload | Methode: doNothing
@@ -400,7 +400,7 @@ class Action extends Core
             // Centron Buchungssatz?
             if ( (isset($this->gCore['getGET']['subAction']) && ($this->gCore['getGET']['subAction'] == '2')) && (isset($this->gCore['getGET']['valueAction']) && ($this->gCore['getGET']['valueAction'] == '2')) ){
                 // head - Datei
-                $hCore->gCore['getLeadToHeadClass']     = 'DBExport';                                 // Klasse die geladen werden soll
+                $hCore->gCore['getLeadToHeadClass']     = 'DBExportCentron';                                 // Klasse die geladen werden soll
                 $hCore->gCore['getLeadToHeadMethod']    = 'getExportsBookingDataCentronInitial';                // Methoden - Aufruf
 
                 // Body - Datei -> Verweis zur Klasse: FileUpload | Methode: doNothing
@@ -409,6 +409,54 @@ class Action extends Core
 
                 // Footer - Datei bleibt Default!
             }
+
+
+
+
+
+
+
+
+            // Dimari Stammdaten?
+            if ( (isset($this->gCore['getGET']['subAction']) && ($this->gCore['getGET']['subAction'] == '1')) && (isset($this->gCore['getGET']['valueAction']) && ($this->gCore['getGET']['valueAction'] == '1')) ){
+
+                $curStep = 1;
+
+                if ( (isset($this->gCore['getPOST']['getUserOK'])) && ($this->gCore['getPOST']['getUserOK'] == 'yes') ){
+                    $curStep = 2;
+                }
+
+                // Seite 1 mit Informationen ausgeben und Bestätigung für den Export einholen
+                if ($curStep == '1'){
+                    // head - Datei
+                    $hCore->gCore['getLeadToHeadClass']     = 'DBExportDimari';                                 // Klasse die geladen werden soll
+                    $hCore->gCore['getLeadToHeadMethod']    = 'getExportsBaseDataDimari';               // Methoden - Aufruf
+
+                    // Body - Datei -> Verweis zur Klasse: FileUpload | Methode: doNothing
+                    $hCore->gCore['getLeadToBodySite']      = 'includes/html/dbExport/dbExportMainBaseDataDimari';  // Webseite die geladen werden soll
+                    $hCore->gCore['getLeadToBodyByAction']  = 'force';                                    // Erzwinge das Überschreiben von Default
+
+                    // Footer - Datei bleibt Default!
+                }
+
+
+                // Exportiere die Daten
+                if ($curStep == '2'){
+                    // head - Datei
+                    $hCore->gCore['getLeadToHeadClass']     = 'DBExportDimari';                                 // Klasse die geladen werden soll
+                    $hCore->gCore['getLeadToHeadMethod']    = 'doExportsBaseDataDimari';                // Methoden - Aufruf
+
+                    // Body - Datei -> Verweis zur Klasse: FileUpload | Methode: doNothing
+                    $hCore->gCore['getLeadToBodySite']      = 'includes/html/home/homeBody';                // Webseite die geladen werden soll
+                    $hCore->gCore['getLeadToBodyByAction']  = 'force';                                    // Erzwinge das Überschreiben von Default
+
+                    // Footer - Datei bleibt Default!
+                }
+
+            }
+
+
+
 
 
             }   // END DB Export

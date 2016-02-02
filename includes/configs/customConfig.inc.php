@@ -26,6 +26,14 @@ $_SESSION['customConfig']['Centron']['GeschaeftsbereichPrivate'] = '813';
 $_SESSION['customConfig']['Centron']['Waehrung'] = 'EUR';
 $_SESSION['customConfig']['Centron']['Zahlungsbedingung'] = '10';
 
+// Dimari
+// Dimari generelles Sammelkonto
+$_SESSION['customConfig']['Dimari']['Sammelkonto'] = 122800;
+
+// Zahlarten ID Übersetzung
+$_SESSION['customConfig']['Dimari']['Zahlart'][0] = 'SZ';
+$_SESSION['customConfig']['Dimari']['Zahlart'][1] = 'BL';
+
 
 
 // Path & Links
