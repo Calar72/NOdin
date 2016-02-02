@@ -118,15 +118,16 @@ class FileUpload extends Core
         $uploadfile = $uploaddir . $filePrefix . basename($_FILES['fileToUpload']['name']);
 
 
+        // Informationen aufbereiten
+        $typeIndex = array_search($hCore->gCore['getGET']['subAction'], $hCore->gCore['LNav']['ConvertTypeID']);
+        $typeInfo = $hCore->gCore['LNav']['ConvertType'][$typeIndex];
+
+        $systemIndex = array_search($hCore->gCore['getGET']['valueAction'], $hCore->gCore['LNav']['ConvertSystemID']);
+        $systemInfo = $hCore->gCore['LNav']['ConvertSystem'][$systemIndex];
+
+
         // Wurde Datei zum Upload uebergeben?
         if ( (isset($_FILES['fileToUpload']['tmp_name'])) && ($_FILES['fileToUpload']['error'] == 0) ){
-
-            // Informationen aufbereiten
-            $typeIndex = array_search($hCore->gCore['getGET']['subAction'], $hCore->gCore['LNav']['ConvertTypeID']);
-            $typeInfo = $hCore->gCore['LNav']['ConvertType'][$typeIndex];
-
-            $systemIndex = array_search($hCore->gCore['getGET']['valueAction'], $hCore->gCore['LNav']['ConvertSystemID']);
-            $systemInfo = $hCore->gCore['LNav']['ConvertSystem'][$systemIndex];
 
             $fileOrigName = basename($_FILES['fileToUpload']['name']);
 
