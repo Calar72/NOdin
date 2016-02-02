@@ -1,4 +1,7 @@
 <?php
+/**
+ * Copyright (c) 2016 by Markus Melching (TKRZ)
+ */
 
 /**
  * Created by PhpStorm.
@@ -23,7 +26,7 @@
 class DBImport extends Core
 {
 
-    public $gLeftNavigation = array();
+    public $gDBImport = array();
 
     private $hCore;	            // Privates Core Objekt
 

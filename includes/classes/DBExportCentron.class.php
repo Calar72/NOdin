@@ -93,6 +93,8 @@ class DBExportCentron extends Core
 
 
 
+
+
     public function getExportsBaseDataCentron()
     {
         $hCore = $this->hCore;
@@ -217,14 +219,6 @@ class DBExportCentron extends Core
 
 
 
-
-
-
-
-
-
-
-
     public function doExportsBaseDataCentron()
     {
         $hCore = $this->hCore;
@@ -242,9 +236,6 @@ class DBExportCentron extends Core
             $dbFieldnames[] = $row->Field;
         }
         $this->gCoreDB->free_result($result);
-
-
-
 
 
 
@@ -267,8 +258,6 @@ class DBExportCentron extends Core
             $cntIndex++;
         }
         $this->gCoreDB->free_result($result);
-
-
 
 
 
@@ -382,10 +371,6 @@ class DBExportCentron extends Core
 
 
 
-
-
-
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // INITIAL Methode: Export Centron Buchungsdaten
     public function getExportsBookingDataCentronInitial()
@@ -405,12 +390,8 @@ class DBExportCentron extends Core
 
 
 
-
-
     private function doExportsBookingDataCentronInitial()
     {
-
-        $hCore = $this->hCore;
 
         // Benötigte Kundendaten anhand der anstehenden Rechnungen und KundenNr. ermitteln
         $this->getRelevantBaseData();
@@ -423,14 +404,12 @@ class DBExportCentron extends Core
         // A B C Stamm aufbauen
         $this->generateSets();
 
-        // TODO HIER!
         // csv-Datei erstellen
         $this->generateBooginCSV();
 
         RETURN TRUE;
 
     }   // END private function doExportsBookingDataCentronInitial()
-
 
 
 
@@ -454,8 +433,6 @@ class DBExportCentron extends Core
             $dbFieldnames[] = $row->Field;
         }
         $this->gCoreDB->free_result($result);
-
-
 
 
         $query = "SELECT c.*
@@ -498,9 +475,6 @@ class DBExportCentron extends Core
 
 
 
-
-
-
     // Buchungssatz einlesen
     private function getBookingData()
     {
@@ -520,9 +494,6 @@ class DBExportCentron extends Core
             $dbFieldnames[] = $row->Field;
         }
         $this->gCoreDB->free_result($result);
-
-
-
 
 
         // Buchungssatz einlesen
@@ -555,36 +526,15 @@ class DBExportCentron extends Core
 
 
 
-
-
-
-
-
     private function generateSets()
     {
 
         $hCore = $this->hCore;
 
         // Initial Variable definieren
-//        $lastCustomerNumber = 0;
         $lastBookingNumber = 0;
-
-//        $curIndex = 0;
-//        $curIndexC = 0;
-//        $curIndexB = 0;
-//        $curIndexA = 0;
-//
-//        $mainArrayIndex = 0;
-//
-//
-//        $indexMain = 0;
-//        $indexA = 0;
-//        $indexB = 0;
         $indexC =0;
 
-//        $setCnt =0;
-
-//        $indexA = 0;
         foreach ($hCore->gCore['BuchungsDaten'] as $bookingSet) {
 
 //            if ($bookingSet['KundenNummer'] != '10348'){
@@ -687,10 +637,6 @@ class DBExportCentron extends Core
 
 
 
-
-
-
-
                 // Erzeuge neuen B Satz
                 $hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Satzart']              = 'B';                            // Satzart
                 //$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Bruttobetrag']         = $bookingSet['Brutto'];   // Bruttobetrag
@@ -703,8 +649,6 @@ class DBExportCentron extends Core
 
 
 
-
-
             // C Satz hinzufügen
             $brutto = $bookingSet['Brutto'];
             $brutto = $this->cleanMoney($brutto);
@@ -714,7 +658,6 @@ class DBExportCentron extends Core
 
 
             $prozentBerechnung = 100 + $mwst;
-//            $curCSteuerbetrag =  $brutto * ($b/100);
             $curCSteuerbetrag =  $brutto * ($mwst/$prozentBerechnung);
             $curCSteuerbetrag = $this->cleanMoney($curCSteuerbetrag);
             $curCNetto = $brutto - $curCSteuerbetrag;
@@ -779,6 +722,7 @@ class DBExportCentron extends Core
 
 
 
+
     private function cleanMoney($arg)
     {
         $arg = str_replace(",",".", $arg);
@@ -791,17 +735,16 @@ class DBExportCentron extends Core
 
 
 
+
     // CSV - Datei Buchungssatz erstellen
     private function generateBooginCSV()
     {
 
         $hCore = $this->hCore;
 
-
         if (!isset($hCore->gCore['ExportBuchungsDaten']['Rechnungen'])){
             RETURN FALSE;
         }
-
 
         $tilde = '~';
 
@@ -866,8 +809,6 @@ class DBExportCentron extends Core
             $cntA++;
 
 
-
-
             // Für Prüfsumme berechnen
             $sumBruttoB += $set['B']['Bruttobetrag'];
 
@@ -879,9 +820,6 @@ class DBExportCentron extends Core
             $csv .= $set['B']['Geschaeftsbereich'] . $tilde;
             $csv .= "\r\n";
             $cntB++;
-
-
-
 
 
 
@@ -905,11 +843,7 @@ class DBExportCentron extends Core
                 $cntC++;
             }
 
-
-
         }   // END foreach ($hCore->gCore['ExportBuchungsDaten']['KdNr'] AS $kdNummer=>$setArray){
-
-
 
         // Prüfsumme
         $csv .= "P~";
@@ -929,20 +863,6 @@ class DBExportCentron extends Core
         RETURN TRUE;
 
     }   // END private function generateBooginCSV()
-
-
-
-
-
-
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
 
 
 
