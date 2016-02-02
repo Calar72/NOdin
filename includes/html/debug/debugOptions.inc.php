@@ -134,6 +134,11 @@ else {
                     &bull; <a href="http://www.w3schools.com/css/default.asp" target="_blank" class="std">CSS3</a>
                     <br><br>
                     &bull; <a href="http://wiki.selfhtml.org/wiki/Startseite" target="_blank" class="std">Self HTML Wiki</a>
+
+                    <br><br><hr>
+
+                    <br>
+                    &bull; <a href="http://www.cika-software.de/helpdesk/webfakt/" target="_blank" class="std">Webfakt Helpdesk</a>
                 </div>
             </td>
         </tr>

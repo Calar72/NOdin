@@ -268,7 +268,7 @@ class DBImport extends Core
             }
 
             // Webfakt - System?
-            elseif ($this->hCore->gCore['curSourceSystemID'] == '2'){
+            elseif ($this->hCore->gCore['curSourceSystemID'] == '3'){
                 //TODO Centron Stammdaten - Import
             }
 
@@ -291,7 +291,7 @@ class DBImport extends Core
             }
 
             // Webfakt - System?
-            elseif ($this->hCore->gCore['curSourceSystemID'] == '2'){
+            elseif ($this->hCore->gCore['curSourceSystemID'] == '3'){
                 //TODO Centron Buchungssatz - Import
             }
         }
