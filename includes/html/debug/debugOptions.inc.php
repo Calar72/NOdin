@@ -116,6 +116,10 @@ else {
                     <br><br>
                     &bull; <a href="http://fortawesome.github.io/Font-Awesome/icons/" target="_blank" class="std">Awesome Font</a>
                     <br><br>
+                    &bull; <a href="http://192.168.6.11/PhpDocumentor/" target="_blank" class="std">PHPDoc Builder</a>
+                    <br><br>
+                    &bull; <a href="http://192.168.6.11/PHPDoc/" target="_blank" class="std">PHP Dokumentation</a>
+                    <br><br>
                     &bull; <a href="<?php print ($_SESSION['customConfig']['WebLinks']['EXTHOMESHORT']); ?>test" class="std">Test - Seite</a>
                     <br><br><hr>
 
