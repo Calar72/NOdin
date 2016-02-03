@@ -23,17 +23,22 @@
 class Base
 {
 
+    // Klassen - Variable Base
     public $gBase = array();
 
+    // Klassen - Variable gCore ... wird in nahezu allen Sub-Klassen verwendet und dient der Uebergabe diverser Inhalte/Parameter
     public $gCore = array();
+
+    // Beinhaltet das MySQL - Objekt
     public $gCoreDB;
+
+    // Beinhaltet das Klassen - Objekt fuer die Query - Bereitstellung
     public $gCoreQuery;
 
 
-
-
-
-
+    /**
+     * Base constructor.
+     */
     function __construct()
     {
 
@@ -41,7 +46,7 @@ class Base
         Debug::debugInitOnLoad('Class', __CLASS__);
 
 
-        //TODO Die Get/Post Variable müssen besser abgefangen werden!
+        //TODO Die Get/Post Variable muessen besser abgefangen werden!
         // Post und Get - Variable speichern
         $this->gCore['getGET']  = $this->getCleanInput($_GET);
         $this->gCore['getPOST'] = $this->getCleanInput($_POST);
@@ -52,6 +57,13 @@ class Base
 
 
 
+    /**
+     * Liefert den aktuellen Klassen-Namen
+     * Gibt den aktuellen Klassen-Namen ggf. auf den Bildschirm aus
+     *
+     * @param bool $printOnScreen
+     * @return string
+     */
     private function getMyClassName($printOnScreen=false)
     {
 
@@ -66,6 +78,13 @@ class Base
 
 
 
+    /**
+     * INITIAL - Liefert den aktuellen Klassen-Namen
+     * Gibt den aktuellen Klassen-Namen ggf. auf den Bildschirm aus
+     *
+     * @param bool $printOnScreen
+     * @return string
+     */
     function getClassName($printOnScreen=false)
     {
 
@@ -79,9 +98,15 @@ class Base
 
 
 
-    // Methode gibt ein Array zurück
+    /**
+     * Liefert ein Array zurueck
+     *
+     * @param $arg
+     * @return array
+     */
     function getArgumentAsArray($arg)
     {
+
         $myArg = array();
 
         if (!is_array($arg))
@@ -91,27 +116,42 @@ class Base
 
         RETURN $myArg;
 
-    }
+    }   // END function getArgumentAsArray(...)
 
 
 
 
 
-    // INITIAL Methode "säubert" GET und POST - Argumente
+    /**
+     * INITIAL - Liefert "saeubert" GET und POST - Argumente
+     *
+     * @param $arg
+     * @return array
+     */
     function getCleanInput($arg)
     {
+
         $myArg = $this->getArgumentAsArray($arg);
 
-        //FIXME SICHERHEIT - GET und POST - Argumente "säubern" eventuell mit foreach durchgehen?
+        //FIXME SICHERHEIT - GET und POST - Argumente "saeubern" eventuell mit foreach durchgehen?
 
         RETURN $myArg;
-    }
+
+    }   // END function getCleanInput(...)
 
 
 
 
 
-    // Methode prüft eine String-Länge und gibt true oder false zurück
+
+    /**
+     * Methode prueft eine String-Laenge und gibt true oder false zurueck
+     *
+     * @param $varToCheck
+     * @param $minLen
+     * @param string $maxLen
+     * @return bool
+     */
     function checkLenMinMax($varToCheck, $minLen, $maxLen = '')
     {
 
@@ -134,8 +174,15 @@ class Base
 
 
 
-    // Methode bereitet Größe lesbarer auf
-    function formatSizeUnits($bytes) {
+    /**
+     * Methode bereitet Datei-Groesse lesbarer auf
+     *
+     * @param $bytes
+     * @return string
+     */
+    function formatSizeUnits($bytes)
+    {
+
         if ($bytes >= 1073741824)
             $bytes = number_format($bytes / 1073741824, 2) . ' GB';
 
@@ -155,7 +202,8 @@ class Base
             $bytes = '0 bytes';
 
         return $bytes;
-    }
+
+    }   // END function formatSizeUnits(...)
 
 
 
