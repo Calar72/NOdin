@@ -85,6 +85,23 @@ table.debugHeadlineInformation {
 
 
 
+.messagesHeadlineInformation {
+	background: rgba(204, 252, 255, 1);
+	text-align: left;
+	padding-left:0px;
+}
+
+
+table.messagesHeadlineInformation {
+	text-align: left;
+	border-collapse: collapse;
+	font-family: "Arial", sans-serif;
+	font-size: 11px;
+	background-color: rgba(204, 252, 255, 1);
+}
+
+
+
 
 
 

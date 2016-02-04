@@ -153,7 +153,7 @@ class Debug extends Messages
 
                 // <hr> Tag ausgeben?
                 if (!$htmlHRTagDone)
-                    $this->simpleout('<hr>');
+                    $this->debugSimpleout('<hr>');
 
                 // <hr> Tag ausgegeben, also auf true setzen
                 $htmlHRTagDone = true;

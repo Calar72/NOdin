@@ -3,7 +3,7 @@
 
 /* Main-Div für die Debug-Variablen - Ausgabe */
 .divDebugOptionsOuter {
-    z-index: 600;
+    z-index: 0;
 	/*position: absolute;*/
 	position: absolute;
 	overflow: auto;
@@ -27,6 +27,13 @@
 	padding-left: 6px;
 
 	#background-image: linear-gradient(90deg, rgba(204, 252, 255, 1), transparent);
+}
+
+.divDebugOptionShowMessages {
+	z-index: 999;
+	position: fixed;
+	top: 134px;
+	left: 385px;
 }
 
 .divDebugOptionShowValue {
@@ -262,3 +269,43 @@
 }
 
 
+
+/* Main-Div für die Messages - Ausgaben */
+.divMessagesValueOuter {
+	z-index: 700;
+	position: absolute;
+	overflow: auto;
+	top: 50%;
+	left: 50%;
+	margin-top: -15%;
+	margin-left: -35%;
+	width: 70%;
+	height: 30%;
+	border: 1px solid rgb(122, 167, 170);
+	background-image: linear-gradient(90deg, rgba(204, 252, 255, 1), transparent);
+}
+
+/* Inneres-Div für die Messages - Ausgaben */
+.divMessagesValueInner {
+	z-index: 700;
+	position: absolute;
+	overflow: auto;
+	top: 19px;
+	left: 19px;
+	right: 19px;
+	bottom: 19px;
+	border: 1px solid rgb(122, 167, 170);
+	background: rgb(208, 208, 208);
+}
+
+
+
+
+.divHelpInfo {
+	position: absolute;
+	overflow: auto;
+	width: 80%;
+	height: 70%;
+	margin-top: 20px;
+	margin-left: 100px;
+}

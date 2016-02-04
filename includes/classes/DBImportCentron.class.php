@@ -343,6 +343,11 @@ class DBImportCentron extends Core
         // Fehler aufgetreten?
         if (count($errorArray) > 0){
 
+            //TODO .... prüfen ob das eine gute Idee ist den Import-Counter wirklich hochzusetzen
+            // Import Counter aktuallisieren
+            $query = "UPDATE fileUpload SET importCounter = importCounter+1 WHERE fileUploadID = '".$hCore->gCore['getPOST']['sel_fileUploadID']."' LIMIT 1";
+            $this->gCoreDB->query($query);
+
             $infoOut = '';
             foreach ($errorArray as $key){
 
@@ -356,6 +361,8 @@ class DBImportCentron extends Core
             $hCore->gCore['Messages']['Code'][]      = 'DBImport';
             $hCore->gCore['Messages']['Headline'][]  = 'Fehler bei: DB - Import <i class="fa fa-arrow-right"></i> '.$typeInfo.' <i class="fa fa-arrow-right"></i> '.$systemInfo;
             $hCore->gCore['Messages']['Message'][]   = 'Fehler bei: DB - Import!<br>Export-Datei nicht erstellt! Fehler bei folgenden Kundennummer(n):<br>'.$infoOut;
+
+            $hCore->gCore['getLeadToBodySite']          = 'includes/html/home/homeBody';    // Webseite die geladen werden soll
         }
         else{
 
@@ -396,6 +403,12 @@ class DBImportCentron extends Core
         $hCore = $this->hCore;
 
         $zeilen         = $hCore->gCore['csvValue'];
+
+        // Tabelle leeren!
+        $query = "TRUNCATE TABLE `bookingDataCentron`";
+
+        // Tabelle leeren!
+        $this->gCoreDB->query($query);
 
         foreach ($zeilen as $bookingSet){
 

@@ -135,7 +135,7 @@ class Query extends MySQLDB
                                     `sourceTypeID`
 					          FROM sourceType
 					          WHERE `active` LIKE 'yes'
-					          ORDER BY sourceTypeName ASC";
+					          ORDER BY orderBy, sourceTypeName ASC";
             break;
 
 
@@ -147,7 +147,7 @@ class Query extends MySQLDB
                                     `sourceSystemID`
 					          FROM sourceSystem
 					          WHERE `active` LIKE 'yes'
-					          ORDER BY sourceSystemName ASC";
+					          ORDER BY orderBy, sourceSystemName ASC";
                 break;
 
 

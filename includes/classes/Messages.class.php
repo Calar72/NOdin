@@ -75,11 +75,37 @@ class Messages extends DefaultConfig
     function simpleout($arg, $splitArray=FALSE)
     {
 
+//        $this->doPrePostMessages('pre');    // HTML Message - Pre - Tag/Fenster ausgeben
+
         // Wurde $getContent als Array übergeben?
-        if ( (is_array($arg)) && ($splitArray) ){
+        if ( (is_array($arg)) && ($splitArray) ) {
 
             foreach ($arg as $curContent)
-                $this->simpleoutString($curContent);	// Übergebe an Sub-Ausgabe-Methode
+                $this->simpleoutString($curContent);    // Übergebe an Sub-Ausgabe-Methode
+
+        }
+        else
+            $this->simpleoutString($arg);		// Übergebe an Sub-Ausgabe-Methode
+
+//        $this->doPrePostMessages('post');   // HTML Message - Post - Tag/Fenster ausgeben
+
+        RETURN TRUE;
+
+    }	// END function simpleout(...)
+
+
+
+
+
+    // INITIAL - Gibt den übergebenen Debug - Content in einem HTML Pre-Tag aus!
+    function debugSimpleout($arg, $splitArray=FALSE)
+    {
+
+        // Wurde $getContent als Array übergeben?
+        if ( (is_array($arg)) && ($splitArray) ) {
+
+            foreach ($arg as $curContent)
+                $this->simpleoutString($curContent);    // Übergebe an Sub-Ausgabe-Methode
 
         }
         else
@@ -157,6 +183,26 @@ class Messages extends DefaultConfig
         RETURN TRUE;
 
     }	// END detailoutString(...)
+
+
+
+
+
+    // Gibt die HTML Pre o. Post Datei für Messages aus
+    private function doPrePostMessages($arg)
+    {
+
+        $arg = strtolower($arg);
+
+        if ($arg == 'pre')
+            include 'includes/html/messages/messagesPre.inc.php';
+
+        elseif ($arg == 'post')
+            include 'includes/html/messages/messagesPost.inc.php';
+
+        RETURN TRUE;
+
+    }   // END private function doPrePostMessages(...)
 
 
 

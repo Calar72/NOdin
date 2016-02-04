@@ -118,7 +118,6 @@ class DBImport extends Core
                       ORDER BY fileUpload.uploadDateTime DESC
                         ";
 
-
         // Resultat der Login - Prüfung
         $result = $this->gCoreDB->query($query);
 
@@ -133,7 +132,6 @@ class DBImport extends Core
 
             RETURN FALSE;
         }
-
 
         $indexCnt = 0;
         while ($row = $result->fetch_object()){
