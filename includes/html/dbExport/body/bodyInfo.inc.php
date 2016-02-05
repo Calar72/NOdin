@@ -12,10 +12,11 @@ $systemInfo = $hCore->gCore['LNav']['ConvertSystem'][$systemIndex];
 
 
 
-<table border=0 class="standard" style="width:100%">
+<table border=0 class="standard">
 	<tr>
-		<td>
-			DB - Export <i class="fa fa-arrow-right"></i> <?php print ($typeInfo); ?> <i class="fa fa-arrow-right"></i> <?php print ($systemInfo); ?>
+		<td class="bottomLineGreen">
+			DB - Export <i class="fa fa-arrow-right"></i> <?php print ($typeInfo); ?> <i class="fa fa-arrow-right"></i> <?php print ($systemInfo); ?>&nbsp;
 		</td>
 	</tr>
 </table>
+<br><br>

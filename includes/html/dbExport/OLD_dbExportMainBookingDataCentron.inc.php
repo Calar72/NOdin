@@ -1,9 +1,5 @@
 <?php
 /**
- * Copyright (c) 2016 by Markus Melching (TKRZ)
- */
-
-/**
  * Created by PhpStorm.
  * User: MMelching
  * Date: 25.01.2016

@@ -373,14 +373,123 @@ class DBExportCentron extends Core
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // INITIAL Methode: Export Centron Buchungsdaten
-    public function getExportsBookingDataCentronInitial()
+    public function getExportsBookingDataCentron()
     {
 
         $hCore = $this->hCore;
 
-        // Initial Aufruf für Centron Buchungssatz export
-        $this->doExportsBookingDataCentronInitial();
+        // Typ bekannt!
+        $req_sourceTypeID   = $hCore->gCore['getGET']['subAction'];
 
+        // System bekannt!
+        $req_sourceSystemID = $hCore->gCore['getGET']['valueAction'];
+
+        // Daten einlesen
+
+        // Summe der Datensätze
+        $query = "SELECT COUNT(*) AS sumBookingData FROM bookingDataCentron WHERE 1";
+        $result = $this->gCoreDB->query($query);
+        $num_rows = $this->gCoreDB->num_rows($result);
+
+        if (!$num_rows == '1'){
+            $getSumBookingData = 0;
+        }
+        else{
+            $row = $result->fetch_object();
+            $getSumBookingData = $row->sumBookingData;
+        }
+        $hCore->gCore['bookingDataInfo']['getSumBookingData'] = $getSumBookingData;
+        $this->gCoreDB->free_result($result);
+
+
+
+        // Ältester Datensatz
+        $query = "SELECT lastUpdate FROM bookingDataCentron WHERE 1 ORDER BY lastUpdate ASC LIMIT 1";
+        $result = $this->gCoreDB->query($query);
+        $num_rows = $this->gCoreDB->num_rows($result);
+
+        if (!$num_rows == '1'){
+            $getOldestBookingData = 0;
+        }
+        else{
+            $row = $result->fetch_object();
+            $getOldestBookingData = $row->lastUpdate;
+        }
+        $hCore->gCore['bookingDataInfo']['getOldestBookingData'] = $getOldestBookingData;
+        $this->gCoreDB->free_result($result);
+
+
+
+        // Aktuellste Datensatz
+        $query = "SELECT lastUpdate FROM bookingDataCentron WHERE 1 ORDER BY lastUpdate DESC LIMIT 1";
+        $result = $this->gCoreDB->query($query);
+        $num_rows = $this->gCoreDB->num_rows($result);
+
+        if (!$num_rows == '1'){
+            $getNewestBookingData = 0;
+        }
+        else{
+            $row = $result->fetch_object();
+            $getNewestBookingData = $row->lastUpdate;
+        }
+        $hCore->gCore['bookingDataInfo']['getNewestBookingData'] = $getNewestBookingData;
+        $this->gCoreDB->free_result($result);
+
+
+
+        // Benutzer
+        $query = "SELECT userName FROM user u, bookingDataCentron as b WHERE u.userID = b.userID GROUP BY u.userID";
+        $result = $this->gCoreDB->query($query);
+        $num_rows = $this->gCoreDB->num_rows($result);
+
+        if (!$num_rows >= '1'){
+            $userNames[] = '';
+        }
+        else{
+            while($row = $result->fetch_object()){
+                $userNames[] = $row->userName;
+            }
+        }
+        $hCore->gCore['bookingDataInfo']['userNames'] = $userNames;
+        $this->gCoreDB->free_result($result);
+
+
+
+
+        // Erloeskontoen
+        $query = "SELECT Erloeskonto FROM bookingDataCentron WHERE 1 GROUP BY Erloeskonto";
+        $result = $this->gCoreDB->query($query);
+        $num_rows = $this->gCoreDB->num_rows($result);
+
+        if (!$num_rows >= '1'){
+            $Erloeskonten[] = '';
+        }
+        else{
+            while($row = $result->fetch_object()){
+                $Erloeskonten[] = $row->Erloeskonto;
+            }
+        }
+        $hCore->gCore['bookingDataInfo']['Erloeskonten'] = $Erloeskonten;
+        $this->gCoreDB->free_result($result);
+
+
+
+
+        // Kostenstellen
+        $query = "SELECT Kostenstelle FROM bookingDataCentron WHERE 1 GROUP BY Kostenstelle";
+        $result = $this->gCoreDB->query($query);
+        $num_rows = $this->gCoreDB->num_rows($result);
+
+        if (!$num_rows >= '1'){
+            $Kostenstellen[] = '';
+        }
+        else{
+            while($row = $result->fetch_object()){
+                $Kostenstellen[] = $row->Kostenstelle;
+            }
+        }
+        $hCore->gCore['bookingDataInfo']['Kostenstellen'] = $Kostenstellen;
+        $this->gCoreDB->free_result($result);
 
         RETURN TRUE;
 
@@ -390,7 +499,7 @@ class DBExportCentron extends Core
 
 
 
-    private function doExportsBookingDataCentronInitial()
+    function doExportsBookingDataCentron()
     {
 
         // Benötigte Kundendaten anhand der anstehenden Rechnungen und KundenNr. ermitteln
@@ -859,6 +968,38 @@ class DBExportCentron extends Core
 
 
         $hCore->gCore['BookingCSV'] = $csv;
+
+
+
+        // Informationen aufbereiten
+        $typeIndex = array_search($hCore->gCore['getGET']['subAction'], $hCore->gCore['LNav']['ConvertTypeID']);
+        $typeInfo = $hCore->gCore['LNav']['ConvertType'][$typeIndex];
+
+        $systemIndex = array_search($hCore->gCore['getGET']['valueAction'], $hCore->gCore['LNav']['ConvertSystemID']);
+        $systemInfo = $hCore->gCore['LNav']['ConvertSystem'][$systemIndex];
+
+
+        // TODO Export - Verzeichnis Funktion erstellen (Centron)
+
+        $downloadLink = 'CentronBuchungsdatenExport';
+
+        // '/var/www/html/www/uploads/';
+        $exportpath = $_SESSION['customConfig']['WebLinks']['MAINUPLOADPATH'];
+        $storeFile = 'uploads/' . $downloadLink . '_exp.csv';
+        $newDownloadLink = $_SESSION['customConfig']['WebLinks']['EXTHOMESHORT'].$storeFile;
+
+        $fp = fopen($storeFile, 'w');
+        fwrite($fp, $csv);
+        fclose($fp);
+
+        // Message Ausgabe vorebeiten
+        $hCore->gCore['Messages']['Type'][]      = 'Done';
+        $hCore->gCore['Messages']['Code'][]      = 'DBImport';
+        $hCore->gCore['Messages']['Headline'][]  = 'DB - Export <i class="fa fa-arrow-right"></i> '.$typeInfo.' <i class="fa fa-arrow-right"></i> '.$systemInfo;
+        $hCore->gCore['Messages']['Message'][]   = 'DB - Export erfolgreich!<br>Die Datei kann jetzt <a href="'.$newDownloadLink.'" class="std" target=_blank>HIER</a> heruntergeladen werden!';
+
+
+        $hCore->gCore['getLeadToBodySite']          = 'includes/html/home/homeBody';    // Webseite die geladen werden soll
 
         RETURN TRUE;
 
