@@ -128,7 +128,7 @@ class Messages extends DefaultConfig
             RETURN TRUE;
 
         print ("<br><pre><br>");
-            print_r($value);
+        print_r($value);
         print ("<br></pre><br>");
 
         RETURN TRUE;
