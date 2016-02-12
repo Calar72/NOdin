@@ -24,6 +24,7 @@ class Messages extends DefaultConfig
 {
 
     public $gMessages = array();
+    public $gMessageCnt;
 
 
 

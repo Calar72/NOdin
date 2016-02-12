@@ -1,6 +1,6 @@
 <?php
 // Standard head - Datei laden
-include 'includes/html/standard/standardHead.inc.php';
+//include 'includes/html/standard/standardHead.inc.php';
 
 
 

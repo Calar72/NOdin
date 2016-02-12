@@ -194,7 +194,7 @@ class Login extends Core
             $hCore->gCore['Messages']['Type'][]      = 'Fehler';
             $hCore->gCore['Messages']['Code'][]      = 'Login';
             $hCore->gCore['Messages']['Headline'][]  = 'Login fehlgeschlagen!';
-            $hCore->gCore['Messages']['Message'][]   = 'Benutzer/Passwort stimmen nicht überein, oder Benutzer/Passwort unbekannt!';
+            $hCore->gCore['Messages']['Message'][]   = 'Benutzer/Passwort Kombination unbekannt!';
 
             RETURN FALSE;
         }

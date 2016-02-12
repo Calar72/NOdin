@@ -59,8 +59,12 @@ indexErrorHandling();
 // 0030) System - Check durchführen
 require_once 'includes/system/systemCheck.inc.php';
 
-// PHP Error - Handling
-//indexErrorHandling();
+
+
+
+
+// 0035) Standard head - Datei laden
+include 'includes/html/standard/standardHead.inc.php';
 
 
 
@@ -69,8 +73,6 @@ require_once 'includes/system/systemCheck.inc.php';
 // 0040) Core - Klassen implementieren
 require 'includes/system/systemClassLoad.inc.php';
 
-// PHP Error - Handling
-//indexErrorHandling();
 
 
 

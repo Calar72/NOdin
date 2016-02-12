@@ -119,7 +119,8 @@ class DBImport extends Core
                         ";
 
         // Resultat der Login - Prüfung
-        $result = $this->gCoreDB->query($query);
+        $result = $this->gCoreDB->query($query,1);
+        $this->simpleout("hallo");
 
         // Betroffene Zeilen, bzw. erhaltene
         $num_rows = $this->gCoreDB->num_rows($result);
