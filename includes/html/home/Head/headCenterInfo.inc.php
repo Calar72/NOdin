@@ -41,12 +41,11 @@ if (array_key_exists('Messages',$hCore->gCore)){
                             </tr>
 
                             <tr>
-                                <td style="width:80px; background: #CCFCFF" class="bottomLine">&nbsp;</td>
-                                <td style="width:%; background: #CCFCFF" class="bottomLine">&nbsp;</td>
-
                                 <td style="width:40px" class="bottomLine leftLine">Typ:</td>
                                 <td class="bottomLine rightLine" style="width:120px"><?php print ($typeValue); ?></td>
 
+                                <td style="width:80px; background: #CCFCFF" class="bottomLine">&nbsp;</td>
+                                <td style="width:%; background: #CCFCFF" class="bottomLine">&nbsp;</td>
 
                                 <td style="width:40px" class="bottomLine leftLine">Code:</td>
                                 <td class="bottomLine rightLine" style="width:120px"><?php print ($codeValue); ?></td>
