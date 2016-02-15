@@ -11,14 +11,16 @@
 
 
 // Require System-Config - Datei ... dort sind Basis und Default - Werte definiert
-require_once 'includes/configs/systemConfig.inc.php';
+//require_once 'includes/configs/systemConfig.inc.php';
+$hCore->loadSystemConfig();
 
 
 
 
 
 // Require die Custom-Config - Datei ... dort sind die individuelle Werte definiert (z.B. DB - Verbindung, Webpfad, Uploadpfad, Farbeinstellungen usw.)
-require_once 'includes/configs/customConfig.inc.php';
+//require_once 'includes/configs/customConfig.inc.php';
+$hCore->loadDefaultConfig();
 
 
 

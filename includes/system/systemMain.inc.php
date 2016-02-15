@@ -143,6 +143,7 @@ print ('<div id="body_container">');
     $hBody->$getLeadToBodyMethod($getLeadToBodyArg);             // Body - Methode aufrufen
     include $getLeadToBodySite . '.inc.php';    // Body - HTML - Seite includen
 
+
 print ('</div>');
 
 
