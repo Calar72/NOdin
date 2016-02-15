@@ -98,6 +98,7 @@ class Messages extends DefaultConfig
 
 
 
+
     // INITIAL - Gibt den übergebenen Debug - Content in einem HTML Pre-Tag aus!
     function debugSimpleout($arg, $splitArray=FALSE)
     {

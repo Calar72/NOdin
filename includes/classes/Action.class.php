@@ -25,13 +25,13 @@ class Action extends Core
 
     public $gAction = array();
 
-    private $hCore;	            // Privates Core Objekt
+   private $hCore;	            // Privates Core Objekt
 
 
 
 
 
-    function __construct($hCore)
+    function __construct(& $hCore)
     {
 
         // Debug - Classname ausgeben?!

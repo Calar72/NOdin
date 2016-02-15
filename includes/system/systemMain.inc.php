@@ -70,12 +70,9 @@ $hCore->gCore['getLeadToFooterArg']       = '';
 
 
 
-
 // 0040) Action - Steuerung
 // Starte die Action Steuereung ... UEBERSCHREIBE GGF. DIE DEFAULT EINSTELLUNGEN
 $hAction = new Action($hCore);
-
-
 
 
 
