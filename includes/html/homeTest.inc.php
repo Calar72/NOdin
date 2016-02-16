@@ -195,7 +195,7 @@ class baseDataSet {
 
 
     <?php
-
+/*
 
 
 
@@ -395,6 +395,55 @@ class baseDataSet {
     print_r($result);
     echo "</pre>";
     echo "$pattern<br>";
+*/
+
+
+
+    $p = 'Diana';
+
+    $a = (isset($p)) ? $p : 'Markus';
+
+
+    echo "$a<br>";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     ?>
