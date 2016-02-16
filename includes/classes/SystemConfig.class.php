@@ -81,12 +81,34 @@ class SystemConfig extends Base
             die ('<hr>Fehler bei der Systemprüfung:<br>- Datei "'.$curConfigFile.'" nicht lesbar! (Hinweis: Leserechte richtig gesetzt?)<br><hr>');
         }
 
-        $ini_array = parse_ini_file($curConfigFile, TRUE);
+        // .ini / Config - Datei parsen
+        $ini_ConfigArray = parse_ini_file($curConfigFile, TRUE);
 
-        $_SESSION['systemConfig'] = $ini_array;
-        $_SESSION['systemConfig']['Debug']['enableDebugFrame']      = 'yes';    // Enable - Disble Debug - Frame ausgabe      (yes/no)      (Default = yes)
-        $_SESSION['systemConfig']['Debug']['enableShowDebugValue']  = 'no';     // Enable - Disble Debug - Value Fenster      (yes/no)      (Default = no)
-        $_SESSION['systemConfig']['Debug']['enableShowDebugLinks']  = 'no';     // Enable - Disble Debug - Link Fenster      (yes/no)      (Default = no)
+
+        // Debug - Leiste einblenden?
+        if (isset($_SESSION['systemConfig']['Debug']['enableDebugFrame']))
+            $ini_ConfigArray['Debug']['enableDebugFrame'] = $_SESSION['systemConfig']['Debug']['enableDebugFrame'];
+        else
+            $ini_ConfigArray['Debug']['enableDebugFrame'] = 'no';
+
+
+        // Debug - Values dauerhaft einblenden?
+        if (isset($_SESSION['systemConfig']['Debug']['enableShowDebugValue']))
+            $ini_ConfigArray['Debug']['enableShowDebugValue'] = $_SESSION['systemConfig']['Debug']['enableShowDebugValue'];
+        else
+            $ini_ConfigArray['Debug']['enableShowDebugValue'] = 'no';
+
+
+        // Debug - Link - Leiste dauerhaft einblenden?
+        if (isset($_SESSION['systemConfig']['Debug']['enableShowDebugLinks']))
+            $ini_ConfigArray['Debug']['enableShowDebugLinks'] = $_SESSION['systemConfig']['Debug']['enableShowDebugLinks'];
+        else
+            $ini_ConfigArray['Debug']['enableShowDebugLinks'] = 'no';
+
+
+        // Session Config setzen
+        $_SESSION['systemConfig'] = $ini_ConfigArray;
+
     }
 
 

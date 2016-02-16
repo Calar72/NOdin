@@ -380,10 +380,21 @@ class baseDataSet {
 
 
 
+    $pattern = 'Marienhospital Münsterland,';
+    $search = '/,$/i';
+
+    if ( preg_match_all($search, $pattern, $result)) {
+        // $strassenname       = trim($result[1][0]);
+    }
+    $newValue = '';
+    $pattern = preg_replace($search, $newValue, $pattern);
 
 
-
-
+    echo "$pattern<br>";
+    echo "<pre>";
+    print_r($result);
+    echo "</pre>";
+    echo "$pattern<br>";
 
 
     ?>

@@ -194,8 +194,15 @@ class DBImport extends Core
 
         // Datei öffnen und via getcsv in Array speichern
         $filepath = $row->fileTargetFullPath;
-        $Data = array_map('str_getcsv', file($filepath));
 
+        //$Data = array_map('str_getcsv', file($filepath));
+        // $Data = file($filepath);
+        $preData = file($filepath);
+
+        foreach ($preData as $newLine){
+            $myNewData[][0] = $newLine;
+        }
+        $Data = $myNewData;
 
 
         // Centron Buchungsdaten?
@@ -224,6 +231,7 @@ class DBImport extends Core
 
         // Speichere csv - Daten zur weiteren Verarbeitung in der globalen - Klassen - Variable
         $this->hCore->gCore['csvValue'] = $myData;
+
 
         // Rufe Schnittstellen - Controller auf... in dem wird zwischen den verschiedenen Systemen unterschieden
         $this->OBSchnittstellenController();

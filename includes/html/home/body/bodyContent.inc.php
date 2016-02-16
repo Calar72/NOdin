@@ -14,4 +14,11 @@ $hCore->debugInitOnLoad('File',__FILE__);
 	</tr>
 </table>
 
+<?php
+/*
+echo "<pre>";
+print_r($_SESSION);
+echo "</pre>";
+*/
+?>
 

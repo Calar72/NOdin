@@ -888,9 +888,10 @@ class DBExportCentron extends Core
             $csv .= $set['A']['ABWZahlungsart'] . $tilde;
             $csv .= $set['A']['Faelligkeit'] . $tilde;
             $csv .= $set['A']['Valuta'] . $tilde;
-            $csv .= $set['A']['Valuta'] . $tilde;
+            //$csv .= $set['A']['Valuta'] . $tilde;
             // TODO HIER FEHLER!!!!
-            $csv .= $set['A']['PLZ'] . $tilde;
+            //$csv .= $set['A']['PLZ'] . $tilde;
+            // So gefixt?
             $csv .= $set['A']['Ort'] . $tilde;
             $csv .= $set['A']['Strasse'] . $tilde;
             $csv .= $set['A']['Hausnummer'] . $tilde;

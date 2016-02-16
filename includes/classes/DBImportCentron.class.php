@@ -149,6 +149,13 @@ class DBImportCentron extends Core
         $setRowEmail        = 6;
 
 
+        // Tabelle leeren!
+        $query = "TRUNCATE TABLE `baseDataCentron`";
+
+        // Tabelle leeren!
+        $this->gCoreDB->query($query);
+
+
         ////////////////////////////////////////////////////////////////////
         foreach ($zeilen as $kunde){
             $daten['errorArray']['Kd.-Nr.'] = array();
@@ -159,36 +166,61 @@ class DBImportCentron extends Core
                 continue;
             }
 
-            $cnt_kunden++;
 
-//            if (trim($kunde[0]) == ""){
+            //TODO WORKAROUND für 3 kundennumern... keine Anschriftdaten!
+            $tmpKdNr = trim($kunde[$setRowKDNummer]);
+            if ( ($tmpKdNr == '10148') || ($tmpKdNr == '10371') || ($tmpKdNr == '10131') ){
+                continue;
+            }
+
+//            if (trim($kunde[$setRowKDNummer]) == ""){
             if (trim($kunde[$setRowKDNummer]) == ""){
                 continue;
             }
 
 
 
+
             // Strassenstring auseinandernehmen
 //            if (!isset($kunde[3])){
             if (!isset($kunde[$setRowStrasseHnr])){
-                $strassenname = 'unset';
-                $hausnummer = 'unset';
+//                $strassenname = 'unset';
+                $strassenname = '';
+//                $hausnummer = 'unset';
+                $hausnummer = '';
+                $hausnummerzusatz = '';
                 $daten['errorArray']['Kd.-Nr.'] = $kunde[$setRowKDNummer];
             }
             else {
 //                $strassenname = trim($kunde[3]);
                 $strassenname = trim($kunde[$setRowStrasseHnr]);
                 $hausnummer = "";
+                /*
                 if ( preg_match('/([^\d]+)\s?(.+)/i', $strassenname, $result)) {
                     $strassenname = trim($result[1]);
                     $hausnummer = trim($result[2]);
                 }
+                */
+                $search = '/([^\d]+)(\d+)?([^\d]+)?/i';
+                if ( preg_match_all($search, $strassenname, $result)) {
+                    $strassenname       = trim($result[1][0]);
+                    $hausnummer         = trim($result[2][0]);
+                    $hausnummerzusatz   = trim($result[3][0]);
+                }
             }
+
+            // TODO ELEGANTER Datensatz bei Doppel abfangen
+            if (strlen($strassenname) <2){
+                continue;
+            }
+
+            $cnt_kunden++;
 
 
 //            if (!isset($kunde[4])){
             if (!isset($kunde[$setRowPLZ])){
-                $PLZ = 'unset';
+//                $PLZ = 'unset';
+                $PLZ = '';
                 $daten['errorArray']['Kd.-Nr.'] = $kunde[$setRowKDNummer];
             }
             else {
@@ -198,7 +230,8 @@ class DBImportCentron extends Core
 
             if (!isset($kunde[$setRowOrt])){
 //            if (!isset($kunde[5])){
-                $Ort = 'unset';
+//                $Ort = 'unset';
+                $Ort = '';
                 $daten['errorArray']['Kd.-Nr.'] = $kunde[$setRowKDNummer];
             }
             else {
@@ -208,7 +241,8 @@ class DBImportCentron extends Core
 
 //            if (!isset($kunde[6])){
             if (!isset($kunde[$setRowTelefon])){
-                $Telefon = 'unset';
+//                $Telefon = 'unset';
+                $Telefon = '';
                 $daten['errorArray']['Kd.-Nr.'] = $kunde[$setRowKDNummer];
             }
             else {
@@ -218,14 +252,15 @@ class DBImportCentron extends Core
 
             if (!isset($kunde[$setRowEmail])){
 //            if (!isset($kunde[7])){
-                $Email = 'unset';
+//                $Email = 'unset';
+                $Email = '';
                 $daten['errorArray']['Kd.-Nr.'] = $kunde[$setRowKDNummer];
             }
             else {
                 $Email = trim($kunde[$setRowEmail]);
             }
 
-
+            /*
             // Hausnummernzusatz
             $hausnummerzusatz = "";
 
@@ -235,8 +270,9 @@ class DBImportCentron extends Core
                 $hausnummerzusatz = trim(str_replace($matches[0], "", $hausnummer));
                 $hausnummer = $matches[0];
             }
+            */
 
-
+/*
             $name1 = trim($kunde[$setRowName1]);
 //            $name1 = trim($kunde[1]);
             $name2 = "";
@@ -245,6 +281,12 @@ class DBImportCentron extends Core
                 $name1 = substr($name1, 0, 30);
             }
 
+            $search = '/,$/i';
+            if ( preg_match_all($search, $name1, $result)) {
+                $newValue = '';
+                $name1 = preg_replace($search, $newValue, $name1);
+            }
+*/
 
             // Anschriftsname
             $anschrifts_name1 = trim($kunde[$setRowName1]);
@@ -262,12 +304,26 @@ class DBImportCentron extends Core
                 $name1 = substr($name1, 0, 30);
             }
 
+            $search = '/,$/i';
+            if ( preg_match_all($search, $name1, $result)) {
+                $newValue = '';
+                $name1 = preg_replace($search, $newValue, $name1);
+            }
+
+            $search = '/,$/i';
+            if ( preg_match_all($search, $name2, $result)) {
+                $newValue = '';
+                $name2 = preg_replace($search, $newValue, $name2);
+            }
+
+
             if (count($daten['errorArray']['Kd.-Nr.']) > 0){
                 $errorArray[] = $daten['errorArray'];
             }
 
 
             $personenkonto 	= trim($kunde[$setRowKDNummer]);	// Personenkonto sprich Kundennummer
+
 
             $dynInsertQuery = "(
                                 `userID`,
