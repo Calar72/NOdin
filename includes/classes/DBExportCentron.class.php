@@ -750,7 +750,8 @@ class DBExportCentron extends Core
                 $hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Satzart']              = 'B';                            // Satzart
                 //$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Bruttobetrag']         = $bookingSet['Brutto'];   // Bruttobetrag
                 //$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Nettobetrag']        = '';                       // Nettobetrag
-                $hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Steuerkennzeichen']    = $bookingSet['MwSt'];      // Steuerkennzeichen
+//                $hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Steuerkennzeichen']    = $bookingSet['MwSt'];      // Steuerkennzeichen
+                $hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Steuerkennzeichen']    = $_SESSION['customConfig']['Centron']['Steuerkennzeichen'];      // Steuerkennzeichen
                 $hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Geschaeftsbereich']    = $_SESSION['customConfig']['Centron']['GeschaeftsbereichNonPrivate'];    // Geschäftsbereich
 
 

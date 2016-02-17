@@ -14,7 +14,7 @@
     margin:0;
     padding:1px;
     width: 150px;
-    border: 1px solid black;
+    border: 0px solid black;
 }
 
 #primary_nav_wrap ul a
@@ -28,7 +28,6 @@
     line-height:32px;
     padding:0 15px;
     font-family: "Arial", sans-serif;
-
 }
 
 #primary_nav_wrap ul li
@@ -46,7 +45,8 @@
 
 #primary_nav_wrap ul li:hover
 {
-    background: #f6b002;
+    background-image: linear-gradient(90deg, #f6b002, transparent);
+    border: 0px solid rgb(122, 167, 170);
 }
 
 #primary_nav_wrap ul ul
@@ -57,7 +57,7 @@
     left:144px;
     background: rgb(255, 255, 255);
     padding:1px;
-    border: 1px solid black;
+    border: 1px solid rgb(122, 167, 170);
     z-index: 600;
 }
 

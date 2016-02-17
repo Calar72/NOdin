@@ -35,7 +35,7 @@ $formAction = $preForm . $postForm;
             <td class="bottomLine">Aktuellster Datensatz</td>
             <td class="bottomLine">Ältester Datensatz</td>
             <td class="bottomLine">Benutzer (Liste)</td>
-            <td class="bottomLine">Erlökonten (Liste)</td>
+            <td class="bottomLine">Erlöskonten (Liste)</td>
             <td class="bottomLine">Kostenstellen (Liste)</td>
         </tr>
 

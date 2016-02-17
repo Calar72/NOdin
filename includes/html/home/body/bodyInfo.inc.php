@@ -11,7 +11,16 @@ $hCore->debugInitOnLoad('File',__FILE__);
 ?>
 
 
+<br>
+<table border=0 class="standard" align="center" style="width:80%">
+    <tr>
+        <th><a class="std" href="" onclick="javascript:show('divHelpInfo'); return false"><i class="fa fa-info"></i>&nbsp;&nbsp;Ablauf Hilfe ein/ausblenden</a></th>
+    </tr>
+</table>
 
+<div style="display: none" id="divHelpInfo" class="divHelpInfo">
+
+<br>
 <br>
 <table border=0 class="standard" align="center" style="width:80%">
     <tr>
@@ -59,20 +68,9 @@ $hCore->debugInitOnLoad('File',__FILE__);
     </tr>
 </table>
 
+
+
 <br><br><br>
-
-
-<table border=0 class="standard" align="center" style="width:80%">
-    <tr>
-        <th><a class="std" href="" onclick="javascript:show('divHelpInfo'); return false"><i class="fa fa-info"></i>&nbsp;&nbsp;Vorgang Hilfe ein/ausblenden</a></th>
-    </tr>
-</table>
-
-
-
-
-<div style="display: none" id="divHelpInfo" class="divHelpInfo">
-
 
 
 
@@ -88,11 +86,7 @@ $hCore->debugInitOnLoad('File',__FILE__);
     </tr>
 </table>
 
-
-
 <br><br>
-
-
 
 <table border=0 class="standard" align="center" style="width:80%">
     <tr>
@@ -175,7 +169,6 @@ $hCore->debugInitOnLoad('File',__FILE__);
         </td>
     </tr>
 </table>
-
 
 
 

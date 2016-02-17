@@ -67,6 +67,16 @@ input[id=DefaultGetData]:focus {
 
 
 
+.inputFooterTicker {
+	border: none;
+	color: rgba(70, 70, 70, 0.76);
+	font-size: 90%;
+	font-family: monospace;
+	background-image: linear-gradient(90deg, rgba(204, 252, 255, 1), rgba(204, 252, 255, 1));
+}
+
+
+
 .debugHeadlineInformation {
 	background: rgba(204, 252, 255, 1);
 	text-align: center;
