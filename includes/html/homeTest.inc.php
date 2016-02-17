@@ -235,149 +235,7 @@ class baseDataSet {
 
 
 
-
-
-
-
-
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-            // Basis Klasse 1 START - Klasse
-            abstract class main
-            {
-                abstract protected function getValue();         // Methode getValue muss in Sub - Klasse definiert werden
-                abstract protected function setValue($arg);     // Methode setValue muss in Sub - Klasse  definiert werden
-                abstract protected function __clone();          // Methode __close muss in Sub - Klasse  defniert werden
-
-                public $mainValue;
-
-                function __construct()
-                {
-
-                }
-            }
-
-
-            // Basis Klasse 2
-            abstract class subA extends main
-            {
-                function __construct()
-                {
-                    parent::__construct();
-                }
-            }
-
-
-
-            // Basis Klasse 3
-            abstract class subB extends subA
-            {
-                function __construct()
-                {
-                    parent::__construct();
-                }
-            }
-
-
-
-
-
-            // Basis Klasse 4 ENDE - Klasse
-            class foo extends subB
-            {
-                protected static $obj = null;
-
-                function __construct()
-                {
-                    parent::__construct();
-                }
-
-                protected function __clone()
-                {
-
-                }
-
-
-                // Stellt sicher, dass nur eine Instanz der Klasse erzeugt wird... aufruf dann über {klassenname}::getSigleton() ... ergibt das Objekt
-                public static function getSingleton()
-                {
-                    if (null === self::$obj)
-                        self::$obj = new self;
-
-                    return self::$obj;
-                }
-
-
-                function getValue()
-                {
-                    return $this->mainValue;
-                }
-
-
-                function setValue($arg)
-                {
-                    $this->mainValue = $arg;
-                }
-
-            }
-
-
-
-            // Normale Klasse
-            class irgendwasklasse
-            {
-                // Objekt Handler für die Basis - Klassen
-                public $obj;
-
-                function __construct()
-                {
-                    // Sicher stellen das wir den Objekt - Handler der Basisklassen einmal haben
-                    $this->obj = foo::getSingleton();
-                }
-
-                // Irgendeine Funktion in der wir die Variable "mainValue" der Basis - Klasse setzen
-                function neu($arg)
-                {
-                    $this->obj->mainValue=$arg;
-                }
-            }
-
-
-            $hIrgendwasKlasse = new irgendwasklasse();
-
-            $hIrgendwasKlasse->neu('Montag');
-            var_dump($hIrgendwasKlasse->obj);
-            echo "<hr>";
-
-            $hIrgendwasKlasse->obj->mainValue = 'Dienstag';
-            var_dump($hIrgendwasKlasse->obj);
-            echo "<hr>";
-
-            var_dump($hIrgendwasKlasse);
-            echo "<hr>&nbsp;";
-            echo "<hr>";
-
-            $hNochmal = new irgendwasklasse();
-            var_dump($hNochmal->obj);
-            echo "<hr>";
-            var_dump($hNochmal);
-
-
-
-
-            echo"<hr><br><br><hr>";
-
-            ///////////////////////////////////////////////////////////////////
-
-
-
-
-
 
 
 
@@ -409,14 +267,33 @@ class baseDataSet {
 
         ?>
 
+
+
+<?php
+
+echo "<hr>";
+
+
+$myCoreC = new CoreTest();
+$myCoreC->coreValue = 'Melching';
+$myCoreC->myValue = 'Markus';
+var_dump($myCoreC); echo "<br>";
+
+
+
+$myCoreD = new CoreTest();
+$myCoreD->myValue = 'Diana';
+var_dump($myCoreD); echo "<br>";
+$myCoreD->loadSystemConfig();
+?>
+
+
     </div>
 
 
-    <div style="display: block" id="footer_ticker_container" class="footer_ticker_container">
-        <FORM NAME="NewsTicker">
-            <INPUT TYPE="TEXT" READONLY id="inputFooterTicker" class="inputFooterTicker" NAME="Zeile" SIZE=50 MAXLENGTH=60">
-        </FORM>
-        <SCRIPT>StartTicker();</SCRIPT>
-    </div>
-
-
+<div style="display: block" id="footer_ticker_container" class="footer_ticker_container">
+    <FORM NAME="NewsTicker">
+        <INPUT TYPE="TEXT" READONLY id="inputFooterTicker" class="inputFooterTicker" NAME="Zeile" SIZE=50 MAXLENGTH=60">
+    </FORM>
+    <SCRIPT>StartTicker();</SCRIPT>
+</div>
