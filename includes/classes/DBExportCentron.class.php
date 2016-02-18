@@ -889,10 +889,6 @@ class DBExportCentron extends Core
             $csv .= $set['A']['ABWZahlungsart'] . $tilde;
             $csv .= $set['A']['Faelligkeit'] . $tilde;
             $csv .= $set['A']['Valuta'] . $tilde;
-            //$csv .= $set['A']['Valuta'] . $tilde;
-            // TODO HIER FEHLER!!!!
-            //$csv .= $set['A']['PLZ'] . $tilde;
-            // So gefixt?
             $csv .= $set['A']['Ort'] . $tilde;
             $csv .= $set['A']['Strasse'] . $tilde;
             $csv .= $set['A']['Hausnummer'] . $tilde;
@@ -911,6 +907,7 @@ class DBExportCentron extends Core
             $csv .= $set['A']['ABWAnschriftStrasse'] . $tilde;
             $csv .= $set['A']['ABWAnschriftHausNr'] . $tilde;
             $csv .= $set['A']['ABWAnschriftHausNrZusatz'] . $tilde;
+            $csv .= $tilde;                                             // Leeres Feld, Workaround weil Fehler in der kVASy Beschreibung(!)
             $csv .= $set['A']['Prenotifcation'] . $tilde;
             $csv .= $set['A']['MandatsRefNr'] . $tilde;
             $csv .= $set['A']['AnkZahlungseinzgZum'] . $tilde;
