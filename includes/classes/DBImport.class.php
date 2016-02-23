@@ -262,7 +262,8 @@ class DBImport extends Core
             // Dimari - System?
             if ($this->hCore->gCore['curSourceSystemID'] == '1'){
                 //TODO Dimari Stammdaten - Import
-                $hDBImport = new DBImportDimari($hCore);
+//                $hDBImport = new DBImportDimari($hCore);
+                $hDBImport = new DBImportDimariKonzeptum($hCore);
                 $hDBImport->importBaseDataFileToDB();
             }
 

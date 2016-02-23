@@ -24,7 +24,7 @@
  *
  *
  */
-class DBExportDimari extends Core
+class OLD_DBExportDimari extends Core
 {
 
     public $gDBExportDimari = array();
@@ -175,7 +175,7 @@ class DBExportDimari extends Core
 
 
         // Sammelkonten
-        $query = "SELECT STATUSID FROM baseDataDimari WHERE 1 GROUP BY STATUSID";
+        $query = "SELECT SAMMELKONTO FROM baseDataDimari WHERE 1 GROUP BY SAMMELKONTO";
         $result = $this->gCoreDB->query($query);
         $num_rows = $this->gCoreDB->num_rows($result);
 
@@ -184,7 +184,7 @@ class DBExportDimari extends Core
         }
         else{
             while($row = $result->fetch_object()){
-                $Sammelkonten[] = $row->STATUSID;
+                $Sammelkonten[] = $row->SAMMELKONTO;
             }
         }
         $hCore->gCore['baseDataInfo']['Sammelkonten'] = $Sammelkonten;
@@ -194,7 +194,7 @@ class DBExportDimari extends Core
 
 
         // Zahlungsart
-        $query = "SELECT ZAHLUNGS_ART FROM baseDataDimari WHERE 1 GROUP BY ZAHLUNGS_ART";
+        $query = "SELECT ZAHLART FROM baseDataDimari WHERE 1 GROUP BY ZAHLART";
         $result = $this->gCoreDB->query($query);
         $num_rows = $this->gCoreDB->num_rows($result);
 
@@ -203,7 +203,7 @@ class DBExportDimari extends Core
         }
         else{
             while($row = $result->fetch_object()){
-                $Zahlungsarten[] = $row->ZAHLUNGS_ART;
+                $Zahlungsarten[] = $row->ZAHLART;
             }
         }
         $hCore->gCore['baseDataInfo']['Zahlungsarten'] = $Zahlungsarten;
@@ -219,418 +219,19 @@ class DBExportDimari extends Core
     // INITIAL
     public function doExportsBaseDataDimari()
     {
-        echo "hier";
-
-        // Tabellen Felder lesen
-        $this->fetchDBFieldnames($_SESSION['customConfig']['Dimari']['baseDataIndexAdd']);
-
-
-        // Daten aus DB lesen
-        $this->readDBData();
-
-
-        // Daten aufbereiten
-        $this->refactorCustomerSet();
-
         // Datenstamm aus DB lesen wo log_baseDataImportsID = der gewaehlten ImportID ist
-        //$zeilen = $this->readDatensatz();
+        $zeilen = $this->readDatensatz();
 
-        //$return['csv'] = $this->OBSchnittstelleDimari($zeilen);
+        $return['csv'] = $this->OBSchnittstelleDimari($zeilen);
 
         RETURN TRUE;
     }
 
 
-    private function refactorCustomerSet()
-    {
-        $hCore = $this->hCore;
 
-        // Setzte Default Array
-        $this->setExpFormat();
 
 
-        foreach ($this->hCore->gCore['customerSet'] as $customerCnt=>$customerKey){
-
-            foreach ($this->hCore->gCore['defaultCustomerData'] as $keyname=>$egal){
-
-                $tmp = '';
-
-                if (isset($this->hCore->gCore['customerSet'][$customerCnt][$keyname]))
-                    $tmp = $this->hCore->gCore['customerSet'][$customerCnt][$keyname];
-
-
-                // Sonderfall Firma
-                if ($keyname == 'KD_NAME1'){
-                    if ( (isset($this->hCore->gCore['customerSet'][$customerCnt]['FIRMENNAME'])) && (strlen($this->hCore->gCore['customerSet'][$customerCnt]['FIRMENNAME']) > 0) ){
-
-                        // Setzte Name 1 auf Firmenname
-                        $tmp = $this->hCore->gCore['customerSet'][$customerCnt]['FIRMENNAME'];
-
-                        // Name 2 in AP_Vorname - Feld setzen
-                        if (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME2']))
-                            $this->hCore->gCore['customerSet'][$customerCnt]['AP_VORNAME'] = $this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME2'];
-
-                        // Name 1 in AP_Vorname - Feld setzen
-                        if (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME1']))
-                            $this->hCore->gCore['customerSet'][$customerCnt]['AP_NACHNAME'] = $this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME1'];
-
-                        // Verhindern dass KD_NAME2 mit dem Vornamen gefüllt wird
-                        $this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME2'] = '';
-
-                        $this->hCore->gCore['customerSet'][$customerCnt]['ORG_STUFE'] = 'F';
-
-                    }
-                    else {
-                        // DEFAULT Keine Firma
-                        $this->hCore->gCore['customerSet'][$customerCnt]['ORG_STUFE'] = 'P';
-                    }
-                }
-
-
-
-                // Sonderfall Mandant_ID
-                elseif ($keyname == 'MANDANT_ID'){
-                    $tmp = '0';
-                }
-
-
-                // Sonderfall MWST
-                elseif ($keyname == 'MWST'){
-                    $tmp = '19';
-                }
-
-
-
-                // Sonderfall Währung
-                elseif ($keyname == 'WAEHRUNG'){
-                    $tmp = 'EUR';
-                }
-
-
-                // Sonderfall Dokument_Gruppe
-                elseif ($keyname == 'DOKUMENT_GRUPPE'){
-                    $tmp = '1';
-                }
-
-
-
-                // Sonderfall Strasse
-                elseif ($keyname == 'KD_STRASSE'){
-                    $tmp = $this->hCore->gCore['customerSet'][$customerCnt]['STREET'];
-
-                    if (isset($this->hCore->gCore['customerSet'][$customerCnt]['HAUSNUMMER']))
-                        $tmp .= ' ' . $this->hCore->gCore['customerSet'][$customerCnt]['HAUSNUMMER'];
-
-                    if (isset($this->hCore->gCore['customerSet'][$customerCnt]['HAUSNUMMER_ZUSATZ']))
-                        $tmp .= ' ' . $this->hCore->gCore['customerSet'][$customerCnt]['HAUSNUMMER_ZUSATZ'];
-
-
-                }
-
-
-
-                // Sonderfall Vertrag Nr
-                elseif ($keyname == 'VETRAG_NR'){
-                    if (isset($this->hCore->gCore['customerSet'][$customerCnt]['SEPA_MANDATSREFERENZ'])) {
-
-                        // Splitten
-                        $suchmuster = '/(\d+)(-)(\d+)$/';
-                        $zeichenkette = $this->hCore->gCore['customerSet'][$customerCnt]['SEPA_MANDATSREFERENZ'];
-                        preg_match($suchmuster, $zeichenkette, $matches);
-
-                        if (isset($matches[3]))
-                            $tmp = $matches[3];
-                        else
-                            $tmp = $this->hCore->gCore['customerSet'][$customerCnt]['KUNDEN_NR'];
-                    }
-                    else{
-                        $tmp = $this->hCore->gCore['customerSet'][$customerCnt]['KUNDEN_NR'];
-                    }
-                }
-
-
-
-                // Sonderfall Zahlungsart
-                elseif ($keyname == 'ZAHLUNGS_ART'){
-                    // 0 = Überweisung
-                    if ($this->hCore->gCore['customerSet'][$customerCnt]['ZAHLUNGS_ART'] == '0')
-                        $tmp = 'M';
-
-                    // 1 = Lastschrift
-                    elseif ($this->hCore->gCore['customerSet'][$customerCnt]['ZAHLUNGS_ART'] == '1')
-                        $tmp = 'LB';
-
-                    // Unbekannt ... setze auf Lastschrift
-                    else
-                        $tmp = 'LB';
-                }
-
-
-
-                // Sonderfall SEPA Unterschrift am
-                elseif ($keyname == 'SEPA_UNTERCHIFT_AM'){
-                    if (isset($this->hCore->gCore['customerSet'][$customerCnt]['SEPA_GUELTIG_AB']))
-                        $tmp = $this->hCore->gCore['customerSet'][$customerCnt]['SEPA_GUELTIG_AB'];
-                }
-
-
-
-
-                // Sonderfall Varsandart
-                elseif ($keyname == 'VERSANDART'){
-                    if ($this->hCore->gCore['customerSet'][$customerCnt]['VERSANDART'] == 'Online')
-                        $tmp = 'W';
-
-                    elseif ($this->hCore->gCore['customerSet'][$customerCnt]['VERSANDART'] == 'Email')
-                        $tmp = 'E';
-
-                    elseif ($this->hCore->gCore['customerSet'][$customerCnt]['VERSANDART'] == 'Papier')
-                        $tmp = 'P';
-                }
-
-
-
-                $this->hCore->gCore['newCustomerSet'][$customerCnt][$keyname] = $tmp;
-
-            }
-
-        }
-
-        $emptyArray = array();
-        $this->hCore->gCore['customerSet'] = $emptyArray;
-    }
-
-
-
-
-
-
-
-
-    private function setExpFormat()
-    {
-
-        $hCore = $this->hCore;
-
-//        $this->hCore->gCore['defaultCustomerData'] = array( 'KD_NAME1',
-//                                                            'KD_NAME2');
-
-        $this->hCore->gCore['defaultCustomerData']['KD_NAME1']                  = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_NAME2']                  = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_NAME3']                  = '';
-        $this->hCore->gCore['defaultCustomerData']['KUNDEN_NR']                 = '';
-
-        $this->hCore->gCore['defaultCustomerData']['ORG_STUFE']                 = '';
-        $this->hCore->gCore['defaultCustomerData']['KURZBEZEICHNUNG']           = '';
-        $this->hCore->gCore['defaultCustomerData']['BEMERKUNG']                 = '';
-        $this->hCore->gCore['defaultCustomerData']['MANDANT_ID']                = '';
-        $this->hCore->gCore['defaultCustomerData']['MWST']                      = '';
-        $this->hCore->gCore['defaultCustomerData']['WAEHRUNG']                  = '';
-        $this->hCore->gCore['defaultCustomerData']['ORG_EINHEIT_GRUPPE_ID']     = '';
-        $this->hCore->gCore['defaultCustomerData']['DOKUMENT_GRUPPE']           = '';
-
-        $this->hCore->gCore['defaultCustomerData']['KD_ANREDE']                 = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_BRIEF_ANREDE']           = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_TITEL']                  = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_VORNAME']                = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_NACHNAME']               = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_STRASSE']                = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_PLZ']                    = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_ORT']                    = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_POSTFACH']               = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_PLZ_POSTFACH']           = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_TEL']                    = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_FAX']                    = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_MOBIL']                  = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_EMAIL']                  = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_WWW_ADRESSE']            = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_GEBURT_DATUM']           = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_ABTEILUNG_POSITION']     = '';
-        $this->hCore->gCore['defaultCustomerData']['KD_ADR_BEZEICHNUNG']        = '';
-
-        $this->hCore->gCore['defaultCustomerData']['AP_ANREDE']                 = '';
-        $this->hCore->gCore['defaultCustomerData']['AP_BRIEF_ANREDE']           = '';
-        $this->hCore->gCore['defaultCustomerData']['AP_TITEL']                  = '';
-        $this->hCore->gCore['defaultCustomerData']['AP_VORNAME']                = '';
-        $this->hCore->gCore['defaultCustomerData']['AP_NACHNAME']               = '';
-        $this->hCore->gCore['defaultCustomerData']['AP_STRASSE']                = '';
-        $this->hCore->gCore['defaultCustomerData']['AP_PLZ']                    = '';
-        $this->hCore->gCore['defaultCustomerData']['AP_ORT']                    = '';
-        $this->hCore->gCore['defaultCustomerData']['AP_POSTFACH']               = '';
-        $this->hCore->gCore['defaultCustomerData']['AP_PLZ_POSTFACH']           = '';
-        $this->hCore->gCore['defaultCustomerData']['AP_ABTEILUNG_POSITION']     = '';
-        $this->hCore->gCore['defaultCustomerData']['AP_TEL']                    = '';
-        $this->hCore->gCore['defaultCustomerData']['AP_FAX']                    = '';
-        $this->hCore->gCore['defaultCustomerData']['AP_MOBIL']                  = '';
-        $this->hCore->gCore['defaultCustomerData']['AP_EMAIL']                  = '';
-        $this->hCore->gCore['defaultCustomerData']['AP_WWW_ADRESSE']            = '';
-        $this->hCore->gCore['defaultCustomerData']['AP_GEBURT_DATUM']           = '';
-        $this->hCore->gCore['defaultCustomerData']['AP_ADR_BEZEICHNUNG']        = '';
-
-        $this->hCore->gCore['defaultCustomerData']['VETRAG_NR']                 = '';
-        $this->hCore->gCore['defaultCustomerData']['KREDITINSTITUTNAME']        = '';
-        $this->hCore->gCore['defaultCustomerData']['BLZ']                       = '';
-        $this->hCore->gCore['defaultCustomerData']['KTONR']                     = '';
-        $this->hCore->gCore['defaultCustomerData']['IBAN']                      = '';
-        $this->hCore->gCore['defaultCustomerData']['BIC']                       = '';
-        $this->hCore->gCore['defaultCustomerData']['ZAHLUNGS_ART']              = '';
-        $this->hCore->gCore['defaultCustomerData']['INHABER_KONTO']             = '';
-        $this->hCore->gCore['defaultCustomerData']['ZAHLUNGSZIEL_TAGE']         = '';
-
-        $this->hCore->gCore['defaultCustomerData']['SEPA_MANDATSREFERENZ']      = '';
-        $this->hCore->gCore['defaultCustomerData']['SEPA_UNTERCHIFT_AM']        = '';
-        $this->hCore->gCore['defaultCustomerData']['SEPA_GUELTIG_AB']           = '';
-
-        $this->hCore->gCore['defaultCustomerData']['BILLINGLAUF']               = '';
-        $this->hCore->gCore['defaultCustomerData']['EGN']                       = '';
-        $this->hCore->gCore['defaultCustomerData']['VERSANDART']               = '';
-
-    }
-
-
-
-
-
-
-
-
-
-    private function readDBData()
-    {
-        $hCore = $this->hCore;
-
-        $query = "SELECT * FROM `baseDataDimari` WHERE 1 ORDER BY baseDataDimariID";
-        $result = $this->gCoreDB->query($query);
-        $num_rows = $this->gCoreDB->num_rows($result);
-
-        if (!$num_rows >= '1'){
-            $customerSet[] = '';
-        }
-        else{
-            $cnt = 0;
-            while($row = $result->fetch_array(MYSQLI_ASSOC)){
-
-                foreach ($this->hCore->gCore['DBFieldnames'] as $index=>$DBFielname){
-                    $customerSet[$cnt][$DBFielname] = $row[$DBFielname];
-                }
-
-                $cnt++;
-            }
-        }
-
-        $hCore->gCore['customerSet'] = $customerSet;
-
-        // $hCore->gCore['baseDataInfo']['userNames'] = $userNames;
-        $this->gCoreDB->free_result($result);
-    }
-
-
-
-
-
-    // Ermittelt die Feldnamen der Datenbank
-    private function fetchDBFieldnames($noFirstRowsNum=0)
-    {
-        $hCore = $this->hCore;
-
-        $query = "SHOW COLUMNS FROM `baseDataDimari`";
-
-        // Resultat der Login - Prüfung
-        $result = $this->gCoreDB->query($query);
-
-        // Betroffene Zeilen, bzw. erhaltene
-        $num_rows = $this->gCoreDB->num_rows($result);
-
-
-        // Keine Import Datei gefunden!
-        if (!$num_rows >= '1'){
-
-            // Breche Methode hier ab und liefere false - Wert zurück
-
-            RETURN FALSE;
-        }
-
-
-        // Ergebnis in $row speichern
-        $curRow = 0;
-        while ($row = $result->fetch_object()){
-            $curRow++;
-            if ($curRow > $noFirstRowsNum)
-                $this->hCore->gCore['DBFieldnames'][] =  $row->Field;;
-        }
-
-        $this->gCoreDB->free_result($result);
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    function OLD_OBSchnittstelleDimari($zeilen)
+    function OBSchnittstelleDimari($zeilen)
     {
 
         $hCore = $this->hCore;
@@ -784,7 +385,7 @@ class DBExportDimari extends Core
 
 
 
-    function OLD_writeToCSVSingleCustomer($kunde)
+    function writeToCSVSingleCustomer($kunde)
     {
 
         $csv = "";
@@ -841,7 +442,7 @@ class DBExportDimari extends Core
 
 
 
-    function OLD_checkCustomerRowValue($cfgSatz, $kunde)
+    function checkCustomerRowValue($cfgSatz, $kunde)
     {
 
         $newKundeData 	= array();
@@ -1015,7 +616,7 @@ class DBExportDimari extends Core
 
 
 
-    function OLD_initSubstrStrLen($checkArray, $maxlen){
+    function initSubstrStrLen($checkArray, $maxlen){
 
         // Array als übergebenes Argument notwendig!
         // Wenn wir kein Array erhalten haben, erstellen wir hier eine passende Übergabe!
@@ -1065,7 +666,7 @@ class DBExportDimari extends Core
 
 
 
-    function OLD_generateChangeIndexCfgSatz($cfgSatz){
+    function generateChangeIndexCfgSatz($cfgSatz){
 
         foreach ($cfgSatz as $cfgSatzIndex=>$value){
 
@@ -1083,7 +684,7 @@ class DBExportDimari extends Core
 
 
     // Wie .csv einlesen.... nur gehe ich ueber die DB und habe feldnamen als array-index in zeilen
-    function OLD_readDatensatz()
+    function readDatensatz()
     {
          $cfgSatz = $this->readCfgSatz();
 
@@ -1130,7 +731,7 @@ class DBExportDimari extends Core
 
 
 
-    function OLD_readCFGSatz() {
+    function readCFGSatz() {
 
         $cfgSatz = array();
 

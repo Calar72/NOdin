@@ -285,6 +285,16 @@ $myCoreD = new CoreTest();
 $myCoreD->myValue = 'Diana';
 var_dump($myCoreD); echo "<br>";
 $myCoreD->loadSystemConfig();
+
+
+
+$suchmuster = '/(\d+)(-)(\d+)$/';
+$zeichenkette = '100000009-11073';
+preg_match($suchmuster, $zeichenkette, $matches);
+echo "<pre>";
+print_r($matches);
+echo "</pre><br>";
+
 ?>
 
 

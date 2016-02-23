@@ -14,6 +14,7 @@
  *  				'-> Debug					            Child
  * 					    '-> MySQLDB			                Child
  *  					    '-> Query		                Child
+ *  					    '-> Query		                Child
  *      					    '-> Core			        Child
  * ===>	        					|-> ConcreteClass1	    Core - Child - AnyCreature
  * 			        				|-> ...				    Core - Child - AnyCreatures
