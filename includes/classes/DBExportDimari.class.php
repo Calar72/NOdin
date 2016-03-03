@@ -404,7 +404,17 @@ class DBExportDimari extends Core
 
                 // Sonderfall EGN (Einzel Gesprächs Nachweiss)
                 elseif ($keyname == 'EGN'){
-                    $tmp = 'J';
+
+                    // Default auf "aus"
+                    $tmp = 'N';
+
+                    if (isset($this->hCore->gCore['customerSet'][$customerCnt]['EGN'])){
+                        $curEGN = $this->hCore->gCore['customerSet'][$customerCnt]['EGN'];
+
+                        if ($curEGN == '1')
+                            $tmp = 'J';
+
+                    }
                 }
 
 
