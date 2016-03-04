@@ -108,10 +108,54 @@ class DBImportDimariKonzeptum extends Core
         $this->checkDBFieldnames();
 
 
+        // Reudziere auf einen Datensatz pro Kunde
+        // $this->OLD_reduceToOneCustomerSet();
+
         // In Datenbank schreiben
         $this->writeToDB();
     }
 
+
+
+
+
+
+    private function OLD_reduceToOneCustomerSet()
+    {
+        $tmpArray = array();
+
+        // Bool erste Reihe überspringen
+        $noFirstRow = true;
+
+        foreach ($this->hCore->gCore['csvValue'] as $cnt=>$customerArray){
+
+            // Erste Reihe überspringen
+            if ($noFirstRow){
+                $noFirstRow = false;
+               // continue;
+            }
+
+            $curCustomerNumber  = $this->hCore->gCore['csvValue'][$cnt][2];
+            $curEVN             = $this->hCore->gCore['csvValue'][$cnt][32];
+
+            if ( (!isset($tmpArray[$curCustomerNumber][32])) || ($tmpArray[$curCustomerNumber][32] < 1) ){
+                $tmpArray[$curCustomerNumber] = $this->hCore->gCore['csvValue'][$cnt];
+            }
+
+        }
+
+        $this->hCore->gCore['csvValue'] = '';
+
+        $cnt =0;
+        foreach ($tmpArray as $index=>$valueArray){
+            $this->hCore->gCore['csvValue'][$cnt] = $valueArray;
+            $cnt++;
+        }
+
+//        echo "<pre>";
+//        print_r($this->hCore->gCore['csvValue']);
+//        echo "</pre><br>";
+    }
 
 
 

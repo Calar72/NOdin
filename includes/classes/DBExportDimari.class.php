@@ -234,11 +234,6 @@ class DBExportDimari extends Core
         // .csv jetzt vorbereiten
         $this->OBSchnittstelleDimariKonzeptum();
 
-        // Datenstamm aus DB lesen wo log_baseDataImportsID = der gewaehlten ImportID ist
-        //$zeilen = $this->readDatensatz();
-
-        //$return['csv'] = $this->OBSchnittstelleDimari($zeilen);
-
         RETURN TRUE;
     }
 
@@ -267,6 +262,15 @@ class DBExportDimari extends Core
 
                         // Setzte Name 1 auf Firmenname
                         $tmp = $this->hCore->gCore['customerSet'][$customerCnt]['FIRMENNAME'];
+
+                        // Setze AP_ANREDE
+                        if ( (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_ANREDE'])) && (!isset($this->hCore->gCore['customerSet'][$customerCnt]['AP_ANREDE'])) )
+                            $this->hCore->gCore['customerSet'][$customerCnt]['AP_ANREDE'] = $this->hCore->gCore['customerSet'][$customerCnt]['KD_ANREDE'];
+
+                        // Setze AP_BRIEF_ANREDE
+                        if ( (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_BRIEF_ANREDE'])) && (!isset($this->hCore->gCore['customerSet'][$customerCnt]['AP_BRIEF_ANREDE'])) )
+                            $this->hCore->gCore['customerSet'][$customerCnt]['AP_BRIEF_ANREDE'] = $this->hCore->gCore['customerSet'][$customerCnt]['KD_BRIEF_ANREDE'];
+
 
                         // Name 2 in AP_Vorname - Feld setzen
                         if (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME2']))
@@ -356,26 +360,6 @@ class DBExportDimari extends Core
 
 
 
-                // Sonderfall Vertrag Nr
-                elseif ($keyname == 'VETRAG_NR'){
-                    if (isset($this->hCore->gCore['customerSet'][$customerCnt]['SEPA_MANDATSREFERENZ'])) {
-
-                        // Splitten
-                        $suchmuster = '/(\d+)(-)(\d+)$/';
-                        $zeichenkette = $this->hCore->gCore['customerSet'][$customerCnt]['SEPA_MANDATSREFERENZ'];
-                        preg_match($suchmuster, $zeichenkette, $matches);
-
-                        if (isset($matches[3]))
-                            $tmp = $matches[3];
-                        else
-                            $tmp = $this->hCore->gCore['customerSet'][$customerCnt]['KUNDEN_NR'];
-                    }
-                    else{
-                        $tmp = $this->hCore->gCore['customerSet'][$customerCnt]['KUNDEN_NR'];
-                    }
-                }
-
-
 
                 // Sonderfall Zahlungsart
                 elseif ($keyname == 'ZAHLUNGS_ART'){
@@ -406,15 +390,16 @@ class DBExportDimari extends Core
                 elseif ($keyname == 'EGN'){
 
                     // Default auf "aus"
-                    $tmp = 'N';
+                    $tmp = 'J';
 
-                    if (isset($this->hCore->gCore['customerSet'][$customerCnt]['EGN'])){
-                        $curEGN = $this->hCore->gCore['customerSet'][$customerCnt]['EGN'];
-
-                        if ($curEGN == '1')
-                            $tmp = 'J';
-
-                    }
+                    // 2016.03.04 Laut Lars immer AN ... folgender Block wird also auskommentiert!!!
+//                    if (isset($this->hCore->gCore['customerSet'][$customerCnt]['EGN'])){
+//                        $curEGN = $this->hCore->gCore['customerSet'][$customerCnt]['EGN'];
+//
+//                        if ($curEGN == '1')
+//                            $tmp = 'J';
+//
+//                    }
                 }
 
 
@@ -424,8 +409,14 @@ class DBExportDimari extends Core
                     if ($this->hCore->gCore['customerSet'][$customerCnt]['VERSANDART'] == 'Online')
                         $tmp = 'W';
 
-                    elseif ($this->hCore->gCore['customerSet'][$customerCnt]['VERSANDART'] == 'Email')
+                    elseif ($this->hCore->gCore['customerSet'][$customerCnt]['VERSANDART'] == 'Email'){
                         $tmp = 'E';
+
+                        // Fange ab, wenn per Email die Rechnung geschickt werden soll, wir aber keien Emailadresse haben... dann Rechnung via Webportal
+                        if ( (!isset($this->hCore->gCore['customerSet'][$customerCnt]['EMAIL'])) || (strlen($this->hCore->gCore['customerSet'][$customerCnt]['EMAIL'])<2) ) {
+                            $tmp = 'W';
+                        }
+                    }
 
                     elseif ($this->hCore->gCore['customerSet'][$customerCnt]['VERSANDART'] == 'Papier')
                         $tmp = 'P';
@@ -649,6 +640,7 @@ class DBExportDimari extends Core
         $fp = fopen($storeFile, 'w');
         fwrite($fp, $oracle);
         fclose($fp);
+
 
         // Message Ausgabe vorebeiten
         $hCore = $this->hCore;
