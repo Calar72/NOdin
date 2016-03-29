@@ -273,27 +273,35 @@ class baseDataSet {
 
 echo "<hr>";
 
+$tmp = '+49 2572 953262';
+$tmp = '02572 8004422';
+$tmp = '+49 2572952755';
 
-$myCoreC = new CoreTest();
-$myCoreC->coreValue = 'Melching';
-$myCoreC->myValue = 'Markus';
-var_dump($myCoreC); echo "<br>";
+$tmp = trim($tmp);
+$search = '/^\+49 /';
+$replace = '0';
+$tmp = preg_replace($search, $replace, $tmp);
+
+$search = '/^02572/';
+$replace = '02572/';
+$tmp = preg_replace($search, $replace, $tmp);
+
+$search = '/ /';
+$replace = '/';
+$tmp = preg_replace($search, $replace, $tmp);
+
+$search = '/-/';
+$replace = '/';
+$tmp = preg_replace($search, $replace, $tmp);
+
+$search = '/\/\//';
+$replace = '/';
+$tmp = preg_replace($search, $replace, $tmp);
+
+print ($tmp);
+echo "<br>";
 
 
-
-$myCoreD = new CoreTest();
-$myCoreD->myValue = 'Diana';
-var_dump($myCoreD); echo "<br>";
-$myCoreD->loadSystemConfig();
-
-
-
-$suchmuster = '/(\d+)(-)(\d+)$/';
-$zeichenkette = '100000009-11073';
-preg_match($suchmuster, $zeichenkette, $matches);
-echo "<pre>";
-print_r($matches);
-echo "</pre><br>";
 
 ?>
 

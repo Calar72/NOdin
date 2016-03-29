@@ -9,7 +9,7 @@
  * Date: 17.02.2016
  * Time: 15:09
  */
-class CoreTest extends CoreIEnd
+class CoreTest
 {
 
     //public $myDynObj;   // Objekt Handler aus dem Core - Klassen - System
@@ -21,15 +21,10 @@ class CoreTest extends CoreIEnd
     function __construct()
     {
 
-        parent::__construct();
 
     }
 
 
-    function testing()
-    {
-        $this->coreValue = 'Peter';
-    }
 
 
 

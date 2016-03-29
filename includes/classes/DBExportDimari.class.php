@@ -271,6 +271,33 @@ class DBExportDimari extends Core
                         if ( (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_BRIEF_ANREDE'])) && (!isset($this->hCore->gCore['customerSet'][$customerCnt]['AP_BRIEF_ANREDE'])) )
                             $this->hCore->gCore['customerSet'][$customerCnt]['AP_BRIEF_ANREDE'] = $this->hCore->gCore['customerSet'][$customerCnt]['KD_BRIEF_ANREDE'];
 
+                        // Setze Strasse
+                        if (isset($this->hCore->gCore['customerSet'][$customerCnt]['STREET'])) {
+                            $xtmp = $this->hCore->gCore['customerSet'][$customerCnt]['STREET'];
+
+                            if (isset($this->hCore->gCore['customerSet'][$customerCnt]['HAUSNUMMER']))
+                                $xtmp .= ' ' . $this->hCore->gCore['customerSet'][$customerCnt]['HAUSNUMMER'];
+
+                            if (isset($this->hCore->gCore['customerSet'][$customerCnt]['HAUSNUMMER_ZUSATZ']))
+                                $xtmp .= ' ' . $this->hCore->gCore['customerSet'][$customerCnt]['HAUSNUMMER_ZUSATZ'];
+
+                            $this->hCore->gCore['customerSet'][$customerCnt]['AP_STRASSE'] = $xtmp;
+                        }
+
+
+
+                        // Setze PLZ
+                        if (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_PLZ'])) {
+                            $this->hCore->gCore['customerSet'][$customerCnt]['AP_PLZ'] = $this->hCore->gCore['customerSet'][$customerCnt]['KD_PLZ'];
+                        }
+
+
+                        // Setze Ort
+                        if (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_ORT'])) {
+                            $this->hCore->gCore['customerSet'][$customerCnt]['AP_ORT'] = $this->hCore->gCore['customerSet'][$customerCnt]['KD_ORT'];
+                            $this->hCore->gCore['customerSet'][$customerCnt]['AP_ORT'] = $this->hCore->gCore['customerSet'][$customerCnt]['KD_ORT'];
+                        }
+
 
                         // Name 2 in AP_Vorname - Feld setzen
                         if (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME2']))
@@ -374,6 +401,12 @@ class DBExportDimari extends Core
                     // Unbekannt ... setze auf Lastschrift
                     else
                         $tmp = 'LB';
+
+                    // Sonderfall Kunde 20011198 KUNDEN_NR
+                    if ($this->hCore->gCore['customerSet'][$customerCnt]['KUNDEN_NR'] == '20011198'){
+                        $this->hCore->gCore['customerSet'][$customerCnt]['ZAHLUNGS_ART'] == '0';
+                        $tmp = 'M';
+                    }
                 }
 
 
@@ -420,6 +453,36 @@ class DBExportDimari extends Core
 
                     elseif ($this->hCore->gCore['customerSet'][$customerCnt]['VERSANDART'] == 'Papier')
                         $tmp = 'P';
+                }
+
+
+                // Sonderfall Telefonnummern
+                elseif ($keyname == 'KD_TEL'){
+
+                    if (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_TEL'])) {
+                        $tmp = $this->hCore->gCore['customerSet'][$customerCnt]['KD_TEL'];
+                        $tmp = trim($tmp);
+                        $search = '/^\+49 /';
+                        $replace = '0';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
+                        $search = '/^02572/';
+                        $replace = '02572/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
+                        $search = '/ /';
+                        $replace = '/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
+                        $search = '/-/';
+                        $replace = '/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
+                        $search = '/\/\//';
+                        $replace = '/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+                    }
+
                 }
 
 

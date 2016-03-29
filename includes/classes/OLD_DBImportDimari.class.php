@@ -23,7 +23,7 @@
  * 				        			|-> ConcreteClass20	    Core - Child - AnyCreature
  *
  */
-class DBImportDimari extends Core
+class OLD_DBImportDimari extends Core
 {
 
     public $gDBImportDimari = array();
