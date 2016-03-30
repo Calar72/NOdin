@@ -486,6 +486,76 @@ class DBExportDimari extends Core
                 }
 
 
+
+                // Sonderfall Fax
+                elseif ($keyname == 'KD_FAX'){
+
+                    if (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_FAX'])) {
+                        $tmp = $this->hCore->gCore['customerSet'][$customerCnt]['KD_FAX'];
+                        $tmp = trim($tmp);
+                        $search = '/^\+49 /';
+                        $replace = '0';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
+                        $search = '/^02572/';
+                        $replace = '02572/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
+                        $search = '/ /';
+                        $replace = '/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
+                        $search = '/-/';
+                        $replace = '/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
+                        $search = '/\/\//';
+                        $replace = '/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+                    }
+
+                }
+
+
+
+                // Sonderfall Mobil
+                elseif ($keyname == 'KD_MOBIL'){
+
+                    if (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_MOBIL'])) {
+                        $tmp = $this->hCore->gCore['customerSet'][$customerCnt]['KD_MOBIL'];
+                        $tmp = trim($tmp);
+                        $preSearch = '/^\+49 (.*)+/';
+                        $search = '/^\+49 /';
+                        $replace = '0';
+                        if (preg_match($preSearch, $tmp))
+                            $tmp = preg_replace($search, $replace, $tmp);
+
+                        $tmp = trim($tmp);
+                        $search = '/^49 /';
+                        $replace = '0';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
+
+                        $search = '/^02572/';
+                        $replace = '02572/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
+                        $search = '/ /';
+                        $replace = '/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
+                        $search = '/-/';
+                        $replace = '/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
+                        $search = '/\/\//';
+                        $replace = '/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+                    }
+
+                }
+
+
                 $this->hCore->gCore['newCustomerSet'][$customerCnt][$keyname] = utf8_encode($tmp);
 
             }

@@ -276,11 +276,23 @@ echo "<hr>";
 $tmp = '+49 2572 953262';
 $tmp = '02572 8004422';
 $tmp = '+49 2572952755';
+$tmp = '0176 44563868';
+//$tmp = '49 177 5474207';
+
 
 $tmp = trim($tmp);
+$preSearch = '/^\+49 (.*)+/';
 $search = '/^\+49 /';
 $replace = '0';
+if (preg_match($preSearch, $tmp))
+    $tmp = preg_replace($search, $replace, $tmp);
+
+echo "$tmp<br>";
+$tmp = trim($tmp);
+$search = '/^49 /';
+$replace = '0';
 $tmp = preg_replace($search, $replace, $tmp);
+
 
 $search = '/^02572/';
 $replace = '02572/';
