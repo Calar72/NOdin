@@ -147,6 +147,13 @@ class DBImportCentron extends Core
         $setRowOrt          = 4;
         $setRowTelefon      = 5;
         $setRowEmail        = 6;
+        $setRowZahlungstyp  = 7;
+        $setIBAN            = 8;
+        $setSWIFT           = 9;
+        $setLandCode        = 10;
+        $setLandName        = 11;
+        $setBKLZ            = 12;
+        $setBankNr          = 13;
 
 
         // Tabelle leeren!
@@ -241,33 +248,39 @@ class DBImportCentron extends Core
                 $Email = trim($kunde[$setRowEmail]);
             }
 
-            /*
-            // Hausnummernzusatz
-            $hausnummerzusatz = "";
+            // Calar neu
 
-            $matches = array();
-            preg_match('/(\d+)(.*?)/', $hausnummer, $matches);
-            if (isset($matches[0]) and (strlen($matches[0]) != strlen($hausnummer))) {
-                $hausnummerzusatz = trim(str_replace($matches[0], "", $hausnummer));
-                $hausnummer = $matches[0];
-            }
-            */
+            if (!isset($kunde[$setIBAN]))
+                $IBAN = '';
+            else
+                $IBAN = trim($kunde[$setIBAN]);
 
-/*
-            $name1 = trim($kunde[$setRowName1]);
-//            $name1 = trim($kunde[1]);
-            $name2 = "";
-            if (strlen($name1) > 30) {
-                $name2 = substr($name1, 30);
-                $name1 = substr($name1, 0, 30);
-            }
 
-            $search = '/,$/i';
-            if ( preg_match_all($search, $name1, $result)) {
-                $newValue = '';
-                $name1 = preg_replace($search, $newValue, $name1);
-            }
-*/
+            if (!isset($kunde[$setLandCode]))
+                $Laendercode = '';
+            else
+                $Laendercode = trim($kunde[$setLandCode]);
+
+
+            if (!isset($kunde[$setBankNr]))
+                $Kontonummer = '';
+            else
+                $Kontonummer = trim($kunde[$setBankNr]);
+
+
+            if (!isset($kunde[$setBKLZ]))
+                $BLZ = '';
+            else
+                $BLZ = trim($kunde[$setBKLZ]);
+
+
+            if (!isset($kunde[$setSWIFT]))
+                $BIC = '';
+            else
+                $BIC = trim($kunde[$setSWIFT]);
+
+
+
 
             // Anschriftsname
             $anschrifts_name1 = trim($kunde[$setRowName1]);
@@ -312,6 +325,11 @@ class DBImportCentron extends Core
                                 `Name1`,
                                 `Name2`,
                                 `Sammelkonto`,
+                                `Laendercode`,
+                                `BLZ`,
+                                `BIC`,
+                                `Kontonummer`,
+                                `IBAN`,
                                 `Zahlungsart`,
                                 `Anschrift_Name1`,
                                 `Anschrift_Name2`,
@@ -328,6 +346,11 @@ class DBImportCentron extends Core
                                 '".$name1."',
                                 '".$name2."',
                                 '".$_SESSION['customConfig']['Centron']['Sammelkonto']."',
+                                '".$Laendercode."',
+                                '".$BLZ."',
+                                '".$BIC."',
+                                '".$Kontonummer."',
+                                '".$IBAN."',
                                 '".$_SESSION['customConfig']['Centron']['Zahlungsart']."',
                                 '".$anschrifts_name1."',
                                 '".$anschrifts_name2."',
@@ -345,6 +368,11 @@ class DBImportCentron extends Core
                                `Name1`                  = '".$name1."',
                                `Name2`                  = '".$name2."',
                                `Sammelkonto`            = '".$_SESSION['customConfig']['Centron']['Sammelkonto']."',
+                               `Laendercode`            = '".$Laendercode."',
+                               `BLZ`                    = '".$BLZ."',
+                               `BIC`                    = '".$BIC."',
+                               `Kontonummer`            = '".$Kontonummer."',
+                               `IBAN`                   = '".$IBAN."',
                                `Zahlungsart`            = '".$_SESSION['customConfig']['Centron']['Zahlungsart']."',
                                `Anschrift_Name1`        = '".$anschrifts_name1."',
                                `Anschrift_Name2`        = '".$anschrifts_name2."',

@@ -280,11 +280,11 @@ class DBExportCentron extends Core
             $csv .= $kunde['Sammelkonto']. "~";                  // Sammelkonto
             $csv .= $kunde['Zahlungsart']. "~";                      // Zahlungsart
             $csv .= "~";                        // Mandatsreferenznummer
-            $csv .= "~";                        // Ländercode
-            $csv .= "~";                        // BLZ
-            $csv .= "~";                        // BIC
-            $csv .= "~";                        // Kontonummer
-            $csv .= "~";                        // IBAN
+            $csv .= $kunde['Laendercode']. "~";                        // Ländercode
+            $csv .= $kunde['BLZ']. "~";                        // BLZ
+            $csv .= $kunde['BIC']. "~";                        // BIC
+            $csv .= $kunde['Kontonummer']. "~";                        // Kontonummer
+            $csv .= $kunde['IBAN']. "~";                        // IBAN
             $csv .= "~";                        // Anrede Brief
             $csv .= "~";                        // Anschrift - Anrede
             $csv .= $kunde['Anschrift_Name1'] . "~";    // Anschrift - Name1
