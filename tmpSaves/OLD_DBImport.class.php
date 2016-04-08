@@ -23,7 +23,7 @@
  * 				        			|-> ConcreteClass20	    Core - Child - AnyCreature
  *
  */
-class DBImport extends Core
+class OLD_DBImport extends Core
 {
 
     public $gDBImport = array();
