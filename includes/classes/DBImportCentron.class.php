@@ -234,6 +234,7 @@ class DBImportCentron extends Core
 			else {
 				$strassenname = trim($kunde[$setRowStrasseHnr]);
 				$hausnummer = "";
+				$hausnummerzusatz = "";
 				$search = '/([^\d]+)(\d+)?([^\d]+)?/i';
 				if (preg_match_all($search, $strassenname, $result)) {
 					$strassenname = trim($result[1][0]);
