@@ -362,6 +362,7 @@ class DBImportCentron extends Core
 			$personenkonto = trim($kunde[$setRowKDNummer]);    // Personenkonto sprich Kundennummer
 
 
+
 			$dynInsertQuery = "(
                                 `userID`,
                                 `Personenkonto`,
