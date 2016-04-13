@@ -313,6 +313,18 @@ $tmp = preg_replace($search, $replace, $tmp);
 print ($tmp);
 echo "<br>";
 
+$curBuchungsdatumReadable = '2016-01-12';
+$myDate = new DateTime($curBuchungsdatumReadable. ' 08:00:00');
+
+$curZahlungsbedingungen = '10';
+$myDate->add(new DateInterval('P'.$curZahlungsbedingungen.'D'));
+$ankZahlungseinzugZum = $myDate->format('Ymd');
+
+//$ankZahlungseinzugZum = $curBuchungsdatumReadable + $curZahlungsbedingungen;
+
+echo "<hr>--->";
+echo $ankZahlungseinzugZum;
+echo "<br><hr>";
 
 
 ?>

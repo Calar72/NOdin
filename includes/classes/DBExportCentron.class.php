@@ -290,6 +290,22 @@ class DBExportCentron extends Core
 
 
 
+		// Lastschriftmandate einlesen
+		$query = "SELECT * FROM centron_mand_ref WHERE activeStatus = 'yes' ORDER BY personenkonto";
+		$result = $this->gCoreDB->query($query);
+		$num_rows = $this->gCoreDB->num_rows($result);
+
+		if ($num_rows >= '1') {
+			$mandRefArray = array();
+			while ($row = $result->fetch_object()) {
+
+				$mandRefArray[$row->personenkonto] = $row->mandatsnummer;
+			}
+		}
+		$this->gCoreDB->free_result($result);
+
+
+
 		$csv = "";
 
 		$cnt_kunden = 0;
@@ -300,6 +316,17 @@ class DBExportCentron extends Core
 
 			$personenkonto = trim($kunde['Personenkonto']);    // Personenkonto sprich Kundennummer
 
+
+			$curMandRef = '';
+			// Basisslastschrift ... Mandatsreferenz ermitteln
+			if ($kunde['Zahlungsart'] == 'BL') {
+
+				if (isset($mandRefArray[$personenkonto])) {
+					$curMandRef = $mandRefArray[$personenkonto];
+				}
+			}
+
+
 			$tilde = '~';
 
 			$csv .= "S~";
@@ -308,7 +335,7 @@ class DBExportCentron extends Core
 			$csv .= $kunde['Name2'] . "~";               // Name2
 			$csv .= $kunde['Sammelkonto'] . "~";                  // Sammelkonto
 			$csv .= $kunde['Zahlungsart'] . "~";                      // Zahlungsart
-			$csv .= "~";                        // Mandatsreferenznummer
+			$csv .= $curMandRef . "~";                        // Mandatsreferenznummer
 			$csv .= $kunde['Laendercode'] . "~";                        // Ländercode
 			$csv .= $kunde['BLZ'] . "~";                        // BLZ
 			$csv .= $kunde['BIC'] . "~";                        // BIC
@@ -697,8 +724,16 @@ class DBExportCentron extends Core
 //                continue;
 //            }
 
+			//TODO 12.04.2016 Wenn Lastschrift eigenen Datei bekommen soll... dann hier ansetzen!!!
+
 			$curCustomerNumber = $bookingSet['KundenNummer'];
 			$curBookingNumber = $bookingSet['RechnungsNr'];
+
+			$boolIsLastschriftCustomer = false;
+
+			// Lastschrift Kunde?
+			if ($hCore->gCore['CustomerData'][$curCustomerNumber]['Zahlungsart'] == $_SESSION['customConfig']['Centron']['ZahlungsartBL'])
+				$boolIsLastschriftCustomer = true;
 
 
 			// Wenn Neue Rechnungsnummer, dann neuen Rechnungssatz erstellen
@@ -712,11 +747,12 @@ class DBExportCentron extends Core
 				$curBuchungsperiode = $splitDate[1][0] . '.' . $splitDate[2][0];
 				$curBelegdatum = $splitDate[1][0] . $splitDate[2][0] . $splitDate[3][0];
 
+				$curBuchungsdatumReadable = $splitDate[3][0] . "-" . $splitDate[2][0] . "-" . $splitDate[1][0];
+
 				$curBuchungsdatum = $curBelegdatum;
 
 				$curZahlungsbedingungen = $_SESSION['customConfig']['Centron']['Zahlungsbedingung'];
 
-				//TODO 12.04.2016 Wenn Lastschrift eigenen Datei bekommen soll... dann hier ansetzen!!!
 
 				if (!isset($hCore->gCore['CustomerData'][$bookingSet['KundenNummer']])) {
 					// Habe den Stammdatensatz nicht!
@@ -738,9 +774,32 @@ class DBExportCentron extends Core
 				$tmpReNummer = sprintf("%'.010d", $curBookingNumber);
 				$curReNummer = $preReNummer . $tmpReNummer;
 
+
+				// Zahlungseinzug berechnen und initislisieren
+				$ankZahlungseinzugAm = '';
+				$ankZahlungseinzugZum = '';
+
+				// Prenotification
+				$preNote = '';
+
+				// Lastschrift - Kunde?
+				if ($boolIsLastschriftCustomer) {
+
+					if ($_SESSION['customConfig']['Centron']['ZahlungseinzugCalc'] == 'yes') {
+						$ankZahlungseinzugAm = $curBuchungsdatum;
+
+						$myDate = new DateTime($curBuchungsdatumReadable . ' 08:00:00');
+						$myDate->add(new DateInterval('P' . $curZahlungsbedingungen . 'D'));
+						$ankZahlungseinzugZum = $myDate->format('Ymd');
+					}
+
+					// Prenotification
+					$preNote = 'J';
+				}
+
+
+
 				// Erzeuge neuen A Satz
-				// PFLICHT
-				$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['A']['Satzart'] = 'A';
 				// PFLICHT
 				$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['A']['Satzart'] = 'A';                                      // Satzart
 				// PFLICHT
@@ -784,10 +843,11 @@ class DBExportCentron extends Core
 				$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['A']['ABWAnschriftStrasse'] = $hCore->gCore['CustomerData'][$bookingSet['KundenNummer']]['Anschrift_Strasse_abw_Kontoinhaber'];   // Anschrift - Strasse abw. Kontoinhaber
 				$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['A']['ABWAnschriftHausNr'] = $hCore->gCore['CustomerData'][$bookingSet['KundenNummer']]['Anschrift_Hnr_abw_Kontoinhaber'];   // Anschrift - HausNr. abw. Kontoinhaber
 				$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['A']['ABWAnschriftHausNrZusatz'] = $hCore->gCore['CustomerData'][$bookingSet['KundenNummer']]['Anschrift_zus_Hnr_abw_Kontoinhaber'];   // Anschrift - Zus. HausNr. abw. Kontoinhaber
-				$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['A']['Prenotifcation'] = 'j';  // Prenotification erfolgt (J)
+				$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['A']['Prenotifcation'] = $preNote;  // Prenotification erfolgt (J)
 				$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['A']['MandatsRefNr'] = $hCore->gCore['CustomerData'][$bookingSet['KundenNummer']]['Mandatsreferenznummer'];   // Mandatsreferenz-nummer
-				$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['A']['AnkZahlungseinzgZum'] = '';   // Anküendigung des Zahlungseinzugs zum
-				$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['A']['AnkZahlungseinzgAm'] = '';   // Ankündigung des Zahlungseinzugs am
+				$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['A']['AnkZahlungseinzgZum'] = $ankZahlungseinzugZum;   // Anküendigung des Zahlungseinzugs zum
+				$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['A']['AnkZahlungseinzgAm'] = $ankZahlungseinzugAm;   // Ankündigung des Zahlungseinzugs am
+
 				$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['A']['ABWAnkZahlungseinzg'] = '';   // Ankündigung des Zahlunseinzugs am für den abw. Kontoinhaber
 				$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['A']['BuchungszeichenAvviso'] = '';   // Buchungszeichen Avviso
 

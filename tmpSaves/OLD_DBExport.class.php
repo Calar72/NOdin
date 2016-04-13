@@ -423,7 +423,6 @@ class OLD_DBExport extends Core
         // A B C Stamm aufbauen
         $this->generateSets();
 
-        // TODO HIER!
         // csv-Datei erstellen
         $this->generateBooginCSV();
 

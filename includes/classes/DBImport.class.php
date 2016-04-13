@@ -23,7 +23,7 @@
  * 				        			|-> ConcreteClass20	    Core - Child - AnyCreature
  *
  */
-class OLD_DBImport extends Core
+class DBImport extends Core
 {
 
     public $gDBImport = array();
@@ -199,12 +199,15 @@ class OLD_DBImport extends Core
         // $Data = file($filepath);
         $preData = file($filepath);
 
+
+
         foreach ($preData as $newLine){
             $myNewData[][0] = $newLine;
         }
         $Data = $myNewData;
 
 
+        /*
         // Centron Buchungsdaten?
         if ( ($this->hCore->gCore['curSourceTypeID'] == '2') && ($this->hCore->gCore['curSourceSystemID'] == '2') ){
             $newData = array();
@@ -214,6 +217,7 @@ class OLD_DBImport extends Core
 
             $Data = $newData;
         }
+        */
 
 
         foreach ($Data as $index=>$row){

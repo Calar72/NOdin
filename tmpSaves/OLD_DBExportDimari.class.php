@@ -395,8 +395,8 @@ class OLD_DBExportDimari extends Core
         $csv .= $kunde['PERSONENKONTO'] . $tilde;		// Personenkonto
         $csv .= $kunde['NAME1_FULL'] . $tilde; 			// Name1
         $csv .= $kunde['NAME2_REST'] . $tilde; 			// Name2
-        $csv .= $kunde['SAMMELKONTO'] . $tilde;			// Sammelkonto					// TODO KLAEREN: Was soll ich hier eintragen A?
-        $csv .= $kunde['ZAHLART'] . $tilde;				// Zahlungsart					// TODO KLAEREN: Was soll ich hier eintragen B?
+        $csv .= $kunde['SAMMELKONTO'] . $tilde;			// Sammelkonto
+        $csv .= $kunde['ZAHLART'] . $tilde;				// Zahlungsart
         $csv .= "~"; 									// Mandatsreferenznummer
         $csv .= "~"; 									// L�ndercode
         $csv .= $kunde['BLZ'] . $tilde; 				// BLZ

@@ -362,6 +362,22 @@ class DBImportCentron extends Core
 			$personenkonto = trim($kunde[$setRowKDNummer]);    // Personenkonto sprich Kundennummer
 
 
+			// Welches System soll genutzt werden (das Alte nur mit SZ oder das Neue mit SZ und BL als Zahlart)
+			if ($_SESSION['customConfig']['Centron']['ZahlungsartOldNew'] == 'new'){
+
+					// Zahlungsart Lastschrift oder Überweisung?
+				if (strlen($BIC)>0)
+					$zahlungsart = $_SESSION['customConfig']['Centron']['ZahlungsartBL'];
+				else
+					$zahlungsart = $_SESSION['customConfig']['Centron']['Zahlungsart'];
+
+			}
+			else{
+				$zahlungsart = $_SESSION['customConfig']['Centron']['Zahlungsart'];
+			}
+
+
+
 
 			$dynInsertQuery = "(
                                 `userID`,
@@ -395,7 +411,7 @@ class DBImportCentron extends Core
                                 '" . $BIC . "',
                                 '" . $Kontonummer . "',
                                 '" . $IBAN . "',
-                                '" . $_SESSION['customConfig']['Centron']['Zahlungsart'] . "',
+                                '" . $zahlungsart . "',
                                 '" . $anschrifts_name1 . "',
                                 '" . $anschrifts_name2 . "',
                                 '" . $PLZ . "',
@@ -417,7 +433,7 @@ class DBImportCentron extends Core
                                `BIC`                    = '" . $BIC . "',
                                `Kontonummer`            = '" . $Kontonummer . "',
                                `IBAN`                   = '" . $IBAN . "',
-                               `Zahlungsart`            = '" . $_SESSION['customConfig']['Centron']['Zahlungsart'] . "',
+                               `Zahlungsart`            = '" . $zahlungsart . "',
                                `Anschrift_Name1`        = '" . $anschrifts_name1 . "',
                                `Anschrift_Name2`        = '" . $anschrifts_name2 . "',
                                `Anschrift_PLZ`          = '" . $PLZ . "',
