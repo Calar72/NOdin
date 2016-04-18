@@ -310,6 +310,7 @@ class DBExportDimari extends Core
                         // Verhindern dass KD_NAME2 mit dem Vornamen gefüllt wird
                         $this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME2'] = '';
 
+                        // TODO hier muss auf FTTH umgestellt werden
                         $this->hCore->gCore['customerSet'][$customerCnt]['ORG_STUFE'] = 'F';
                         $this->hCore->gCore['customerSet'][$customerCnt]['ORG_EINHEIT_GRUPPE_ID'] = '3';
                         $this->hCore->gCore['customerSet'][$customerCnt]['BILLINGLAUF'] = '2';
