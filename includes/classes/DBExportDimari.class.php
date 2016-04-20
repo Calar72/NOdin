@@ -719,7 +719,7 @@ class DBExportDimari extends Core
         while ($row = $result->fetch_object()){
             $curRow++;
             if ($curRow > $noFirstRowsNum)
-                $this->hCore->gCore['DBFieldnames'][] =  $row->Field;;
+                $this->hCore->gCore['DBFieldnames'][] =  $row->Field;
         }
 
         $this->gCoreDB->free_result($result);
