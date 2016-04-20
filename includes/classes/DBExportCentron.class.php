@@ -319,6 +319,7 @@ class DBExportCentron extends Core
 
 			$curKontoNummer = $kunde['Kontonummer'];
 			$curLaendercode = $kunde['Laendercode'];
+			$curBLZ = $kunde['BLZ'];
 			$curMandRef = '';
 			// Basisslastschrift ... Mandatsreferenz ermitteln
 			if ($kunde['Zahlungsart'] == 'BL') {
@@ -326,6 +327,35 @@ class DBExportCentron extends Core
 				if (isset($mandRefArray[$personenkonto])) {
 					$curMandRef = $mandRefArray[$personenkonto];
 				}
+
+				// Kontonummer und BLZ aus IBAN ermitteln ... Siehe Email S. Bruns vom 20.04.2016 12:46 Uhr
+				$curIBAN = trim($kunde['IBAN']);
+
+				// Mögliche Leerzeichen entfernen
+				$curIBAN = preg_replace('/ /', '', $curIBAN);
+				$tmpLandID = substr($curIBAN, 0, 2);
+
+				if ($tmpLandID == 'DE') {
+
+					// Deutsche IBAN
+					if (strlen($curBLZ) < 2)
+						$curBLZ = substr($curIBAN, 4, 8);
+
+					if (strlen($curKontoNummer) < 2)
+						$curKontoNummer = substr($curIBAN, 12);
+
+				}
+				elseif ($tmpLandID == 'NL') {
+
+					// Niederländische IBAN
+					if (strlen($curBLZ) < 2)
+						$curBLZ = substr($curIBAN, 4, 4);
+
+					if (strlen($curKontoNummer) < 2)
+						$curKontoNummer = substr($curIBAN, 8);
+
+				}
+
 			}
 			else {
 				// Kontonummer 0 entfernen ... Siehe Email S. Bruns vom 20.04.2016 10:56 Uhr
@@ -350,7 +380,7 @@ class DBExportCentron extends Core
 			$csv .= $kunde['Zahlungsart'] . "~";                      // Zahlungsart
 			$csv .= $curMandRef . "~";                        // Mandatsreferenznummer
 			$csv .= $curLaendercode . "~";                        // Ländercode
-			$csv .= $kunde['BLZ'] . "~";                        // BLZ
+			$csv .= $curBLZ . "~";                        // BLZ
 			$csv .= $kunde['BIC'] . "~";                        // BIC
 			$csv .= $curKontoNummer . "~";                        // Kontonummer
 			$csv .= $kunde['IBAN'] . "~";                        // IBAN

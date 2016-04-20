@@ -273,59 +273,38 @@ class baseDataSet {
 
 echo "<hr>";
 
-$tmp = '+49 2572 953262';
-$tmp = '02572 8004422';
-$tmp = '+49 2572952755';
-$tmp = '0176 44563868';
-//$tmp = '49 177 5474207';
 
-
-$tmp = trim($tmp);
-$preSearch = '/^\+49 (.*)+/';
-$search = '/^\+49 /';
-$replace = '0';
-if (preg_match($preSearch, $tmp))
-    $tmp = preg_replace($search, $replace, $tmp);
-
-echo "$tmp<br>";
-$tmp = trim($tmp);
-$search = '/^49 /';
-$replace = '0';
-$tmp = preg_replace($search, $replace, $tmp);
-
-
-$search = '/^02572/';
-$replace = '02572/';
-$tmp = preg_replace($search, $replace, $tmp);
-
-$search = '/ /';
-$replace = '/';
-$tmp = preg_replace($search, $replace, $tmp);
-
-$search = '/-/';
-$replace = '/';
-$tmp = preg_replace($search, $replace, $tmp);
-
-$search = '/\/\//';
-$replace = '/';
-$tmp = preg_replace($search, $replace, $tmp);
-
-print ($tmp);
 echo "<br>";
 
-$curBuchungsdatumReadable = '2016-01-12';
-$myDate = new DateTime($curBuchungsdatumReadable. ' 08:00:00');
 
-$curZahlungsbedingungen = '10';
-$myDate->add(new DateInterval('P'.$curZahlungsbedingungen.'D'));
-$ankZahlungseinzugZum = $myDate->format('Ymd');
 
-//$ankZahlungseinzugZum = $curBuchungsdatumReadable + $curZahlungsbedingungen;
+// Format NL: NL pp bbbb kkkkkkkkkk
+$curIBAN   = 'NL 76 RABO 0150859295';
 
-echo "<hr>--->";
-echo $ankZahlungseinzugZum;
-echo "<br><hr>";
+// Format DE: DE pp bbbbbbbb kkkkkkkkkk
+//$curIBAN   = 'DE 91 40153768 0000035367';
 
+$curIBAN = trim($curIBAN);
+
+// Mögliche Leerzeichen entfernen
+$curIBAN = preg_replace('/ /', '', $curIBAN);
+$tmpLandID = substr($curIBAN, 0, 2);
+
+if ($tmpLandID == 'DE'){
+
+    // Deutsche IBAN
+
+    $curBLZ = substr($curIBAN, 4, 8);
+    $curKontoNummer = substr($curIBAN, 12);
+
+}
+elseif ($tmpLandID == 'NL'){
+
+    // Niederländische IBAN
+    $curBLZ = substr($curIBAN, 4, 4);
+    $curKontoNummer = substr($curIBAN, 8);
+
+}
 
 ?>
 
