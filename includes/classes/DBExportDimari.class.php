@@ -679,6 +679,9 @@ class DBExportDimari extends Core
         $this->hCore->gCore['defaultCustomerData']['EGN']                       = '';
         $this->hCore->gCore['defaultCustomerData']['VERSANDART']               = '';
 
+        $this->hCore->gCore['defaultCustomerData']['WEB_BENUTZER']               = '';
+        $this->hCore->gCore['defaultCustomerData']['WEB_BENUTZER_PASSWORT']      = '';
+
     }
 
 
