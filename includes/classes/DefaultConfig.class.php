@@ -72,11 +72,11 @@ class DefaultConfig extends SystemConfig
 
 
     // INITIAL Lädt die System - Configurationsdatei
-    function loadDefaultConfig()
+    function loadDefaultConfig($appandConfiFile = 'defaultConfig.inc.ini')
     {
 
         // Default bzw. custom-Config einlesen
-        $curConfigFile = 'includes/configs/defaultConfig.inc.ini';
+        $curConfigFile = 'includes/configs/' . $appandConfiFile;
 
         // Prüfen ob Datei existiert
         if (!file_exists($curConfigFile)){

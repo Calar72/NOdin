@@ -2,7 +2,13 @@
 // Debug - Dateinamen ausgeben?!
 $hCore->debugInitOnLoad('File',__FILE__);
 
+// Logo anhand der Config ausgeben
+$curLogo = 'logo_tkrz.png';
 
+if (isset($_SESSION['gDefaultLogoLoad']))
+	$curLogo = 'logo_' . $_SESSION['gDefaultLogoLoad'] . '.png';
+else
+	$curLogo = 'logo_tkrz.png';
 
 
 ?>
@@ -13,7 +19,7 @@ $hCore->debugInitOnLoad('File',__FILE__);
 
 			<table class="textLeft">
 				<tr>
-					<td class="bottomLine rPaddingSix"><a href="<?php print ($_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT']); ?>home"><img src="<?php print ($_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT']); ?>includes/images/logo_tkrz.png" width="213" height="85" alt="LOGO"></a></td>
+					<td class="rPaddingSix"><a href="<?php print ($_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT']); ?>home"><img src="<?php print ($_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT']); ?>includes/images/<?php print ($curLogo); ?>" width="213" alt="LOGO"></a></td>
 				</tr>
 			</table>
 

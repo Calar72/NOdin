@@ -132,8 +132,8 @@ $hCore->debugInitOnLoad('File',__FILE__);
             Zu beachtetn ist die Spalte "<i>&sum; Imports</i>" in der leicht zu erkennen ist, ob der Datensatz schon einmal importiert wurde.<br><br>
 
             Bei einem erneuten Import der Datensätze für Buchungsdaten werden diese als aktuell gültig (sprich allein vorhanden) behandelt!<br>
-            ALTE STAMMDATENSÄTZE WERDE IMMER GEUPDATET ... DER DATENSTAMM WIRD ERWEITERT!<br>
-            ALTE BUCHUNGSDATENSÄTZE WERDE IMMER GELÖSCHT ... DER DATENSTAMM FÜR DIE BUCHUNGSSÄTZE WIRD NEU GESCHRIEBEN!<br><br>
+            ALTE STAMMDATENSÄTZE WERDEN IMMER GEUPDATET ... DER DATENSTAMM WIRD ERWEITERT!<br>
+            ALTE BUCHUNGSDATENSÄTZE WERDEN IMMER GELÖSCHT ... DER DATENSTAMM FÜR DIE BUCHUNGSSÄTZE WIRD NEU GESCHRIEBEN!<br><br>
 
             Ist nicht sicher, was genau in den Datein enthalten ist, so können die Datein via Klick auf "<i>Download</i>" heruntergeladen werden.
         </td>

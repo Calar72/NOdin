@@ -143,6 +143,13 @@ else {
 
                     <br>
                     &bull; <a href="http://www.cika-software.de/helpdesk/webfakt/" target="_blank" class="std">Webfakt Helpdesk</a>
+
+                    <br><br><hr>
+                    Aktuelle Config: <?php print ($_SESSION['gDefaultConfigLoad']); ?><br><br>
+                    Lade:<br>
+                    &bull; <a class="std" href="<?php print ($_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT']); ?>loadConfig/defaultConfig">TKRZ (Default)<a><br>
+                    &bull; <a class="std" href="<?php print ($_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT']); ?>loadConfig/defaultConfigRheiNet">RheiNet<a><br>
+                    &bull; <a class="std" href="<?php print ($_SESSION['customConfig']['WebLinks']['INTERNHOMESHORT']); ?>loadConfig/defaultConfigSchuettorf">Schüttorf<a>
                 </div>
             </td>
         </tr>

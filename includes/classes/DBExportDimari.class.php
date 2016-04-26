@@ -311,16 +311,16 @@ class DBExportDimari extends Core
                         $this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME2'] = '';
 
                         // TODO hier muss auf FTTH umgestellt werden
-                        $this->hCore->gCore['customerSet'][$customerCnt]['ORG_STUFE'] = 'F';
-                        $this->hCore->gCore['customerSet'][$customerCnt]['ORG_EINHEIT_GRUPPE_ID'] = '3';
-                        $this->hCore->gCore['customerSet'][$customerCnt]['BILLINGLAUF'] = '2';
+                        $this->hCore->gCore['customerSet'][$customerCnt]['ORG_STUFE'] = $_SESSION['customConfig']['Dimari']['ORG_STUFE_FIRMA'];
+                        $this->hCore->gCore['customerSet'][$customerCnt]['ORG_EINHEIT_GRUPPE_ID'] = $_SESSION['customConfig']['Dimari']['ORG_EINHEIT_GRUPPE_ID_FIRMA'];
+                        $this->hCore->gCore['customerSet'][$customerCnt]['BILLINGLAUF'] = $_SESSION['customConfig']['Dimari']['BILLINGLAUF_FIRMA'];
 
                     }
                     else {
                         // DEFAULT Keine Firma
-                        $this->hCore->gCore['customerSet'][$customerCnt]['ORG_STUFE'] = 'P';
-                        $this->hCore->gCore['customerSet'][$customerCnt]['ORG_EINHEIT_GRUPPE_ID'] = '1';
-                        $this->hCore->gCore['customerSet'][$customerCnt]['BILLINGLAUF'] = '1';
+                        $this->hCore->gCore['customerSet'][$customerCnt]['ORG_STUFE'] = $_SESSION['customConfig']['Dimari']['ORG_STUFE_PRIVAT'];
+                        $this->hCore->gCore['customerSet'][$customerCnt]['ORG_EINHEIT_GRUPPE_ID'] = $_SESSION['customConfig']['Dimari']['ORG_EINHEIT_GRUPPE_ID_PRIVAT'];
+                        $this->hCore->gCore['customerSet'][$customerCnt]['BILLINGLAUF'] = $_SESSION['customConfig']['Dimari']['BILLINGLAUF_PRIVAT'];
                     }
                 }
 
@@ -328,7 +328,7 @@ class DBExportDimari extends Core
 
                 // Sonderfall Mandant_ID
                 elseif ($keyname == 'MANDANT_ID'){
-                    $tmp = '0';
+                    $tmp = $_SESSION['customConfig']['Dimari']['MANDANDT_ID'];
                 }
 
 
@@ -347,7 +347,14 @@ class DBExportDimari extends Core
 
                 // Sonderfall Dokument_Gruppe
                 elseif ($keyname == 'DOKUMENT_GRUPPE'){
-                    $tmp = '1';
+
+                    // Firmen-Kunde?
+                    if ( (isset($this->hCore->gCore['customerSet'][$customerCnt]['FIRMENNAME'])) && (strlen($this->hCore->gCore['customerSet'][$customerCnt]['FIRMENNAME']) > 0) )
+                        $tmp = $_SESSION['customConfig']['Dimari']['DOKUMENT_GRUPPE_FIRMA'];
+
+                    else
+                        $tmp = $_SESSION['customConfig']['Dimari']['DOKUMENT_GRUPPE_PRIVAT'];
+
                 }
 
 
@@ -471,6 +478,14 @@ class DBExportDimari extends Core
                         $replace = '02572/';
                         $tmp = preg_replace($search, $replace, $tmp);
 
+                        $search = '/^05971/';
+                        $replace = '05971/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
+                        $search = '/^05923/';
+                        $replace = '05923/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
                         $search = '/ /';
                         $replace = '/';
                         $tmp = preg_replace($search, $replace, $tmp);
@@ -500,6 +515,14 @@ class DBExportDimari extends Core
 
                         $search = '/^02572/';
                         $replace = '02572/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
+                        $search = '/^05971/';
+                        $replace = '05971/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
+                        $search = '/^05923/';
+                        $replace = '05923/';
                         $tmp = preg_replace($search, $replace, $tmp);
 
                         $search = '/ /';
@@ -539,6 +562,14 @@ class DBExportDimari extends Core
 
                         $search = '/^02572/';
                         $replace = '02572/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
+                        $search = '/^05971/';
+                        $replace = '05971/';
+                        $tmp = preg_replace($search, $replace, $tmp);
+
+                        $search = '/^05923/';
+                        $replace = '05923/';
                         $tmp = preg_replace($search, $replace, $tmp);
 
                         $search = '/ /';
@@ -744,7 +775,6 @@ class DBExportDimari extends Core
             // Kunden einzelne Daten durchgen
             foreach ($this->hCore->gCore['newCustomerSet'][$customerCnt] as $keyFieldname=>$value){
 
-                // Format: "bla"|"blub"|"blibber"
 
                 // Pipezeichen setzen?
                 if ($leadingPipe)
@@ -837,7 +867,6 @@ class DBExportDimari extends Core
             // Kunden einzelne Daten durchgen
             foreach ($this->hCore->gCore['newCustomerSet'][$customerCnt] as $keyFieldname=>$value){
 
-                // Format: "bla"|"blub"|"blibber"
 
                 // Pipezeichen setzen?
                 if ($leadingPipe)

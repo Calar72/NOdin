@@ -305,7 +305,6 @@ elseif ($tmpLandID == 'NL'){
     $curKontoNummer = substr($curIBAN, 8);
 
 }
-
 ?>
 
 

@@ -25,7 +25,7 @@
  *
  * KDNummer 10348
  */
-class DBExportCentron extends Core
+class DBExportCentronFTTC extends Core
 {
 
 	public $gDBExportCentron = array();

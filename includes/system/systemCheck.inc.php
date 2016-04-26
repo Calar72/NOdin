@@ -20,7 +20,11 @@ $hCore->loadSystemConfig();
 
 // Require die Custom-Config - Datei ... dort sind die individuelle Werte definiert (z.B. DB - Verbindung, Webpfad, Uploadpfad, Farbeinstellungen usw.)
 //require_once 'includes/configs/customConfig.inc.php';
-$hCore->loadDefaultConfig();
+// Andere Config zum laden ausgewählt?
+if (!isset($_SESSION['gDefaultConfigLoad']))
+    $_SESSION['gDefaultConfigLoad'] = 'defaultConfig.inc.ini';
+
+$hCore->loadDefaultConfig($_SESSION['gDefaultConfigLoad']);
 
 
 

@@ -202,6 +202,25 @@ class Action extends Core
 
 		//////////////////////////////////// Ab hier die Action - Steuerung //////////////////////////////////
 
+		// Andere Config manuell laden?
+		if ($this->gCore['getGET']['callAction'] == 'loadConfig') {
+
+			$arg = $this->gCore['getGET']['subAction'] . '.inc.ini';
+			$_SESSION['gDefaultConfigLoad'] = $arg;
+			$_SESSION['gDefaultLogoLoad'] = $this->gCore['getGET']['subAction'];
+
+			// head - Datei
+
+			// head - Datei -> Verweis zur Klasse: HomeHead | Methode: homeHeadSwitchDebugFrame
+			$hCore->gCore['getLeadToHeadClass'] = 'DefaultConfig';                           // Klasse die geladen werden soll
+			$hCore->gCore['getLeadToHeadMethod'] = 'loadDefaultConfig';                        // Methoden - Aufruf
+			$hCore->gCore['getLeadToHeadByAction'] = 'force';                                // Erzwinge das Überschreiben von Default
+			$hCore->gCore['getLeadToHeadArg'] = $arg;    	 // Übergebe Argumente
+
+			// Footer - Datei bleibt Default!
+		}
+
+
 		// Logout angefordert?
 		if ($this->gCore['getGET']['callAction'] == 'callLogout') {
 			// head - Datei bleibt Default!
