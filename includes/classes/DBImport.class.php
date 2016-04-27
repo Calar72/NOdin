@@ -224,7 +224,9 @@ class DBImport extends Core
 
             // Centron Buchungsdaten?
             if ( ($this->hCore->gCore['curSourceTypeID'] == '2') && ($this->hCore->gCore['curSourceSystemID'] == '2') ){
-                $eachValueArray = str_getcsv($row[0], "\t");
+                // TODO ... Die Buchungsdatei auf Tab oder Semikolon prüfen... so muss ich manuell hin/her wechseln.
+                // $eachValueArray = str_getcsv($row[0], "\t");
+                $eachValueArray = str_getcsv($row[0], ";");
             }
             else{
                 $eachValueArray = str_getcsv($row[0], ";");
