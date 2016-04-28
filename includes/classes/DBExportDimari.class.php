@@ -326,6 +326,7 @@ class DBExportDimari extends Core
 
 
 
+
                 // Sonderfall Mandant_ID
                 elseif ($keyname == 'MANDANT_ID'){
                     $tmp = $_SESSION['customConfig']['Dimari']['MANDANDT_ID'];
@@ -415,6 +416,47 @@ class DBExportDimari extends Core
                         $this->hCore->gCore['customerSet'][$customerCnt]['ZAHLUNGS_ART'] == '0';
                         $tmp = 'M';
                     }
+                }
+
+
+
+                // Sonderfall ... Kontoinhaber leer bei Lastschrift
+                elseif ($keyname == 'INHABER_KONTO'){
+                    // Zahlungsart gesetzt?
+                    if (isset($this->hCore->gCore['customerSet'][$customerCnt]['ZAHLUNGS_ART'])){
+
+                        // Ist Lastschrift?
+                        if ($this->hCore->gCore['customerSet'][$customerCnt]['ZAHLUNGS_ART'] == '1'){
+
+                            $xLen = strlen($this->hCore->gCore['customerSet'][$customerCnt]['INHABER_KONTO']);
+
+                            // Kontoinhaber leer?
+                            if ($xLen < 1){
+
+                                $newKotoInhaA = '';
+                                $newKotoInhaB = '';
+                                $boolGotA = false;
+                                $boolGotB = false;
+                                if (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME2'])){
+                                    $newKotoInhaB = $this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME2'];
+                                    $boolGotB = true;
+                                }
+                                if (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME1'])){
+                                    $newKotoInhaA = $this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME1'];
+                                    $boolGotA = true;
+                                }
+
+                                $tmp = $newKotoInhaB;
+                                if ( ($boolGotA) && ($boolGotB) )
+                                    $tmp .= ' ';
+
+                                $tmp .= $newKotoInhaA;
+                            }
+
+                        }
+
+                    }
+
                 }
 
 
