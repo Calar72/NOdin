@@ -437,16 +437,31 @@ class DBExportDimari extends Core
                                 $newKotoInhaB = '';
                                 $boolGotA = false;
                                 $boolGotB = false;
-                                if (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME2'])){
-                                    $newKotoInhaB = $this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME2'];
-                                    $boolGotB = true;
+
+                                // Bei Firma die AP - Daten verwenden
+                                if ( (isset($this->hCore->gCore['customerSet'][$customerCnt]['FIRMENNAME'])) && (strlen($this->hCore->gCore['customerSet'][$customerCnt]['FIRMENNAME']) > 0) ){
+                                    if (isset($this->hCore->gCore['customerSet'][$customerCnt]['AP_VORNAME'])){
+                                        $newKotoInhaB = $this->hCore->gCore['customerSet'][$customerCnt]['AP_VORNAME'];
+                                        $boolGotB = true;
+                                    }
+                                    if (isset($this->hCore->gCore['customerSet'][$customerCnt]['AP_NACHNAME'])){
+                                        $newKotoInhaA = $this->hCore->gCore['customerSet'][$customerCnt]['AP_NACHNAME'];
+                                        $boolGotA = true;
+                                    }
                                 }
-                                if (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME1'])){
-                                    $newKotoInhaA = $this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME1'];
-                                    $boolGotA = true;
+                                else {
+                                    if (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME2'])){
+                                        $newKotoInhaB = $this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME2'];
+                                        $boolGotB = true;
+                                    }
+                                    if (isset($this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME1'])){
+                                        $newKotoInhaA = $this->hCore->gCore['customerSet'][$customerCnt]['KD_NAME1'];
+                                        $boolGotA = true;
+                                    }
                                 }
 
                                 $tmp = $newKotoInhaB;
+
                                 if ( ($boolGotA) && ($boolGotB) )
                                     $tmp .= ' ';
 
