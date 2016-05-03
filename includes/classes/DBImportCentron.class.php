@@ -160,6 +160,23 @@ class DBImportCentron extends Core
 
 		$hCore = $this->hCore;
 
+
+		// Lastschriftmandate einlesen
+		$query = "SELECT * FROM centron_mand_ref WHERE activeStatus = 'yes' ORDER BY personenkonto";
+		$result = $this->gCoreDB->query($query);
+		$num_rows = $this->gCoreDB->num_rows($result);
+
+		if ($num_rows >= '1') {
+			$mandRefArray = array();
+			while ($row = $result->fetch_object()) {
+
+				$mandRefArray[$row->personenkonto] = $row->mandatsnummer;
+			}
+		}
+		$this->gCoreDB->free_result($result);
+
+//
+
 		$hDB = '';
 		$hMessage = '';
 		$zeilen = $hCore->gCore['csvValue'];
@@ -243,6 +260,11 @@ class DBImportCentron extends Core
 				}
 			}
 
+			// Mandatsreferenznummer
+			$curMandRef = '';
+			if (isset($mandRefArray[$tmpKdNr])) {
+				$curMandRef = $mandRefArray[$tmpKdNr];
+			}
 
 
 			// TODO ELEGANTER Datensatz bei Doppel abfangen
@@ -391,6 +413,7 @@ class DBImportCentron extends Core
                                 `Kontonummer`,
                                 `IBAN`,
                                 `Zahlungsart`,
+                                `Mandatsreferenznummer`,
                                 `Anschrift_Name1`,
                                 `Anschrift_Name2`,
                                 `Anschrift_PLZ`,
@@ -412,6 +435,7 @@ class DBImportCentron extends Core
                                 '" . $Kontonummer . "',
                                 '" . $IBAN . "',
                                 '" . $zahlungsart . "',
+                                '" . $curMandRef . "',
                                 '" . $anschrifts_name1 . "',
                                 '" . $anschrifts_name2 . "',
                                 '" . $PLZ . "',

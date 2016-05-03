@@ -164,6 +164,7 @@ class DBImportDimariKonzeptum extends Core
     {
         $hCore = $this->hCore;
 
+
         // Bool erste Reihe überspringen
         $noFirstRow = true;
 
@@ -182,6 +183,7 @@ class DBImportDimariKonzeptum extends Core
                 $noFirstRow = false;
                 continue;
             }
+
 
             $preQuery = "INSERT INTO `baseDataDimari`";
 

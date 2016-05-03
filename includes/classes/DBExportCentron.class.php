@@ -823,7 +823,7 @@ class DBExportCentron extends Core
 				$ankZahlungseinzugZum = '';
 
 				// Prenotification
-				$preNote = '';
+				$preNote = 'J';		// IMMER auf J siehe Email S.Bruns 29.04.2016 11:53 Uhr
 
 				// Lastschrift - Kunde?
 				if ($boolIsLastschriftCustomer) {
@@ -837,7 +837,7 @@ class DBExportCentron extends Core
 					}
 
 					// Prenotification
-					$preNote = 'J';
+					// $preNote = 'J';
 				}
 
 
@@ -901,12 +901,14 @@ class DBExportCentron extends Core
 				//$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Bruttobetrag']         = $bookingSet['Brutto'];   // Bruttobetrag
 				//$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Nettobetrag']        = '';                       // Nettobetrag
 //                $hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Steuerkennzeichen']    = $bookingSet['MwSt'];      // Steuerkennzeichen
-				$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Steuerkennzeichen'] = $_SESSION['customConfig']['Centron']['Steuerkennzeichen'];      // Steuerkennzeichen
+				// TODO In Config warte auf Feedback S.Bruns 20160503
+				$identVar = 'Steuerkennzeichen_' . $bookingSet['MwSt'];
+				$curSteuerkennzeichen = $_SESSION['customConfig']['Centron'][$identVar];
+				$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Steuerkennzeichen'] = $curSteuerkennzeichen;      // Steuerkennzeichen
 				$hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Geschaeftsbereich'] = $_SESSION['customConfig']['Centron']['GeschaeftsbereichNonPrivate'];    // Geschäftsbereich
 
 
 			}  //  END if ($curBookingNumber != $lastBookingNumber)
-
 
 
 			// C Satz hinzufügen
@@ -929,6 +931,8 @@ class DBExportCentron extends Core
 				$curBNetto = $hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Nettobetrag'];
 				$curBBrutto = $hCore->gCore['ExportBuchungsDaten']['Rechnungen'][$curBookingNumber]['B']['Bruttobetrag'];
 			}
+
+
 			$curNewNetto = $curBNetto + $curCNetto;
 			$curNewNetto = $this->cleanMoney($curNewNetto);
 			$curNewBBrutto = $curBBrutto + $brutto;
@@ -1011,6 +1015,21 @@ class DBExportCentron extends Core
 
 		$hCore = $this->hCore;
 
+		// Lastschriftmandate einlesen
+		$query = "SELECT * FROM centron_mand_ref WHERE activeStatus = 'yes' ORDER BY personenkonto";
+		$result = $this->gCoreDB->query($query);
+		$num_rows = $this->gCoreDB->num_rows($result);
+
+		if ($num_rows >= '1') {
+			$mandRefArray = array();
+			while ($row = $result->fetch_object()) {
+
+				$mandRefArray[$row->personenkonto] = $row->mandatsnummer;
+			}
+		}
+		$this->gCoreDB->free_result($result);
+
+
 		if (!isset($hCore->gCore['ExportBuchungsDaten']['Rechnungen'])) {
 			RETURN false;
 		}
@@ -1029,6 +1048,13 @@ class DBExportCentron extends Core
 		$sumSteuerBetragC = 0;
 
 		foreach($hCore->gCore['ExportBuchungsDaten']['Rechnungen'] AS $index => $set) {
+
+			// Mandatsreferenznummer
+			$tmpKdNr = $set['A']['Personenkonto'];
+			$curMandRef = '';
+			if (isset($mandRefArray[$tmpKdNr])) {
+				$curMandRef = $mandRefArray[$tmpKdNr];
+			}
 
 			// Für Prüfsumme berechnen
 			$sumBruttoA += $set['A']['Bruttobetrag'];
@@ -1068,7 +1094,7 @@ class DBExportCentron extends Core
 			$csv .= $set['A']['ABWAnschriftHausNrZusatz'] . $tilde;
 			$csv .= $tilde;                                             // Leeres Feld, Workaround weil Fehler in der kVASy Beschreibung(!)
 			$csv .= $set['A']['Prenotifcation'] . $tilde;
-			$csv .= $set['A']['MandatsRefNr'] . $tilde;
+			$csv .= $curMandRef . $tilde;
 			$csv .= $set['A']['AnkZahlungseinzgZum'] . $tilde;
 			$csv .= $set['A']['AnkZahlungseinzgAm'] . $tilde;
 			$csv .= $set['A']['ABWAnkZahlungseinzg'] . $tilde;
