@@ -823,7 +823,7 @@ class DBExportCentron extends Core
 				$ankZahlungseinzugZum = '';
 
 				// Prenotification
-				$preNote = 'J';		// IMMER auf J siehe Email S.Bruns 29.04.2016 11:53 Uhr
+				$preNote = 'N';		// Bei Selbstzahler auf N
 
 				// Lastschrift - Kunde?
 				if ($boolIsLastschriftCustomer) {
@@ -836,8 +836,8 @@ class DBExportCentron extends Core
 						$ankZahlungseinzugZum = $myDate->format('Ymd');
 					}
 
-					// Prenotification
-					// $preNote = 'J';
+					// Prenotification ... nur bei Lastschriftkunden mit J
+					$preNote = 'J';
 				}
 
 
